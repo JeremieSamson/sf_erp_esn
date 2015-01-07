@@ -1,3 +1,3 @@
 esn_user_homepage:
-    path:     /hellotest/{name}
+    path:     /hellotest
     defaults: { _controller: ESNUserBundle:Default:index }
