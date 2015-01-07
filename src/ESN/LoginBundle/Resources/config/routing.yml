@@ -1,0 +1,3 @@
+esn_login_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: ESNLoginBundle:Default:index }
