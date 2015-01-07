@@ -1,0 +1,4 @@
+esn_admin:
+    resource: "@ESNAdminBundle/Resources/config/routing.yml"
+    prefix:   /
+
