@@ -1,3 +1,3 @@
 esn_login_homepage:
-    path:     /hello/{name}
+    path:     /login
     defaults: { _controller: ESNLoginBundle:Default:index }
