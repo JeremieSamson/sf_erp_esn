@@ -257,7 +257,7 @@ header {
 .main {
 	padding-bottom: 2em;
 	
-	border-bottom: 1px solid #000;
+	border-bottom: 0px solid #000;
 }
 
 
@@ -312,7 +312,9 @@ header {
 
 .footer {
 	margin-top: 0;
-	
+        width:100%;
+	position: fixed;
+        bottom:0px;
 	border-top: 0px solid #292929;
 }
 

@@ -15,4 +15,9 @@ class DashboardController extends Controller
     {
         return $this->render('ESNDashboardBundle:Dashboard:subnavbar.html.twig');
     }
+    
+    public function dashboardAction() {
+        
+        return $this->render('ESNDashboardBundle:Dashboard:dashboard.html.twig');
+    }
 }

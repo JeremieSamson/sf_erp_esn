@@ -3,3 +3,7 @@
 {% block subnavbar %}
 {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
+
+{% block body %}
+{{ render(controller("ESNDashboardBundle:Dashboard:dashboard")) }}
+{% endblock %}
