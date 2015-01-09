@@ -1,0 +1,18 @@
+<?php
+
+namespace ESN\DashboardBundle\Controller;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class DashboardController extends Controller
+{
+    public function indexAction()
+    {
+        return $this->render('ESNDashboardBundle::index.html.twig');
+    }
+    
+    public function subnavbarAction()
+    {
+        return $this->render('ESNDashboardBundle:Dashboard:subnavbar.html.twig');
+    }
+}

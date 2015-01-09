@@ -16,7 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new ESN\AdminBundle\ESNAdminBundle(),
+            new ESN\DashboardBundle\ESNDashboardBundle(),
             new ESN\LoginBundle\ESNLoginBundle(),
             new ESN\UserBundle\ESNUserBundle(),
         );

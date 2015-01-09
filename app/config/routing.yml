@@ -2,8 +2,8 @@ esn_user:
     resource: "@ESNUserBundle/Resources/config/routing.yml"
     prefix:   /
 
-esn_admin:
-    resource: "@ESNAdminBundle/Resources/config/routing.yml"
+esn_dashboard:
+    resource: "@ESNDashboardBundle/Resources/config/routing.yml"
     prefix:   /
     
 esn_login:

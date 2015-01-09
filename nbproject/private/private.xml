@@ -5,19 +5,32 @@
         <group>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/LoginBundle/Resources/config/routing.yml</file>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/Resources/views/base.html.twig</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/ESNDashboardBundle.php</file>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/config/security.yml</file>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/config/config.yml</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/LoginBundle/Resources/config/services.yml</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/config/routing_dev.yml</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/LoginBundle/Resources/views/Default/index.html.twig</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdminBundle/Resources/views/Default/index.html.twig</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/DependencyInjection/Configuration.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/DependencyInjection/ESNAdminExtension.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/UserBundle/ESNUserBundle.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/Resources/config/routing.yml</file>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/config/routing.yml</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/SymfonyRequirements.php</file>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/console</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/config/parameters.yml.dist</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/check.php</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdminBundle/Controller/DefaultController.php</file>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/UserBundle/Resources/config/routing.yml</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/Tests/Controller/DefaultControllerTest.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/config/routing_dev.yml</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/Resources/views/Dashboard/subnavbar.html.twig</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/AppKernel.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/logs/dev.log</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/Resources/views/index.html.twig</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/UserBundle/Controller/UsersController.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/LoginBundle/Resources/config/services.yml</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/UserBundle/Resources/views/index.html.twig</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/SymfonyRequirements.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/check.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/Controller/DashboardController.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/UserBundle/Resources/config/services.yml</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/LoginBundle/Resources/views/Default/index.html.twig</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/config/parameters.yml.dist</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/DashboardBundle/Resources/config/services.yml</file>
         </group>
     </open-files>
 </project-private>

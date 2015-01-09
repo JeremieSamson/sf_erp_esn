@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DefaultController extends Controller
+class LoginController extends Controller
 {
     public function indexAction(Request $request)
     {
@@ -14,10 +14,10 @@ class DefaultController extends Controller
         // Si la requête est un post, c'est uqe le visiteur a soumis le formulaire
         if ($request->isMethod('POST')) {
             //Puis on redirige vers la page de visualisation de cette annonce
-            return $this->redirect($this->generateUrl('esn_admin_homepage'));
+            return $this->redirect($this->generateUrl('esn_dashboard_homepage'));
         }
         // Si on n'est pas en Post, alors on affiche le formulaire
-        return $this->render('ESNLoginBundle:Default:index.html.twig');
+        return $this->render('ESNLoginBundle::index.html.twig');
     }
     
     
