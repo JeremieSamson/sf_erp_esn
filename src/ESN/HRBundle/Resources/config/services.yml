@@ -1,0 +1,4 @@
+services:
+#    esnhr.example:
+#        class: ESN\HRBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

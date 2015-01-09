@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new ESN\TreasuryBundle\ESNTreasuryBundle(),
             new ESN\MembersBundle\ESNMembersBundle(),
             new ESN\AdministrationBundle\ESNAdministrationBundle(),
+            new ESN\PermanenceBundle\ESNPermanenceBundle(),
+            new ESN\HRBundle\ESNHRBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
