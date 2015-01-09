@@ -1,3 +1,7 @@
+esn_administration:
+    resource: "@ESNAdministrationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 esn_members:
     resource: "@ESNMembersBundle/Resources/config/routing.yml"
     prefix:   /
