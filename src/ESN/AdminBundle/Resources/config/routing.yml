@@ -1,3 +1,3 @@
 esn_admin_homepage:
     path:     /admin
-    defaults: { _controller: ESNAdminBundle:Default:index }
+    defaults: { _controller: ESNAdminBundle:Admin:index }
