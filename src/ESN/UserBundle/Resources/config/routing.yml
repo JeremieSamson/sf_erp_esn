@@ -1,3 +1,0 @@
-esn_users_homepage:
-    path:     /users
-    defaults: { _controller: ESNUserBundle:Users:index }

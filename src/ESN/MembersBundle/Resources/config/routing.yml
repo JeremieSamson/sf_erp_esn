@@ -1,0 +1,3 @@
+esn_members_homepage:
+    path:     /members
+    defaults: { _controller: ESNMembersBundle:Members:index }

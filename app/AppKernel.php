@@ -18,8 +18,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new ESN\DashboardBundle\ESNDashboardBundle(),
             new ESN\LoginBundle\ESNLoginBundle(),
-            new ESN\UserBundle\ESNUserBundle(),
             new ESN\TreasuryBundle\ESNTreasuryBundle(),
+            new ESN\MembersBundle\ESNMembersBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

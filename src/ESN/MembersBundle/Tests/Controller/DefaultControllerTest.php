@@ -1,6 +1,6 @@
 <?php
 
-namespace ESN\UserBundle\Tests\Controller;
+namespace ESN\MembersBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
