@@ -8,7 +8,11 @@ class DashboardController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('ESNDashboardBundle::index.html.twig');
+        
+        return $this->render('ESNDashboardBundle::index.html.twig', array(
+            'title' => "Dashboard"
+        ));
+  
     }
     
     public function subnavbarAction()

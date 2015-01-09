@@ -1,3 +1,7 @@
+esn_treasury:
+    resource: "@ESNTreasuryBundle/Resources/config/routing.yml"
+    prefix:   /
+
 esn_user:
     resource: "@ESNUserBundle/Resources/config/routing.yml"
     prefix:   /

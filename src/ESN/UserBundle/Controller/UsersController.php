@@ -8,6 +8,8 @@ class UsersController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('ESNUserBundle::index.html.twig');
+        return $this->render('ESNUserBundle::index.html.twig', array(
+            'title' => "Users"
+        ));
     }
 }
