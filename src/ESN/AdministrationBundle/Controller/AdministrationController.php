@@ -12,4 +12,9 @@ class AdministrationController extends Controller
             'title' => "Administration"
         ));
     }
+    
+    public function adminAction()
+    {
+        return $this->render('ESNAdministrationBundle:Administration:admin.html.twig');
+    }
 }

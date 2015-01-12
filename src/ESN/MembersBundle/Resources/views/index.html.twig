@@ -4,3 +4,6 @@
 {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
+{% block body %}
+    {{ render(controller("ESNMembersBundle:Members:detail")) }}    
+{% endblock %}

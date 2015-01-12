@@ -5,3 +5,6 @@
 {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
+{% block body %}
+    {{ render(controller("ESNAdministrationBundle:Administration:admin")) }}
+{% endblock %}
