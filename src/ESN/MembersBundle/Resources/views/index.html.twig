@@ -5,5 +5,9 @@
 {% endblock %}
 
 {% block body %}
-    {{ render(controller("ESNMembersBundle:Members:detail")) }}    
+    {% if id is defined %}
+        {{ render(controller("ESNMembersBundle:Members:detail" , {'type': type,'id':id})) }}
+    {% else %}
+        {{ render(controller("ESNMembersBundle:Members:list" , {'typeMember': type})) }} 
+    {% endif %}
 {% endblock %}

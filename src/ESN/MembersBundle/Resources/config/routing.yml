@@ -1,3 +1,9 @@
 esn_members_homepage:
-    path:     /members
+    path:     /members/{type}
     defaults: { _controller: ESNMembersBundle:Members:index }
+    
+esn_members_detail:
+    path:     /members/{type}/{id}
+    defaults: {  _controller: ESNMembersBundle:Members:index_detail }
+    requirements:
+        id:  \d+
