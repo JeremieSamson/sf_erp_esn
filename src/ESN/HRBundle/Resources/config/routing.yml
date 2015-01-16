@@ -1,3 +1,7 @@
-esn_hr_homepage:
-    path:     /human-resources
-    defaults: { _controller: ESNHRBundle:HR:index }
+esn_hr_association:
+    path:     /human-resources/association
+    defaults: { _controller: ESNHRBundle:HR:index, type:"association" }
+    
+esn_hr_recruitment:
+    path:     /human-resources/recruitment
+    defaults: { _controller: ESNHRBundle:HR:index, type:"recruitment" }

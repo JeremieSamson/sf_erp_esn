@@ -3,7 +3,10 @@
             <div class="widget-content">
                 
                 <h3>    
-                    <a href="">{{ member.name }}</a>
+                    <a href="{{ path('esn_members_detail', {
+                        'type': "esners",
+                        'id' : member.id
+                       }) }}">{{ member.name }}</a>
                 </h3>
                 <h4>{{ member.role}}</h4>
                 
@@ -15,6 +18,11 @@
                         'type': "esners",
                         'id' : member.id
                        }) }}">View Detail</a>
+                      / 
+                    <a href="{{ path('esn_members_edit', {
+                        'type': "esners",
+                        'id' : member.id
+                       }) }}">Edit profil</a>
                 </p>
                 
             </div><!-- /widget-content --> 

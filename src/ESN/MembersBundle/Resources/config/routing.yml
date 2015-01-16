@@ -1,9 +1,15 @@
 esn_members_homepage:
     path:     /members/{type}
-    defaults: { _controller: ESNMembersBundle:Members:index }
+    defaults: { _controller: ESNMembersBundle:Members:index, action:"lister" }
     
 esn_members_detail:
     path:     /members/{type}/{id}
-    defaults: {  _controller: ESNMembersBundle:Members:index_detail }
+    defaults: {  _controller: ESNMembersBundle:Members:index, action:"detailler" }
+    requirements:
+        id:  \d+
+        
+esn_members_edit:
+    path:     /members/{type}/{id}/edit
+    defaults: {  _controller: ESNMembersBundle:Members:index, action:"editer" }
     requirements:
         id:  \d+

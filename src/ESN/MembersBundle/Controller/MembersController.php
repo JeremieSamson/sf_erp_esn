@@ -28,26 +28,19 @@ class MembersController extends Controller
         )
     );
     
-    public function indexAction($type)
+    public function indexAction($type,$id=null,$action)
     {
-        $data = array('title' => "Members", 'type' => $type);
+        $data = array('title' => "Members", 'type' => $type, 'action' => $action, 'id' => $id);
         return $this->render('ESNMembersBundle::index.html.twig', $data);
     }
     
-    public function index_detailAction($type,$id) {
-        $data = array('title' => "Members", 'type' => $type,'id'=>$id);
-       
-        return $this->render('ESNMembersBundle::index.html.twig', $data);
-    }
-    
-    
-    public function listAction($typeMember)
+    public function listAction($type)
     {
         $liste_membres = array(
-            'liste_membres' =>$typeMember == 'esners' ? $this->esners : $this->erasmus
+            'liste_membres' =>$type == 'esners' ? $this->esners : $this->erasmus
         );
                 
-        if ($typeMember == 'esners') {
+        if ($type == 'esners') {
            return $this->render('ESNMembersBundle:Esners:list.html.twig',  $liste_membres); 
         } else {
            return $this->render('ESNMembersBundle:Erasmus:list.html.twig', $liste_membres);  
@@ -81,11 +74,15 @@ class MembersController extends Controller
             return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', $personne);
         } 
     }
-    
-    
-    /*
-    public function formAction()
+
+    public function editAction($type, $id)
     {
-        return $this->render('ESNMembersBundle:Erasmus:form.html.twig');
-    }*/
+         $table = $type == 'esners' ? $this->esners : $this->erasmus;
+        foreach ($table as $m) {
+            if ($m['id'] == $id) {
+                $personne = $m;
+            }
+        }
+        return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $personne);
+    }
 }

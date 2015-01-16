@@ -5,9 +5,15 @@
 {% endblock %}
 
 {% block body %}
-    {% if id is defined %}
-        {{ render(controller("ESNMembersBundle:Members:detail" , {'type': type,'id':id})) }}
-    {% else %}
-        {{ render(controller("ESNMembersBundle:Members:list" , {'typeMember': type})) }} 
+    {% if action == "lister" %}
+        {{ render(controller("ESNMembersBundle:Members:list" , {'type': type})) }} 
+    {% endif %}
+    
+    {% if action == "detailler" %}
+        {{ render(controller("ESNMembersBundle:Members:detail" , {'type': type,'id':id})) }}   
+    {% endif %}
+    
+    {% if action == "editer" %}
+        {{ render(controller("ESNMembersBundle:Members:edit" , {'type': type,'id':id})) }}   
     {% endif %}
 {% endblock %}

@@ -5,3 +5,13 @@
 {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
+{% block body %}
+    {% if type == "association" %}
+        {{ render(controller("ESNHRBundle:HR:association")) }} 
+    {% endif %}
+    
+    {% if type == "recruitment" %}
+        {{ render(controller("ESNHRBundle:HR:recruitment")) }}   
+    {% endif %}
+  
+{% endblock %}
