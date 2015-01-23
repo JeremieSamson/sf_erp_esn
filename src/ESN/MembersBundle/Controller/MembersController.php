@@ -37,9 +37,9 @@ class MembersController extends Controller
     public function listAction($type)
     {
         $liste_membres = array(
-            'liste_membres' =>$type == 'esners' ? $this->esners : $this->erasmus
+            'liste_membres' => $this->getAllMembers($type)
         );
-                
+               
         if ($type == 'esners') {
            return $this->render('ESNMembersBundle:Esners:list.html.twig',  $liste_membres); 
         } else {
@@ -62,12 +62,10 @@ class MembersController extends Controller
     public function detailAction($type,$id)
     {
         /* Donnée récupéré sur la bdd*/
-        $table = $type == 'esners' ? $this->esners : $this->erasmus;
-        foreach ($table as $m) {
-            if ($m['id'] == $id) {
-                $personne = $m;
-            }
-        }
+        $personne = array(
+            'member' => $this->getMember($id, $type)
+        );
+        
         if ($type == 'esners') {
             return $this->render('ESNMembersBundle:Esners:detail.html.twig', $personne);
         } else {
@@ -77,12 +75,39 @@ class MembersController extends Controller
 
     public function editAction($type, $id)
     {
-         $table = $type == 'esners' ? $this->esners : $this->erasmus;
-        foreach ($table as $m) {
-            if ($m['id'] == $id) {
-                $personne = $m;
-            }
+        $personne = array(
+            'member' => $this->getMember($id, $type)
+        );
+        if ($type == 'esners') {
+            return $this->render('ESNMembersBundle:Esners:form.html.twig', $personne);
+        } else {
+            return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $personne);
         }
-        return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $personne);
+    }
+    
+    private function getAllMembers($type) {
+        $repository = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
+        $list_member;
+        if ($type == "esners") {
+            $list_member = $repository->findBy(
+               array('esner' => 1)    
+            );
+        } else {
+            $list_member = $repository->findBy(
+               array('erasmus' => 1)    
+            );
+        }
+        return $list_member;
+    }
+    
+    private function getMember($id,$type) {
+        $repository = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
+        $member;
+        if ($type == "esners") {
+            $member = $repository->find($id);
+        } else {
+            $member = $repository->find($id);
+        }
+        return $member;
     }
 }

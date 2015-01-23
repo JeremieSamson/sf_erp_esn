@@ -20,6 +20,20 @@ class Member
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var boolean
+     * 
+     * @ORM\Column(name="esner", type="boolean")
+     */
+    private $esner;
+    
+    /**
+     * @var boolean
+     * 
+     * @ORM\Column(name="erasmus", type="boolean")
+     */
+    private $erasmus;
 
     /**
      * @var string
@@ -270,5 +284,51 @@ class Member
     public function getStudy()
     {
         return $this->study;
+    }
+
+    /**
+     * Set esner
+     *
+     * @param boolean $esner
+     * @return Member
+     */
+    public function setEsner($esner)
+    {
+        $this->esner = $esner;
+
+        return $this;
+    }
+
+    /**
+     * Get esner
+     *
+     * @return boolean 
+     */
+    public function getEsner()
+    {
+        return $this->esner;
+    }
+
+    /**
+     * Set erasmus
+     *
+     * @param boolean $erasmus
+     * @return Member
+     */
+    public function setErasmus($erasmus)
+    {
+        $this->erasmus = $erasmus;
+
+        return $this;
+    }
+
+    /**
+     * Get erasmus
+     *
+     * @return boolean 
+     */
+    public function getErasmus()
+    {
+        return $this->erasmus;
     }
 }

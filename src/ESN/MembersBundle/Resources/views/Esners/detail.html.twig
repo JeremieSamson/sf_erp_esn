@@ -17,8 +17,8 @@
                 
                 <hr/>
                 
-                &nbsp; {{ mail }} <br/>
-                &nbsp; {{ phone }}
+                &nbsp; {{ member.name }} <br/>
+                &nbsp; {{ member.phone }}
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -29,7 +29,7 @@
         
         <div class="widget ">
             <div class="widget-content">
-                <h3>{{ name }} - {{ role }}</h3>
+                <h3>{{ member.name }} - {#{{ role }}#}</h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -90,14 +90,13 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            Master's Degree Computer Science
+                            {{member.study}}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            University Lille 1
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     

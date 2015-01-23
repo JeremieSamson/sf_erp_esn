@@ -3,10 +3,13 @@
     <div class="span3">
         <div class="widget">
             <div class="widget-content">
-            
-                <button type="submit" class="btn">Edit</button>
-                <button class="btn">Delete</button>
-
+                
+                <a class="btn" href="{{ path('esn_members_erasmus_delete', {
+                        'id' : member.id }) }}">Delete</a>
+                <a class="btn" href="{{ path('esn_members_edit', {
+                        'type': 'erasmus',
+                        'id' : member.id }) }}">Edit</a>
+                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
 
@@ -17,8 +20,8 @@
                 
                 <hr/>
                 
-                &nbsp; {{ mail }} <br/>
-                &nbsp; {{ phone }} <br/>
+                &nbsp; {{ member.email }} <br/>
+                &nbsp; {{ member.phone }} <br/>
                 &nbsp; <i class="icon-large icon-facebook-sign"></i> <a href="">georges.ciaoba</a>
 
             </div><!-- /widget-content --> 
@@ -29,7 +32,7 @@
         <div class="widget">
             <div class="widget-content">
             
-                <h3>{{ name }}</h3>
+                <h3>{{ member.name }}</h3>
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
