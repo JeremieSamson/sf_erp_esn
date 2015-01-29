@@ -6,5 +6,24 @@
 {% endblock %}
 
 {% block body %}
-    {{ render(controller("ESNAdministrationBundle:Administration:admin")) }}
+    {% if type == "countries" %}
+        {{ render(controller("ESNAdministrationBundle:Administration:countries")) }}
+    {% endif %}
+    
+    {% if type == "poles" %}
+        {{ render(controller("ESNAdministrationBundle:Administration:poles")) }} 
+    {% endif %}
+    
+    {% if type == "rules" %}
+        {{ render(controller("ESNAdministrationBundle:Administration:rules")) }} 
+    {% endif %}
+    
+    {% if type == "trips" %}
+        {{ render(controller("ESNAdministrationBundle:Administration:trips")) }} 
+    {% endif %}
+    
+    {% if type == "universities" %}
+        {{ render(controller("ESNAdministrationBundle:Administration:universities")) }} 
+    {% endif %}
+    
 {% endblock %}

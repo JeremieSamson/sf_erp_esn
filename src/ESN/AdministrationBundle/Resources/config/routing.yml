@@ -1,3 +1,19 @@
-esn_administration_homepage:
-    path:     /administration
-    defaults: { _controller: ESNAdministrationBundle:Administration:index }
+esn_administration_countries:
+    path:     /administration/countries
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"countries"}
+    
+esn_administration_poles:
+    path:     /administration/poles
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"poles" }
+    
+esn_administration_rules:
+    path:     /administration/rules
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules" }
+    
+esn_administration_trips:
+    path:     /administration/trips
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"trips" }
+    
+esn_administration_universities:
+    path:     /administration/universities
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities" }

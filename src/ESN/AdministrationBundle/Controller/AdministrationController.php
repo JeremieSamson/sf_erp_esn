@@ -6,15 +6,35 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class AdministrationController extends Controller
 {
-    public function indexAction()
+    public function indexAction($type)
     {
-        return $this->render('ESNAdministrationBundle::index.html.twig', array(
-            'title' => "Administration"
-        ));
+        $data = array('title' => "Administration", 'type' => $type);
+        return $this->render('ESNAdministrationBundle::index.html.twig', $data);
+        
     }
     
-    public function adminAction()
+    public function countriesAction()
     {
-        return $this->render('ESNAdministrationBundle:Administration:admin.html.twig');
+        return $this->render('ESNAdministrationBundle:Countries:index.html.twig');
+    }
+    
+     public function polesAction()
+    {
+        return $this->render('ESNAdministrationBundle:Poles:index.html.twig');
+    }
+    
+     public function rulesAction()
+    {
+        return $this->render('ESNAdministrationBundle:Rules:index.html.twig');
+    }
+    
+     public function tripsAction()
+    {
+        return $this->render('ESNAdministrationBundle:Trips:index.html.twig');
+    }
+    
+    public function universitiesAction()
+    {
+        return $this->render('ESNAdministrationBundle:Universities:index.html.twig');
     }
 }
