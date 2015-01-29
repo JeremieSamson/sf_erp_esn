@@ -1,3 +1,12 @@
-esn_permanence_homepage:
-    path:     /permanence
-    defaults: { _controller: ESNPermanenceBundle:Permanence:index }
+esn_permanence_trips:
+    path:     /permanence/trips
+    defaults: { _controller: ESNPermanenceBundle:Permanence:index, type:"trips" }
+
+esn_permanence_reports:
+    path:     /permanence/reports
+    defaults: { _controller: ESNPermanenceBundle:Permanence:index, type:"reports"}
+    
+esn_permanence_informations:
+    path:     /permanence/informations
+    defaults: { _controller: ESNPermanenceBundle:Permanence:index, type:"informations" }
+    

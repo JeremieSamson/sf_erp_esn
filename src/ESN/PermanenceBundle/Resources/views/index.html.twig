@@ -5,3 +5,16 @@
 {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
+{% block body %}
+    {% if type == "informations" %}
+        {{ render(controller("ESNPermanenceBundle:Permanence:informations")) }} 
+    {% endif %}
+    {% if type == "trips" %}
+       {{ render(controller("ESNPermanenceBundle:Permanence:tripsList")) }}    
+    {% endif %}
+    {% if type == "reports" %}
+        {{ render(controller("ESNPermanenceBundle:Permanence:reportsList")) }} 
+    {% endif %}
+    
+{% endblock %}
+

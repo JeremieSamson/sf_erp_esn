@@ -15,7 +15,18 @@
 		<li><a href="{{ path('esn_members_homepage', {'type': "erasmus"}) }}">Erasmus Student</a></li>
             </ul>    				
 	</li>
-         <li {% if app.request.server.get('PHP_SELF') == '/permanence' %}class="active"{% endif %}><a href="{{ path('esn_permanence_homepage') }}"><i class="icon-home"></i><span>Permanence</span></a> </li>
+         <li class="dropdown"{% if app.request.server.get('PHP_SELF') == '/permanence' %}active"{% endif %}>
+            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="icon-home"></i>
+                <span>Permanence</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ path('esn_permanence_trips') }}">Trips</a></li>
+                <li><a href="{{ path('esn_permanence_reports') }}">Reports</a></li>
+                <li><a href="{{ path('esn_permanence_informations') }}">Informations</a></li>
+            </ul> 
+         </li>
          <li {% if app.request.server.get('PHP_SELF') == '/treasury' %}class="active"{% endif %}><a href="{{ path('esn_treasury_homepage') }}"><i class="icon-money"></i><span>Treasury</span></a> </li>     
          <li class="dropdown {% if app.request.server.get('PHP_SELF') == '/human-resources' %}active{% endif %} ">					
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
