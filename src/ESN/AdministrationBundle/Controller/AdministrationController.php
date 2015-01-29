@@ -15,26 +15,26 @@ class AdministrationController extends Controller
     
     public function countriesAction()
     {
-        return $this->render('ESNAdministrationBundle:Countries:index.html.twig');
+        return $this->render('ESNAdministrationBundle:Countries:form.html.twig');
     }
     
      public function polesAction()
     {
-        return $this->render('ESNAdministrationBundle:Poles:index.html.twig');
+        return $this->render('ESNAdministrationBundle:Poles:form.html.twig');
     }
     
      public function rulesAction()
     {
-        return $this->render('ESNAdministrationBundle:Rules:index.html.twig');
+        return $this->render('ESNAdministrationBundle:Rules:form.html.twig');
     }
     
      public function tripsAction()
     {
-        return $this->render('ESNAdministrationBundle:Trips:index.html.twig');
+        return $this->render('ESNAdministrationBundle:Trips:form.html.twig');
     }
     
     public function universitiesAction()
     {
-        return $this->render('ESNAdministrationBundle:Universities:index.html.twig');
+        return $this->render('ESNAdministrationBundle:Universities:form.html.twig');
     }
 }

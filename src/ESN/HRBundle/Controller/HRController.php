@@ -19,6 +19,6 @@ class HRController extends Controller
     
     public function recruitmentAction()
     {
-        return $this->render('ESNHRBundle:Recruitment:index.html.twig');
+        return $this->render('ESNHRBundle:Recruitment:detail.html.twig');
     }
 }
