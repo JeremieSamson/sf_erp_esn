@@ -29,26 +29,18 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                        {% for pole in poles %}
                                         <tr>
                                             <td><input type="checkbox"></td>
-                                            <td>Web</td>
-                                            <td>Le pole web s'occupe du développement de nouveaux outils informatiques...</td>
-                                            <td>8</td>
+                                            <td>{{ pole.name }}</td>
+                                            <td>{{ pole.description }}</td>
+                                            <td>{{ pole.nb_members }}</td>
                                             <td>
                                                 <a href="">View</a> &nbsp;
                                                 <a href="">Edit</a> &nbsp;
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Culture</td>
-                                            <td>Blablablablablabla</td>
-                                            <td>17</td>
-                                            <td>
-                                                <a href="">View</a> &nbsp;
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
+                                        {% endfor %}
                                       </tbody>
                                     </table>
                                 </div>

@@ -27,28 +27,15 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                       
+                                        {% for university in universities %}
                                         <tr>
                                             <td><input type="checkbox"></td>
-                                            <td>Université Lille 1 </td>
+                                            <td>{{ university.name }}</td>
                                             <td>
                                                 <a href="">Edit</a> &nbsp;
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Université Lille 2 </td>
-                                            <td>
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>IAE</td>
-                                            <td>
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
+                                       {% endfor %}
                                       </tbody>
                                     </table>
                                 </div>

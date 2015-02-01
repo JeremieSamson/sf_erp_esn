@@ -28,24 +28,17 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                          {% for rule in rules %}
                                         <tr>
                                             <td><input type="checkbox"></td>
-                                            <td>Tresorier</td>
-                                            <td>Le tresorier peut voir l'onglet trésorerie</td>
+                                            <td>{{ rule.name }}</td>
+                                            <td>{{ rule.description }}</td>
                                             <td>
                                                 <a href="">View</a> &nbsp;
                                                 <a href="">Edit</a> &nbsp;
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Vice président</td>
-                                            <td>Le vice président a accès à l'onglet HR pour gérer les recrutements de l'association</td>
-                                            <td>
-                                                <a href="">View</a> &nbsp;
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
+                                        {% endfor %}
                                       </tbody>
                                     </table>
                                 </div>

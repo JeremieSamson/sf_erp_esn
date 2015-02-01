@@ -7,23 +7,23 @@
 
 {% block body %}
     {% if type == "countries" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:countries")) }}
+        {{ render(controller("ESNAdministrationBundle:Administration:countries", {'action': action})) }}
     {% endif %}
     
     {% if type == "poles" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:poles")) }} 
+        {{ render(controller("ESNAdministrationBundle:Administration:poles", {'action': action})) }} 
     {% endif %}
     
     {% if type == "rules" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:rules")) }} 
+        {{ render(controller("ESNAdministrationBundle:Administration:rules", {'action': action})) }} 
     {% endif %}
     
     {% if type == "trips" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:trips")) }} 
+        {{ render(controller("ESNAdministrationBundle:Administration:trips", {'action': action})) }} 
     {% endif %}
     
     {% if type == "universities" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:universities")) }} 
+        {{ render(controller("ESNAdministrationBundle:Administration:universities", {'action': action})) }} 
     {% endif %}
     
 {% endblock %}

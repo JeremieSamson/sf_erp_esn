@@ -34,6 +34,13 @@ class Pole
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nb_members", type="integer", length=10)
+     */
+    private $nb_members;
 
 
     /**
@@ -90,5 +97,28 @@ class Pole
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set nb_members
+     *
+     * @param integer $nb_members
+     * @return Pole
+     */
+    public function setNb_members($nb_members)
+    {
+        $this->nb_members = $nb_members;
+
+        return $this;
+    }
+
+    /**
+     * Get nb_members
+     *
+     * @return integer 
+     */
+    public function getNb_members()
+    {
+        return $this->nb_members;
     }
 }

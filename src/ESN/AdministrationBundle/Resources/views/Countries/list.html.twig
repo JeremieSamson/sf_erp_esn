@@ -4,7 +4,9 @@
                                 <div class="widget">
                                     <div class="widget-content">
                                     
-                                        <button type="submit" class="btn">Add new country</button> &nbsp;&nbsp;
+                                      
+                                        <a class="btn" href="{{ path('esn_administration_countries_add') }}">Add new country</a>
+                                                                                  
                                         <button class="btn">Delete selected countries</button>
 
                                     </div><!-- /widget-content --> 
@@ -19,6 +21,7 @@
                                 <div class="panel panel-default">
 
                                     <!-- Table -->
+                                                    
                                     <table class="table">
                                       <thead>
                                         <tr>
@@ -30,25 +33,20 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                          
+                                        {% for country in countries %}
                                         <tr>
                                             <td><input type="checkbox"></td>
-                                            <td>France</td>
-                                            <td>French</td>
-                                            <td>French</td>
+                                            <td>{{country.name}}</td>
+                                            <td>{{country.nationality}}</td>
+                                            <td>{{country.language}}</td>
                                             <td>
                                                 <a href="">Edit</a> &nbsp;
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Ireland</td>
-                                            <td>Irish</td>
-                                            <td>Irish</td>
-                                            <td>
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
-                                      </tbody>
+                                        {% endfor %} 
+                                        
+                                       </tbody>
                                     </table>
                                 </div>
                             </div><!-- widget-content -->

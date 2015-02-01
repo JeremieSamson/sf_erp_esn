@@ -1,19 +1,39 @@
 esn_administration_countries:
     path:     /administration/countries
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"countries"}
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"countries", action:"list"}
     
+esn_administration_countries_add:
+    path:     /administration/countries/add
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"countries", action:"add"}
+        
 esn_administration_poles:
     path:     /administration/poles
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"poles" }
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"poles", action:"list" }
+
+esn_administration_poles_add:
+    path:     /administration/poles/add
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"poles", action:"add" }
     
 esn_administration_rules:
     path:     /administration/rules
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules" }
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules", action:"list" }
+
+esn_administration_rules_add:
+    path:     /administration/rules/add
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules", action:"add" }
     
 esn_administration_trips:
     path:     /administration/trips
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"trips" }
-    
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"trips", action:"list" }
+
+esn_administration_trips_add:
+    path:     /administration/trips/add
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"trips", action:"add" }
+ 
 esn_administration_universities:
     path:     /administration/universities
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities" }
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"list" }
+
+esn_administration_universities_add:
+    path:     /administration/universities/add
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"add" }

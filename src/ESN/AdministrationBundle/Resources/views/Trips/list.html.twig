@@ -28,28 +28,19 @@
                                         </tr>
                                       </thead>
                                       <tbody>
+                                        {% for trip in trips %}
                                         <tr>
                                             <td><input type="checkbox"></td>
-                                            <td>Trip in Paris</td>
-                                            <td>Un des meilleurs voyages <3</td>
-                                            <td>29/09/2014</td>
-                                            <td>90</td>
+                                            <td>{{ trip.name}}</td>
+                                            <td>{{ trip.description}}</td>
+                                            <td>{{ trip.date.format('M j, Y h:m a')}}</td>
+                                            <td>{{ trip.nbPlace}}</td>
                                             <td>
                                                 <a href="">View</a> &nbsp;
                                                 <a href="">Edit</a> &nbsp;
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Trip in Amsterdam</td>
-                                            <td>Un autre voyage tout aussi bien</td>
-                                            <td>14/10/2014</td>
-                                            <td>45</td>
-                                            <td>
-                                                <a href="">View</a> &nbsp;
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
+                                         {% endfor %}
                                       </tbody>
                                     </table>
                                 </div>
