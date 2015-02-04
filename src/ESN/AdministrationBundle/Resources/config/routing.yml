@@ -4,7 +4,7 @@ esn_administration_countries:
     
 esn_administration_countries_add:
     path:     /administration/countries/add
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"countries", action:"add"}
+    defaults: { _controller: ESNAdministrationBundle:Administration:newCountry }
         
 esn_administration_poles:
     path:     /administration/poles
