@@ -1,18 +1,17 @@
+
 <div class="row">
 
-                        <div class="span5">
+                        <div class="span">
                                 <div class="widget">
                                     <div class="widget-content">
                                     
                                       
                                         <a class="btn" href="{{ path('esn_administration_countries_add') }}">Add new country</a>
-                                                                                  
-                                        <button class="btn">Delete selected countries</button>
-
+                                                                               
                                     </div><!-- /widget-content --> 
                                 </div><!-- /widget -->    
                             </div>
-
+                    
 
                     <div class="span12">
                         <div class="widget">
@@ -35,15 +34,23 @@
                                       <tbody>
                                           
                                         {% for country in countries %}
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>{{country.name}}</td>
-                                            <td>{{country.nationality}}</td>
-                                            <td>{{country.language}}</td>
-                                            <td>
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>
+{#                                                    <input type="checkbox" id="{{country.id}}" name="{{country.name}}">#}
+                                                </td>
+                                                <td>{{country.name}}</td>
+                                                <td>{{country.nationality}}</td>
+                                                <td>{{country.language}}</td>
+                                                <td>
+                                                    <a href="{{ path('esn_administration_countries_edit', {
+                                                        'id' : country.id
+                                                       }) }}">Edit</a> &nbsp;/
+                                                    <a href="{{ path('esn_administration_countries_delete', {
+                                                        'id' : country.id
+                                                       }) }}">Delete</a>
+                                                </td>
+                                            </tr>
+                                            
                                         {% endfor %} 
                                         
                                        </tbody>
@@ -54,3 +61,4 @@
                     </div><!-- /span12 -->   
         
                     </div>
+                                       

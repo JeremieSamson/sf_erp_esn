@@ -7,7 +7,7 @@
 
 {% block body %}
     {% if type == "countries" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:countries", {'action': action})) }}
+        {{ render(controller("ESNAdministrationBundle:Countries:listCountries")) }}
     {% endif %}
     
     {% if type == "poles" %}
