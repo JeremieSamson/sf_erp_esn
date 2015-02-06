@@ -16,7 +16,6 @@ esn_administration_countries_edit:
     path:     /administration/countries/edit/{id}
     defaults: { _controller: ESNAdministrationBundle:Countries:editCountry }    
  
-    
  #  POLES 
      
 esn_administration_poles:
@@ -43,14 +42,25 @@ esn_administration_rules_add:
     path:     /administration/rules/add
     defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules", action:"add" }
     
+ #  TRIPS 
+     
 esn_administration_trips:
     path:     /administration/trips
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"trips", action:"list" }
+    defaults: { _controller: ESNAdministrationBundle:Trips:index }
 
 esn_administration_trips_add:
     path:     /administration/trips/add
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"trips", action:"add" }
- 
+    defaults: { _controller: ESNAdministrationBundle:Trips:newTrip }
+    
+esn_administration_trips_delete:
+    path:     /administration/trips/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Trips:deleteTrip }
+    
+esn_administration_trips_edit:
+    path:     /administration/trips/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Trips:editTrip }  
+    
+    
 esn_administration_universities:
     path:     /administration/universities
     defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"list" }

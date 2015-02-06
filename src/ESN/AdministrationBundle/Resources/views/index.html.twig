@@ -19,7 +19,7 @@
     {% endif %}
     
     {% if type == "trips" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:trips", {'action': action})) }} 
+        {{ render(controller("ESNAdministrationBundle:Trips:listTrips")) }} 
     {% endif %}
     
     {% if type == "universities" %}
