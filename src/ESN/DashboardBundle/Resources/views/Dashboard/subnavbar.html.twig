@@ -3,8 +3,8 @@
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li {% if app.request.server.get('PHP_SELF') == '/dashboard' %}class="active"{% endif %}><a href="{{ path('esn_dashboard_homepage') }}"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
-        <li class="dropdown {% if app.request.server.get('PHP_SELF') == '/members' %}active{% endif %} ">					
+        <li {% if '/dashboard' in (app.request.server.get('PHP_SELF'))%}class="active"{% endif %}><a href="{{ path('esn_dashboard_homepage') }}"><i class="icon-dashboard"></i><span>Dashboard</span> </a> </li>
+        <li class="dropdown {% if '/members' in (app.request.server.get('PHP_SELF'))%}active{% endif %} ">					
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-group"></i>
                 <span>Members</span>
@@ -15,7 +15,7 @@
 		<li><a href="{{ path('esn_members_homepage', {'type': "erasmus"}) }}">Erasmus Student</a></li>
             </ul>    				
 	</li>
-         <li class="dropdown"{% if app.request.server.get('PHP_SELF') == '/permanence' %}active"{% endif %}>
+         <li class="dropdown {% if '/permanence' in (app.request.server.get('PHP_SELF'))%}active{% endif %}">
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="icon-home"></i>
                 <span>Permanence</span>
@@ -27,13 +27,13 @@
                 <li><a href="{{ path('esn_permanence_informations') }}">Informations</a></li>
             </ul> 
          </li>
-         <li {% if app.request.server.get('PHP_SELF') == '/treasury' %}class="active"{% endif %}>
+         <li {% if '/treasury' in (app.request.server.get('PHP_SELF'))%}class="active"{% endif %}>
              <a href="{{ path('esn_treasury_homepage') }}">
                  <i class="icon-money"></i>
                  <span>Treasury</span>
              </a> 
          </li>     
-         <li class="dropdown {% if app.request.server.get('PHP_SELF') == '/human-resources' %}active{% endif %} ">					
+         <li class="dropdown {% if '/human-resources' in (app.request.server.get('PHP_SELF'))%}active{% endif %} ">					
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-group"></i>
                 <span>Human Ressources</span>
@@ -44,7 +44,9 @@
 		<li><a href="{{ path('esn_hr_recruitment') }}">Recruitment</a></li>
             </ul>    				
 	</li>
-        <li class="dropdown {% if app.request.server.get('PHP_SELF') == '/administration' %}active{% endif %} ">					
+        <li class="dropdown {% if '/administration' in (app.request.server.get('PHP_SELF'))%}
+                    active
+            {% endif %} ">					
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-group"></i>
                 <span>Administration</span>

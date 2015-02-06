@@ -16,8 +16,39 @@
                 <h3>Countries</h3>
                 
                 <hr/>
-                    {{ form(form) }}
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
                     {{ form_errors(form)}}
+                    
+                     <fieldset>
+                    
+                        <div class="control-group">
+                            <label class="control-label" for="name">Name</label>
+                            <div class="controls">
+                                {{ form_widget(form.name, { 'attr': {'class': 'span4'} }) }}
+                            </div> <!-- /controls -->			
+                        </div> <!-- /control-group -->
+
+                        <div class="control-group">
+                            <label class="control-label" for="nationality">Nationality</label>
+                            <div class="controls">
+                                {{ form_widget(form.nationality, { 'attr': {'class': 'span4'} }) }}
+                            </div> <!-- /controls -->			
+                        </div> <!-- /control-group -->
+
+                        <div class="control-group">
+                            <label class="control-label" for="language">Language</label>
+                            <div class="controls">
+                                {{ form_widget(form.language, { 'attr': {'class': 'span4'} }) }}
+                            </div> <!-- /controls -->			
+                        </div> <!-- /control-group -->
+
+                         <div class="form-actions">
+                            <input type="submit" class="btn btn-primary" value="Save"/> 
+                             <a class="btn" href="{{ path('esn_administration_countries') }}">Cancel</a>
+                        </div> <!-- /form-actions -->
+                    </fieldset>
+                    
+                    
          {#       <form action="" 
                       method="post" class="form-horizontal" name="add_country">
                 <fieldset>
@@ -49,8 +80,8 @@
                     </div> <!-- /form-actions -->
                      </fieldset>
                </form>#}
-            <a class="btn" href="{{ path('esn_administration_countries') }}">Cancel</a>
-            
+           
+            {{ form_end(form) }}
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
     </div>    

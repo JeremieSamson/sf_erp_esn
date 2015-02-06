@@ -36,7 +36,6 @@ class CountriesController extends Controller{
         ->add('name', 'text')
         ->add('nationality', 'text')
         ->add('language', 'text')
-        ->add('Save', 'submit')      
         ->getForm();
         
         $form->handleRequest($request);
@@ -85,7 +84,6 @@ class CountriesController extends Controller{
         ->add('name', 'text')
         ->add('nationality', 'text')
         ->add('language', 'text')
-        ->add('Save', 'submit')
         ->getForm();
         
         $form->handleRequest($request);
