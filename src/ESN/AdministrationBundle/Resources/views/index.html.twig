@@ -23,7 +23,7 @@
     {% endif %}
     
     {% if type == "universities" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:universities", {'action': action})) }} 
+        {{ render(controller("ESNAdministrationBundle:Universities:listUniversities")) }} 
     {% endif %}
     
 {% endblock %}

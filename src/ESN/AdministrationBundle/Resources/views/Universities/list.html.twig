@@ -2,9 +2,9 @@
                         <div class="span6">
                                 <div class="widget">
                                     <div class="widget-content">
-                                    
-                                        <button type="submit" class="btn">Add new university</button> &nbsp;&nbsp;
-                                        <button class="btn">Delete selected universities</button>
+                                    <a class="btn" href="{{ path('esn_administration_universities_add') }}">Add new university</a>
+{#                                        <button type="submit" class="btn">Add new university</button> &nbsp;&nbsp;#}
+{#                                        <button class="btn">Delete selected universities</button>#}
 
                                     </div><!-- /widget-content --> 
                                 </div><!-- /widget -->    
@@ -29,10 +29,17 @@
                                       <tbody>
                                         {% for university in universities %}
                                         <tr>
-                                            <td><input type="checkbox"></td>
+                                            <td>
+{#                                                <input type="checkbox">#}
+                                            </td>
                                             <td>{{ university.name }}</td>
                                             <td>
-                                                <a href="">Edit</a> &nbsp;
+                                                <a href="{{ path('esn_administration_universities_edit', {
+                                                        'id' : university.id
+                                                       }) }}">Edit</a> &nbsp;
+                                                    <a href="{{ path('esn_administration_universities_delete', {
+                                                        'id' : university.id
+                                                       }) }}">Delete</a>
                                             </td>
                                         </tr>
                                        {% endfor %}

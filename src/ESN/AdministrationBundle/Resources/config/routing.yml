@@ -70,11 +70,21 @@ esn_administration_trips_edit:
     path:     /administration/trips/edit/{id}
     defaults: { _controller: ESNAdministrationBundle:Trips:editTrip }  
     
+  
+  # UNIVERSITIES
     
 esn_administration_universities:
     path:     /administration/universities
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"list" }
+    defaults: { _controller: ESNAdministrationBundle:Universities:index }
 
 esn_administration_universities_add:
     path:     /administration/universities/add
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"add" }
+    defaults: { _controller: ESNAdministrationBundle:Universities:newUniversity }
+    
+esn_administration_universities_delete:
+    path:     /administration/universities/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Universities:deleteUniversity }
+
+esn_administration_universities_edit:
+    path:     /administration/universities/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Universities:editUniversity }
