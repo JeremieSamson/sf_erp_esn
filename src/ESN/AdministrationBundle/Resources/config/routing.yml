@@ -1,3 +1,5 @@
+# COUNTRIES
+
 esn_administration_countries:
     path:     /administration/countries
     defaults: { _controller: ESNAdministrationBundle:Countries:index }
@@ -9,18 +11,29 @@ esn_administration_countries_add:
 esn_administration_countries_delete:
     path:     /administration/countries/delete/{id}
     defaults: { _controller: ESNAdministrationBundle:Countries:deleteCountry }
-    
+ 
 esn_administration_countries_edit:
     path:     /administration/countries/edit/{id}
     defaults: { _controller: ESNAdministrationBundle:Countries:editCountry }    
-        
+ 
+    
+ #  POLES 
+     
 esn_administration_poles:
     path:     /administration/poles
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"poles", action:"list" }
+    defaults: { _controller: ESNAdministrationBundle:Poles:index }
 
 esn_administration_poles_add:
     path:     /administration/poles/add
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"poles", action:"add" }
+    defaults: { _controller: ESNAdministrationBundle:Poles:newPole }
+    
+esn_administration_poles_delete:
+    path:     /administration/poles/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Poles:deletePole }
+    
+esn_administration_poles_edit:
+    path:     /administration/poles/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Poles:editPole }    
     
 esn_administration_rules:
     path:     /administration/rules

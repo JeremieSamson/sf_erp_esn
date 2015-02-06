@@ -1,7 +1,7 @@
 
 <div class="row">
 
-                        <div class="span">
+                        <div class="span5">
                                 <div class="widget">
                                     <div class="widget-content">
                                     
@@ -35,6 +35,7 @@
                                           
                                         {% for country in countries %}
                                             <tr>
+                                                
                                                 <td>
 {#                                                    <input type="checkbox" id="{{country.id}}" name="{{country.name}}">#}
                                                 </td>
@@ -44,7 +45,7 @@
                                                 <td>
                                                     <a href="{{ path('esn_administration_countries_edit', {
                                                         'id' : country.id
-                                                       }) }}">Edit</a> &nbsp;/
+                                                       }) }}">Edit</a> &nbsp;
                                                     <a href="{{ path('esn_administration_countries_delete', {
                                                         'id' : country.id
                                                        }) }}">Delete</a>

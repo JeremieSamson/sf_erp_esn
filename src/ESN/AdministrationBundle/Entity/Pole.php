@@ -38,9 +38,9 @@ class Pole
     /**
      * @var integer
      *
-     * @ORM\Column(name="nb_members", type="integer", length=10)
+     * @ORM\Column(name="nbMembers", type="integer", length=10, nullable=true)
      */
-    private $nb_members;
+    private $nbMembers;
 
 
     /**
@@ -100,25 +100,25 @@ class Pole
     }
 
     /**
-     * Set nb_members
+     * Set nbMembers
      *
-     * @param integer $nb_members
+     * @param integer $nbMembers
      * @return Pole
      */
-    public function setNb_members($nb_members)
+    public function setNbMembers($nbMembers)
     {
-        $this->nb_members = $nb_members;
+        $this->nbMembers = $nbMembers;
 
         return $this;
     }
 
     /**
-     * Get nb_members
+     * Get nbMembers
      *
      * @return integer 
      */
-    public function getNb_members()
+    public function getNbMembers()
     {
-        return $this->nb_members;
+        return $this->nbMembers;
     }
 }

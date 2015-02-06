@@ -4,8 +4,9 @@
                                 <div class="widget">
                                     <div class="widget-content">
                                     
-                                        <button type="submit" class="btn">Add new pole</button> &nbsp;&nbsp;
-                                        <button class="btn">Delete selected poles</button>
+                                       {# <button type="submit" class="btn">Add new pole</button> &nbsp;&nbsp;#}
+                                        <a class="btn" href="{{ path('esn_administration_poles_add') }}">Add new pole</a>
+{#                                        <button class="btn">Delete selected poles</button>#}
 
                                     </div><!-- /widget-content --> 
                                 </div><!-- /widget -->    
@@ -31,13 +32,20 @@
                                       <tbody>
                                         {% for pole in poles %}
                                         <tr>
-                                            <td><input type="checkbox"></td>
+                                            <td>
+{#                                                <input type="checkbox">#}
+                                            </td>
                                             <td>{{ pole.name }}</td>
                                             <td>{{ pole.description }}</td>
-                                            <td>{{ pole.nb_members }}</td>
+                                            <td>{{ pole.nbMembers }}</td>
                                             <td>
                                                 <a href="">View</a> &nbsp;
-                                                <a href="">Edit</a> &nbsp;
+                                                <a href="{{ path('esn_administration_poles_edit', {
+                                                        'id' : pole.id
+                                                       }) }}">Edit</a> &nbsp;
+                                                <a href="{{ path('esn_administration_poles_delete', {
+                                                        'id' : pole.id
+                                                       }) }}">Delete</a> &nbsp;
                                             </td>
                                         </tr>
                                         {% endfor %}
