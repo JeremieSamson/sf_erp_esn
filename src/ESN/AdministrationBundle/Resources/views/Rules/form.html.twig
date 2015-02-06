@@ -1,3 +1,12 @@
+{% extends '::base.html.twig' %}
+
+
+{% block subnavbar %}
+{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+{% block body %}
+    
 <div class="row">
     
     <div class="span8">
@@ -7,32 +16,35 @@
                 <h3>Rules</h3>
                 
                 <hr/>
-                
+                 {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+                    {{ form_errors(form)}}
                 <form id="edit-profile" class="form-horizontal">
                 <fieldset>
                     
                     <div class="control-group">
                         <label class="control-label" for="name">Name</label>
                         <div class="controls">
-                            <input type="text" class="span4" id="name" value="Web">
+                             {{ form_widget(form.name, { 'attr': {'class': 'span4'} }) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="description">Description</label>
                         <div class="controls">
-                            <textarea>La description du rôle en quelques mots</textarea>
+                             {{ form_widget(form.description, { 'attr': {'class': 'span4'} }) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Save</button> 
-			<button class="btn">Cancel</button>
+			{#<button class="btn">Cancel</button>#}
+                        <a class="btn" href="{{ path('esn_administration_rules') }}">Cancel</a>
                     </div> <!-- /form-actions -->
-                    
+                    {{ form_end(form) }}
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
     </div>    
     
 </div>
 
+{% endblock %}

@@ -1,19 +1,80 @@
+# COUNTRIES
+
 esn_administration_countries:
     path:     /administration/countries
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"countries"}
+    defaults: { _controller: ESNAdministrationBundle:Countries:index }
     
+esn_administration_countries_add:
+    path:     /administration/countries/add
+    defaults: { _controller: ESNAdministrationBundle:Countries:newCountry }
+    
+esn_administration_countries_delete:
+    path:     /administration/countries/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Countries:deleteCountry }
+ 
+esn_administration_countries_edit:
+    path:     /administration/countries/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Countries:editCountry }    
+ 
+ #  POLES 
+     
 esn_administration_poles:
     path:     /administration/poles
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"poles" }
+    defaults: { _controller: ESNAdministrationBundle:Poles:index }
+
+esn_administration_poles_add:
+    path:     /administration/poles/add
+    defaults: { _controller: ESNAdministrationBundle:Poles:newPole }
     
+esn_administration_poles_delete:
+    path:     /administration/poles/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Poles:deletePole }
+    
+esn_administration_poles_edit:
+    path:     /administration/poles/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Poles:editPole }    
+    
+ #  RULES 
+     
 esn_administration_rules:
     path:     /administration/rules
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules" }
+    defaults: { _controller: ESNAdministrationBundle:Rules:index }
+
+esn_administration_rules_add:
+    path:     /administration/rules/add
+    defaults: { _controller: ESNAdministrationBundle:Rules:newRule }
     
+esn_administration_rules_delete:
+    path:     /administration/rules/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Rules:deleteRule }
+    
+esn_administration_rules_edit:
+    path:     /administration/rules/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Rules:editRule }  
+    
+ #  TRIPS 
+     
 esn_administration_trips:
     path:     /administration/trips
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"trips" }
+    defaults: { _controller: ESNAdministrationBundle:Trips:index }
+
+esn_administration_trips_add:
+    path:     /administration/trips/add
+    defaults: { _controller: ESNAdministrationBundle:Trips:newTrip }
+    
+esn_administration_trips_delete:
+    path:     /administration/trips/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Trips:deleteTrip }
+    
+esn_administration_trips_edit:
+    path:     /administration/trips/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Trips:editTrip }  
+    
     
 esn_administration_universities:
     path:     /administration/universities
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities" }
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"list" }
+
+esn_administration_universities_add:
+    path:     /administration/universities/add
+    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"add" }

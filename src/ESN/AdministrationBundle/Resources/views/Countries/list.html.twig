@@ -1,16 +1,17 @@
+
 <div class="row">
 
                         <div class="span5">
                                 <div class="widget">
                                     <div class="widget-content">
                                     
-                                        <button type="submit" class="btn">Add new country</button> &nbsp;&nbsp;
-                                        <button class="btn">Delete selected countries</button>
-
+                                      
+                                        <a class="btn" href="{{ path('esn_administration_countries_add') }}">Add new country</a>
+                                                                               
                                     </div><!-- /widget-content --> 
                                 </div><!-- /widget -->    
                             </div>
-
+                    
 
                     <div class="span12">
                         <div class="widget">
@@ -19,6 +20,7 @@
                                 <div class="panel panel-default">
 
                                     <!-- Table -->
+                                                    
                                     <table class="table">
                                       <thead>
                                         <tr>
@@ -30,25 +32,29 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>France</td>
-                                            <td>French</td>
-                                            <td>French</td>
-                                            <td>
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Ireland</td>
-                                            <td>Irish</td>
-                                            <td>Irish</td>
-                                            <td>
-                                                <a href="">Edit</a> &nbsp;
-                                            </td>
-                                        </tr>
-                                      </tbody>
+                                          
+                                        {% for country in countries %}
+                                            <tr>
+                                                
+                                                <td>
+{#                                                    <input type="checkbox" id="{{country.id}}" name="{{country.name}}">#}
+                                                </td>
+                                                <td>{{country.name}}</td>
+                                                <td>{{country.nationality}}</td>
+                                                <td>{{country.language}}</td>
+                                                <td>
+                                                    <a href="{{ path('esn_administration_countries_edit', {
+                                                        'id' : country.id
+                                                       }) }}">Edit</a> &nbsp;
+                                                    <a href="{{ path('esn_administration_countries_delete', {
+                                                        'id' : country.id
+                                                       }) }}">Delete</a>
+                                                </td>
+                                            </tr>
+                                            
+                                        {% endfor %} 
+                                        
+                                       </tbody>
                                     </table>
                                 </div>
                             </div><!-- widget-content -->
@@ -56,3 +62,4 @@
                     </div><!-- /span12 -->   
         
                     </div>
+                                       
