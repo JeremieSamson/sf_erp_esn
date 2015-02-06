@@ -34,13 +34,23 @@ esn_administration_poles_edit:
     path:     /administration/poles/edit/{id}
     defaults: { _controller: ESNAdministrationBundle:Poles:editPole }    
     
+ #  RULES 
+     
 esn_administration_rules:
     path:     /administration/rules
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules", action:"list" }
+    defaults: { _controller: ESNAdministrationBundle:Rules:index }
 
 esn_administration_rules_add:
     path:     /administration/rules/add
-    defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"rules", action:"add" }
+    defaults: { _controller: ESNAdministrationBundle:Rules:newRule }
+    
+esn_administration_rules_delete:
+    path:     /administration/rules/delete/{id}
+    defaults: { _controller: ESNAdministrationBundle:Rules:deleteRule }
+    
+esn_administration_rules_edit:
+    path:     /administration/rules/edit/{id}
+    defaults: { _controller: ESNAdministrationBundle:Rules:editRule }  
     
  #  TRIPS 
      

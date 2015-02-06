@@ -15,7 +15,7 @@
     {% endif %}
     
     {% if type == "rules" %}
-        {{ render(controller("ESNAdministrationBundle:Administration:rules", {'action': action})) }} 
+        {{ render(controller("ESNAdministrationBundle:Rules:listRules")) }} 
     {% endif %}
     
     {% if type == "trips" %}
