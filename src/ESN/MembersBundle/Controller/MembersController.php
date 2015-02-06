@@ -80,7 +80,7 @@ class MembersController extends Controller
         $member = array(
            'member' => $this->getAllMembers($type, $id)
         );
-       
+        
         if ($type == 'esners') {
             return $this->render('ESNMembersBundle:Esners:detail.html.twig', $member);
             
@@ -144,7 +144,7 @@ class MembersController extends Controller
             $esner_identity = $repositoryMember->find($esner->getMember()->getId());
             array_push($list_member,array('esner'=>$esner,'identity'=>$esner_identity));
           } else {
-            $erasmus = $repositoryEsner->find($id); 
+            $erasmus = $repositoryErasmus->find($id);
             $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());
             array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$erasmus_identity));  
           }

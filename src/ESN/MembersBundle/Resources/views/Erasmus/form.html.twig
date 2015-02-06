@@ -8,8 +8,8 @@
                 
                 <hr/>
                 
-                &nbsp; <input type="text" value="{{member.email}}"> <br/>
-                &nbsp; <input type="text" value="{{member.phone}}"> <br/>
+                &nbsp; <input type="text" value="{{member[0].identity.email}}"> <br/>
+                &nbsp; <input type="text" value="{{member[0].identity.phone}}"> <br/>
                 &nbsp; <input type="text" value="georges.ciaoba">
 
             </div><!-- /widget-content --> 
@@ -20,8 +20,8 @@
         <div class="widget">
             <div class="widget-content">
             
-                Firstname  &nbsp; <input type="text" value="{{member.name}}"/> &nbsp; &nbsp; &nbsp;
-                Surname  &nbsp; <input type="text" value="Ciaoba"/>
+                Firstname  &nbsp; <input type="text" value="{{member[0].identity.name}}"/> &nbsp; &nbsp; &nbsp;
+                Surname  &nbsp; <input type="text" value="{{member[0].identity.surname}}"/>
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -41,7 +41,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="1992-07-08">
+                            <input type="date" class="span6" id="birthday" value="{{ member[0].identity.birthday|date('Y-m-d') }}">
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -63,21 +63,21 @@
                     <div class="control-group">
                         <label class="control-label" for="card">ESN Card</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="card" value="624839GYL0">
+                            <input type="text" class="span6" id="card" value="{{ member[0].erasmus.esncard }}">
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="2013-09-01">
+                            <input type="date" class="span6" id="birthday" value="{{ member[0].erasmus.arrivalDate|date('Y-m-d') }}">
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
  
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="2015-09-01">
+                            <input type="date" class="span6" id="birthday" value="{{ member[0].erasmus.leavingDate|date('Y-m-d') }}">
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     <hr/>
@@ -85,7 +85,7 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value="Master's Degree Computer Science" >
+                            <input type="text" class="span6" id="zip" value=" {{ member[0].identity.study }}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -105,6 +105,9 @@
 			<button class="btn">Cancel</button>
                     </div> <!-- /form-actions -->
                     
+                </fieldset>
+                </form>
+                        
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
     </div>    

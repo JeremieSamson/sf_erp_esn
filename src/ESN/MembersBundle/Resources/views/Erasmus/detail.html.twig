@@ -5,10 +5,10 @@
             <div class="widget-content">
                 
                 <a class="btn" href="{{ path('esn_members_erasmus_delete', {
-                        'id' : member.id }) }}">Delete</a>
+                        'id' : member[0].erasmus.id }) }}">Delete</a>
                 <a class="btn" href="{{ path('esn_members_edit', {
                         'type': 'erasmus',
-                        'id' : member.id }) }}">Edit</a>
+                        'id' : member[0].erasmus.id }) }}">Edit</a>
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -20,8 +20,8 @@
                 
                 <hr/>
                 
-                &nbsp; {{ member.email }} <br/>
-                &nbsp; {{ member.phone }} <br/>
+                &nbsp; {{ member[0].identity.email }} <br/>
+                &nbsp; {{ member[0].identity.phone }} <br/>
                 &nbsp; <i class="icon-large icon-facebook-sign"></i> <a href="">georges.ciaoba</a>
 
             </div><!-- /widget-content --> 
@@ -32,7 +32,7 @@
         <div class="widget">
             <div class="widget-content">
             
-                <h3>{{ member.name }}</h3>
+                <h3>{{ member[0].identity.name }}</h3>
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -52,21 +52,21 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Age</label>
                         <div class="controls">
-                            24 years old
+                            Test years old
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
-                            08/07/1990
+                            {{ member[0].identity.birthday|date('Y-m-d') }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            Captain
+                            {{ member[0].identity.nationality }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -75,21 +75,21 @@
                     <div class="control-group">
                         <label class="control-label" for="arrival">ESN Card</label>
                         <div class="controls">
-                            624839GYL0
+                            {{ member[0].erasmus.esncard }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                            01/09/2013
+                             {{ member[0].erasmus.arrivalDate|date('Y-m-d') }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
  
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            01/09/2015
+                            {{ member[0].erasmus.leavingDate|date('Y-m-d') }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -98,14 +98,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            Master's Degree Computer Science
+                            {{ member[0].identity.study }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            University Lille 1
+                            {{ member[0].identity.university }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
