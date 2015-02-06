@@ -5,23 +5,23 @@
                 <h3>    
                     <a href="{{ path('esn_members_detail', {
                         'type': "esners",
-                        'id' : member.id
-                       }) }}">{{ member.name }}</a>
+                        'id' : member.esner.id
+                       }) }}">{{ member.identity.name }}</a>
                 </h3>
                 <h4>{#{{ member.role}}#}</h4>
                 
                 <hr/>
                 <p>
-                    Mail : {{member.email}} <br/>
-                    Phone : {{ member.phone}} <br/>
+                    Mail : {{member.identity.email}} <br/>
+                    Phone : {{ member.identity.phone}} <br/>
                     <a href="{{ path('esn_members_detail', {
                         'type': "esners",
-                        'id' : member.id
+                        'id' : member.esner.id
                        }) }}">View Detail</a>
                       / 
                     <a href="{{ path('esn_members_edit', {
                         'type': "esners",
-                        'id' : member.id
+                        'id' : member.esner.id
                        }) }}">Edit profil</a>
                 </p>
                 

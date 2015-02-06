@@ -6,34 +6,32 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class MembersController extends Controller
 {   
-    var $esners = array (
-        array('id'=>1,'name' => 'Matthieu','role' => 'Etudiant',
-            'mail' => 'matthieu.boeykens@etu.univ-lille1.fr',
-            'phone' => '+33 45 45 45 42'
-        ),
-        array('id'  => 2,'name' => 'Helene','role' => 'BG',
-            'mail' => 'helene.lemaire.univ-lille1.fr',
-            'phone' => '+33 42 55 66 42'
-        )
-    );
-    
-    var $erasmus = array (
-        array('id'=>1,'name' => 'Raphael','role' => 'Petit vieux',
-            'mail' => 'Raphael.petitVieux@etu.univ-lille1.fr',
-            'phone' => '+33 45 45 45 42'
-        ),
-        array('id'  => 2,'name' => 'Pahoua','role' => 'Tyran démoniaque',
-            'mail' => 'pahoua.tyran@666.univ-lille1.fr',
-            'phone' => '+33 666'
-        )
-    );
-    
-    public function indexAction($type,$id=null,$action)
+    /**
+     * Action à l'affichage de la page index.html.twig
+     * Affiche sur la page : 
+     *  - titre de la page
+     *  - action : lister,detailler,editer
+     *  - id : id du membre s'il s'agit d'une action detailler ou editer
+     * @param type $type
+     * @param type $action
+     * @param type $id
+     * @return type
+     */
+    public function indexAction($type,$action,$id=null)
     {
-        $data = array('title' => "Members", 'type' => $type, 'action' => $action, 'id' => $id);
+        $data = array(
+            'title' => "Members", 
+            'type' => $type, 
+            'action' => $action, 
+            'id' => $id);
         return $this->render('ESNMembersBundle::index.html.twig', $data);
     }
     
+    /**
+     * Action à l'affichage de la liste des membres en fonction du type.
+     * @param type $type
+     * @return type
+     */
     public function listAction($type)
     {
         $liste_membres = array(
@@ -47,67 +45,117 @@ class MembersController extends Controller
         } 
     }
     
+    /**
+     * Action à l'affichage d'une card d'un esner.
+     * @param type $member
+     * @return type
+     */
     public function cardEsnerAction($member) {
         return $this->render('ESNMembersBundle:Esners:card.html.twig', array(
             'member' => $member
-             )); 
+        )); 
     }
     
+    /**
+     * Action à l'affichage d'une card d'un Erasmus
+     * @param type $member
+     * @return type
+     */
     public function cardErasmusAction($member) {
         return $this->render('ESNMembersBundle:Erasmus:card.html.twig', array(
             'member' => $member
-             )); 
+        )); 
     }
     
+    /**
+     * Action à l'affichage des détails du profil d'un membre en fonction
+     * du type du membre et de son ID.
+     * @param type $type
+     * @param type $id
+     * @return type
+     */
     public function detailAction($type,$id)
     {
-        /* Donnée récupéré sur la bdd*/
-        $personne = array(
-            'member' => $this->getMember($id, $type)
+           
+        $member = array(
+           'member' => $this->getAllMembers($type, $id)
+        );
+       
+        if ($type == 'esners') {
+            return $this->render('ESNMembersBundle:Esners:detail.html.twig', $member);
+            
+        } else {
+            return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', $member);
+        }
+    }
+    
+    /**
+     * Action à l'affichage de la page d'édition d'un membre en fonction
+     * du type du membre et de son ID.
+     * @param type $type
+     * @param type $id
+     * @return type
+     */
+    public function editAction($type, $id)
+    {
+        
+        $member = array(
+           'member' => $this->getAllMembers($type, $id)
         );
         
         if ($type == 'esners') {
-            return $this->render('ESNMembersBundle:Esners:detail.html.twig', $personne);
+            return $this->render('ESNMembersBundle:Esners:form.html.twig', $member);
         } else {
-            return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', $personne);
-        } 
-    }
-
-    public function editAction($type, $id)
-    {
-        $personne = array(
-            'member' => $this->getMember($id, $type)
-        );
-        if ($type == 'esners') {
-            return $this->render('ESNMembersBundle:Esners:form.html.twig', $personne);
-        } else {
-            return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $personne);
+            return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $member);
         }
     }
     
-    private function getAllMembers($type) {
-        $repository = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
-        $list_member;
-        if ($type == "esners") {
-            $list_member = $repository->findBy(
-               array('esner' => 1)    
-            );
+    /**
+     * Si ID est fourni, retourne le membre, sinon retourne tout les membres
+     * Retourne 
+     * @param type $type
+     * @param type $id
+     * @return array
+     */
+    private function getAllMembers($type,$id=null) {
+        $repositoryEsner = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner');
+        $repositoryErasmus = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus');
+        $repositoryMember = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
+        
+        $list_member = array();
+        if (!$id) {
+            // Retourne un array avec 'esner':Object Esner, 'identity':Object Member
+            if ($type == "esners") {
+                $list_esner = $repositoryEsner->findAll();
+                foreach ($list_esner as $esner) {
+                    $member = $repositoryMember->find($esner->getMember()->getId());
+                    array_push($list_member,array('esner'=>$esner,'identity'=>$member));
+                }
+            } else {
+            $list_erasmus = $repositoryErasmus->findAll();
+                foreach ($list_erasmus as $erasmus) {
+                    $member = $repositoryMember->find($erasmus->getMember()->getId());
+                    array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$member));
+                }
+            } 
         } else {
-            $list_member = $repository->findBy(
-               array('erasmus' => 1)    
-            );
+          if ($type == "esners") {
+            $esner = $repositoryEsner->find($id); 
+            $esner_identity = $repositoryMember->find($esner->getMember()->getId());
+            array_push($list_member,array('esner'=>$esner,'identity'=>$esner_identity));
+          } else {
+            $erasmus = $repositoryEsner->find($id); 
+            $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());
+            array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$erasmus_identity));  
+          }
+          
         }
         return $list_member;
-    }
+        
+    }//getElementMember
+        
+        
+
     
-    private function getMember($id,$type) {
-        $repository = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
-        $member;
-        if ($type == "esners") {
-            $member = $repository->find($id);
-        } else {
-            $member = $repository->find($id);
-        }
-        return $member;
-    }
+    
 }

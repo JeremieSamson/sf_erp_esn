@@ -16,9 +16,8 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                
-                &nbsp; {{ member.name }} <br/>
-                &nbsp; {{ member.phone }}
+                &nbsp; {{ member.identity.name }} <br/>
+                &nbsp; {{ member.identity.phone }}
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -29,7 +28,7 @@
         
         <div class="widget ">
             <div class="widget-content">
-                <h3>{{ member.name }} - {#{{ role }}#}</h3>
+                <h3>{{ member.identity.name }} - {#{{ role }}#}</h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -44,21 +43,21 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Age</label>
                         <div class="controls">
-                            22 years old
+                            Test years old
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
-                            08/07/1992
+                           {{ member.identity.birthday|date('Y-m-d') }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            French
+                            {{ member.identity.nationality }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -67,21 +66,21 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            M411 Résidence Bachelard - Cité Scientifique
+                            {{ member.esner.address }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
-                            Villeneuve d'Ascq
+                           {{ member.esner.city }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">Zip Code</label>
                         <div class="controls">
-                            59650
+                            {{ member.esner.zipcode }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -90,13 +89,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            {{member.study}}
+                            {{member.esner.study}}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
+                            {{member.esner.university}}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -105,21 +105,21 @@
                     <div class="control-group">
                         <label class="control-label" for="language1">Language 1</label>
                         <div class="controls">
-                            English
+                            not implement
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="language2">Language 2</label>
                         <div class="controls">
-                            French
+                             not implement
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="language3">Language 3</label>
                         <div class="controls">
-                            Italian
+                             not implement
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     

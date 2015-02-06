@@ -11,7 +11,8 @@
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
     </div><!-- /span12 --> 
-
+    
+    
     <!-- injection test -->
     {% for membre in liste_membres %}
         {{ render(controller("ESNMembersBundle:Members:cardEsner" , {'member': membre})) }}

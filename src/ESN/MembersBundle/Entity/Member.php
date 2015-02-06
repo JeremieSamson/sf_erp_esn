@@ -22,20 +22,6 @@ class Member
     private $id;
     
     /**
-     * @var boolean
-     * 
-     * @ORM\Column(name="esner", type="boolean")
-     */
-    private $esner;
-    
-    /**
-     * @var boolean
-     * 
-     * @ORM\Column(name="erasmus", type="boolean")
-     */
-    private $erasmus;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=30)
@@ -90,6 +76,22 @@ class Member
      * @ORM\Column(name="study", type="string", length=255)
      */
     private $study;
+    
+    /**
+     * 
+     * @var \DateTime
+     * 
+     * @ORM\Column(name="birthday", type="date")
+     */
+    private $birthday;
+    
+    /**
+     *
+     * @var string
+     * 
+     * @ORM\Column(name="nationality", type="string", length=50)
+     */
+    private $nationality;
 
 
     /**
@@ -285,50 +287,51 @@ class Member
     {
         return $this->study;
     }
+    
 
     /**
-     * Set esner
+     * Set birthday
      *
-     * @param boolean $esner
+     * @param \DateTime $birthday
      * @return Member
      */
-    public function setEsner($esner)
+    public function setBirthday($birthday)
     {
-        $this->esner = $esner;
+        $this->birthday = $birthday;
 
         return $this;
     }
 
     /**
-     * Get esner
+     * Get birthday
      *
-     * @return boolean 
+     * @return \DateTime 
      */
-    public function getEsner()
+    public function getBirthday()
     {
-        return $this->esner;
+        return $this->birthday;
     }
 
     /**
-     * Set erasmus
+     * Set nationality
      *
-     * @param boolean $erasmus
+     * @param string $nationality
      * @return Member
      */
-    public function setErasmus($erasmus)
+    public function setNationality($nationality)
     {
-        $this->erasmus = $erasmus;
+        $this->nationality = $nationality;
 
         return $this;
     }
 
     /**
-     * Get erasmus
+     * Get nationality
      *
-     * @return boolean 
+     * @return string 
      */
-    public function getErasmus()
+    public function getNationality()
     {
-        return $this->erasmus;
+        return $this->nationality;
     }
 }

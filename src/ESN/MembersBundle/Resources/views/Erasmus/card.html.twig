@@ -4,10 +4,10 @@
             
                 <input type="checkbox"> &nbsp;&nbsp;<a href="{{ path('esn_members_detail', {
                         'type': "erasmus",
-                        'id' : member.id
-                       }) }}"arget="_blank">{{member.name}}</a>
-                <p class="news-item-preview"> Joined on 01/09/2013</p>
-            
+                        'id' : member.erasmus.id
+                       }) }}"arget="_blank">{{member.identity.name}}</a>
+                <p class="news-item-preview"> Joined on {{member.erasmus.arrivalDate|date('Y-m-d')}}</p>
+                
             </div><!-- widget-content -->
         </div><!-- /widget -->
     </div><!-- /span3 -->    
