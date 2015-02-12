@@ -1,11 +1,3 @@
-esn_treasury_list:
-    path:     /treasury/list
-    defaults: { _controller: ESNTreasuryBundle:Treasury:index, type:"list" }
-    
-esn_treasury_add:
-    path:     /treasury/add
-    defaults: { _controller: ESNTreasuryBundle:Treasury:index,type:"add" }
-    
-esn_treasury_see:
-    path:     /treasury/see
-    defaults: { _controller: ESNTreasuryBundle:Treasury:index,type:"see" }
+esn_treasury_homepage:
+    path:     /treasury
+    defaults: { _controller: ESNTreasuryBundle:Treasury:index }

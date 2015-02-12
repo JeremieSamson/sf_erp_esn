@@ -27,17 +27,12 @@
                 <li><a href="{{ path('esn_permanence_informations') }}">Informations</a></li>
             </ul> 
          </li>
-        <li class="dropdown {% if '/treasury' in (app.request.server.get('PHP_SELF'))%}active{% endif %} ">					
-            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="icon-group"></i>
-                <span>Treasury</span>
-                <b class="caret"></b>
-            </a>	
-            <ul class="dropdown-menu">
-                <li><a href="{{ path('esn_treasury_list') }}">See operations</a></li>
-		<li><a href="{{ path('esn_treasury_add') }}">Add operation</a></li>
-            </ul>    				
-	</li>    
+         <li {% if '/treasury' in (app.request.server.get('PHP_SELF'))%}class="active"{% endif %}>
+             <a href="{{ path('esn_treasury_homepage') }}">
+                 <i class="icon-money"></i>
+                 <span>Treasury</span>
+             </a> 
+         </li>     
          <li class="dropdown {% if '/human-resources' in (app.request.server.get('PHP_SELF'))%}active{% endif %} ">					
             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="icon-group"></i>
