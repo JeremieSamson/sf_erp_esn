@@ -1,6 +1,14 @@
 <div class="row">
 
-                        
+                        <div class="span5">
+                                <div class="widget">
+                                    <div class="widget-content">
+                                    
+                                        <a class="btn" href="{{ path('esn_hr_association_add') }}">Add new Esner</a>
+
+                                    </div><!-- /widget-content --> 
+                                </div><!-- /widget -->    
+                            </div>
 
                     <div class="span12">
                         <div class="widget">
@@ -14,22 +22,24 @@
                                         <tr>
                                             <th>Name</th>
                                             <th>Surname</th>
-                                            <th>Apply Date</th>
+                                            <th>Admission Date</th>
                                             <th>Action</th>
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        {% for apply in applies %}
+                                          
+                                          {% for esner in esners %}
                                                 <tr>
-                                                    <td>{{apply.name}}</td>
-                                                    <td>{{apply.surname}}</td>
-                                                    <td>{{apply.date|date('Y-m-d')}}</td>
+                                                    <td>{{esner.member.name}}</td>
+                                                    <td>{{esner.member.surname}}</td>
+                                                    <td>{{esner.member.inscription|date('Y-m-d')}}</td>
                                                     <td>
-                                                        <a href="{{ path('esn_hr_recruitment_view', {'id' : apply.id}) }}">View</a> &nbsp;
-                                                        <a href="{{ path('esn_hr_recruitment_delete', {'id' : apply.id}) }}">Delete</a>
+                                                        <a href="{{ path('esn_hr_association_edit', {'id' : esner.member.id}) }}">Edit</a> &nbsp;
+                                                        <a href="{{ path('esn_hr_association_delete', {'id' : esner.member.id}) }}">Delete</a>
                                                     </td>
                                                 </tr>
                                           {% endfor %} 
+                                            
                                       </tbody>
                                     </table>
                                 </div>
