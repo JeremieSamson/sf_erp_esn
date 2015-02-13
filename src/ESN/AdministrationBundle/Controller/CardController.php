@@ -26,7 +26,7 @@ class CardController extends Controller{
         if ($nbCardQuery == NULL) {
             $nbCard = 0;
         } else {
-            $nbCard = $nbCardQuery.getNumber();
+            $nbCard = $nbCardQuery->getNumber();
         }
 
         // CREATE CARD

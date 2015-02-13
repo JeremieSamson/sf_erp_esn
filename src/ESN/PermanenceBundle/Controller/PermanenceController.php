@@ -32,7 +32,7 @@ class PermanenceController extends Controller
         if ($montantQuery == NULL) {
             $montant = 0;
         } else {
-            $montant = $montantQuery.getNumber();
+            $montant = $montantQuery->getMontant();
         }
         
         // CARD
@@ -48,7 +48,7 @@ class PermanenceController extends Controller
         if ($nbCardQuery == NULL) {
             $nbCard = 0;
         } else {
-            $nbCard = $nbCardQuery.getNumber();
+            $nbCard = $nbCardQuery->getNumber();
         }
         
         // RENDER RESULT

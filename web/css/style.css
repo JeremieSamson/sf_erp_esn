@@ -11,6 +11,8 @@ Bootstrap Admin Template by EGrappler.com
 body {
 	background: #f9f6f1;
 	font: 13px/1.7em 'Open Sans';
+        height:100%;
+        min-height:100%;
 }
     
 p { 
