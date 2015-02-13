@@ -15,6 +15,12 @@ class TreasuryController extends Controller
         $data = array('title' => "Treasury", 'type' => $type);
         return $this->render('ESNTreasuryBundle::index.html.twig', $data);
     }
+    
+    /**
+     * Liste les operations
+     * @param Request $request
+     * @return type
+     */
     public function listAction(Request $request)
     {
         
@@ -40,6 +46,12 @@ class TreasuryController extends Controller
         return $this->render('ESNTreasuryBundle:Operations:list.html.twig',$operations);
         
     }
+    /**
+     * Voir le detail de la tresorie
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     public function seeAction($id)
     {
         
@@ -56,6 +68,11 @@ class TreasuryController extends Controller
         
         
     }
+    /**
+     * Ajouter une operation
+     * @param Request $request
+     * @return type
+     */
     public function addAction(Request $request)
     {   
         

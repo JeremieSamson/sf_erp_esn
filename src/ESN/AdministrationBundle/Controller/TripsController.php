@@ -16,6 +16,11 @@ class TripsController extends Controller{
         
     }
     
+    /**
+     * Lister les voyages de la base de données
+     * @param Request $request
+     * @return type
+     */
     public function listTripsAction(Request $request)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Trip');
@@ -27,7 +32,12 @@ class TripsController extends Controller{
         
     }
     
-     public function newTripAction(Request $request)
+    /**
+     * Ajouter un nouveau voyage dans la base de données
+     * @param Request $request
+     * @return type
+     */
+    public function newTripAction(Request $request)
     {
        
 // crée une tâche et lui donne quelques données par défaut pour cet exemple
@@ -58,6 +68,12 @@ class TripsController extends Controller{
         ));
     }
     
+    /**
+     * Supprimer le voyage dont l'id est passé en parametre
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function deleteTripAction($id) {
         $em = $this->getDoctrine()->getManager();
         $pole = $em->getRepository('ESNAdministrationBundle:Trip')->find($id);
@@ -73,6 +89,13 @@ class TripsController extends Controller{
         
     }
     
+    /**
+     * Editer le voyage dont l'id est passé en parametre
+     * @param Request $request
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function editTripAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $trip = $em->getRepository('ESNAdministrationBundle:Trip')->find($id);

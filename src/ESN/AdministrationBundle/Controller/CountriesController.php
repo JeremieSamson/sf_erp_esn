@@ -16,6 +16,11 @@ class CountriesController extends Controller{
         
     }
     
+    /**
+     * Liste les pays
+     * @param Request $request
+     * @return type
+     */
     public function listCountriesAction(Request $request)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Country');
@@ -27,7 +32,12 @@ class CountriesController extends Controller{
         
     }
     
-     public function newCountryAction(Request $request)
+    /**
+     * Affiche un formulaire d'ajout d'un pays
+     * @param Request $request
+     * @return type
+     */
+    public function newCountryAction(Request $request)
     {
        
 // crée une tâche et lui donne quelques données par défaut pour cet exemple
@@ -56,6 +66,12 @@ class CountriesController extends Controller{
         ));
     }
     
+    /**
+     * Supprime le pays passe en parametre
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function deleteCountryAction($id) {
         $em = $this->getDoctrine()->getManager();
         $country = $em->getRepository('ESNAdministrationBundle:Country')->find($id);
@@ -71,6 +87,13 @@ class CountriesController extends Controller{
         
     }
     
+    /**
+     * Editer le pays passe en parametre
+     * @param Request $request
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function editCountryAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $country = $em->getRepository('ESNAdministrationBundle:Country')->find($id);

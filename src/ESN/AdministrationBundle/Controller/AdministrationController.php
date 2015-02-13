@@ -8,15 +8,25 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AdministrationController extends Controller
 {    
-
-     public function indexAction($type, $action)
+    /**
+     * Affiche l'ecran d'accueil de l'onglet administration
+     * @param type $type
+     * @param type $action
+     * @return type
+     */
+    public function indexAction($type, $action)
     {
         $data = array('title' => "Administration", 'type' => $type, 'action' => $action);
         return $this->render('ESNAdministrationBundle::index.html.twig', $data);
         
     }
     
-     public function polesAction($action)
+    /**
+     * Affiche la liste des poles ou affiche le formulaire selon l'action
+     * @param type $action
+     * @return type
+     */
+    public function polesAction($action)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Pole');
                 $poles = array(
@@ -32,8 +42,12 @@ class AdministrationController extends Controller
                 break;
         } 
     }
-    
-     public function rulesAction($action)
+    /**
+     * Affiche la liste les roles ou affiche le formulaire selon l'action
+     * @param type $action
+     * @return type
+     */
+    public function rulesAction($action)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Rule');
                 $rules = array(
@@ -50,7 +64,12 @@ class AdministrationController extends Controller
         }
     }
     
-     public function tripsAction($action)
+    /**
+     * Affiche la liste les voyages ou affiche le formulaire selon l'action
+     * @param type $action
+     * @return type*
+     */
+    public function tripsAction($action)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Trip');
                 $trips = array(
@@ -67,6 +86,11 @@ class AdministrationController extends Controller
         }
     }
     
+    /**
+     * Affiche la liste les universites ou affiche le formulaire selon l'action
+     * @param type $action
+     * @return type
+     */
     public function universitiesAction($action)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:University');

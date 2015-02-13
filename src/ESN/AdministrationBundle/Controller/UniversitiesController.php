@@ -16,6 +16,11 @@ class UniversitiesController extends Controller
         
     }
     
+    /**
+     * Lister les universite de la base de données
+     * @param Request $request
+     * @return type
+     */
     public function listUniversitiesAction(Request $request)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:University');
@@ -27,7 +32,12 @@ class UniversitiesController extends Controller
         
     }
     
-     public function newUniversityAction(Request $request)
+    /**
+     * Ajouter une universite dans la base de données
+     * @param Request $request
+     * @return type
+     */
+    public function newUniversityAction(Request $request)
     {
        
 // crée une tâche et lui donne quelques données par défaut pour cet exemple
@@ -54,6 +64,12 @@ class UniversitiesController extends Controller
         ));
     }
     
+    /**
+     * Supprimer l'universite dont l'id est passé dans la base de données
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function deleteUniversityAction($id) {
         $em = $this->getDoctrine()->getManager();
         $university = $em->getRepository('ESNAdministrationBundle:University')->find($id);
@@ -69,6 +85,13 @@ class UniversitiesController extends Controller
         
     }
     
+    /**
+     * Editer l'universite dont l'id est passé en parametre
+     * @param Request $request
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function editUniversityAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $university = $em->getRepository('ESNAdministrationBundle:University')->find($id);

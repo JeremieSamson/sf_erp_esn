@@ -17,6 +17,11 @@ class AssociationController extends Controller{
         return $this->render('ESNHRBundle::index.html.twig', $data); 
     } 
     
+    /**
+     * Lister les Esners
+     * @param Request $request
+     * @return type
+     */
     public function listEsnersAction(Request $request)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner');
@@ -26,6 +31,11 @@ class AssociationController extends Controller{
         
     }
     
+    /**
+     * Ajouter un nouvel Esner
+     * @param Request $request
+     * @return typ
+     */
     public function newEsnerAction(Request $request)
     {
         $member = new Member();
@@ -60,12 +70,19 @@ class AssociationController extends Controller{
             return $this->redirect($this->generateUrl('esn_hr_association'));
         }
         
+        // retourne sur le formulaire 
         return $this->render('ESNHRBundle:Association:form.html.twig', array(
             'type' => "association",
             'form' => $form->createView(),
         ));   
     }
     
+    /**
+     * Supprimer un Esners
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     public function deleteEsnerAction($id) {
         
         $em = $this->getDoctrine()->getManager();
@@ -84,10 +101,18 @@ class AssociationController extends Controller{
         $em->remove($member);
         $em->flush();
 
+        // retourne sur la page d'accueil de human resources
         return $this->redirect($this->generateUrl('esn_hr_association'));
         
     }
     
+    /**
+     * Editer un membre de l'Esn
+     * @param Request $request
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function editEsnerAction(Request $request, $id) {
         
         $em = $this->getDoctrine()->getManager();
