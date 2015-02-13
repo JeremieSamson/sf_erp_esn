@@ -1,0 +1,49 @@
+{% extends '::base.html.twig' %}
+
+
+{% block subnavbar %}
+{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+
+{% block body %}
+<div class="span12">
+        <div class="widget">
+            <div class="widget-content">
+                <a href="{{ path('esn_treasury_list') }}"> Retour </a>
+                    <br>
+                    <br/>
+                    
+                        <div class="control-group">											
+                                <label class="span3" for="date">Date : </label>
+                                <div class="controls">
+                                        <input class="span3" id="amount" value="{{operation.date|date('d/m/Y G:i ')}}" type="text" disabled>
+                                </div> <!-- /controls -->				
+                        </div>
+                    
+                     <div class="control-group">											
+                                <label class="span3" for="libelle">Libelle : </label>
+                                <div class="controls">
+                                        <input class="span3" id="amount" value="{{operation.libelle}}" type="text" disabled>
+                                </div> <!-- /controls -->				
+                        </div>
+                    
+                    <div class="control-group">											
+                        <label class="span3" for="description">Description : </label>
+                        <div class="controls">
+                            <textarea class="span5" rows="6" cols="14 " style="resize: none;" disabled>{{operation.description}}</textarea>
+                        </div>		
+                    </div>
+                    
+                     <div class="control-group">											
+                                <label class="span3" for="amountOfOperation">Amount of the operation : </label>
+                                <div class="controls">
+                                        <input class="span3" id="amount" value="{{operation.montant}}" type="text" disabled>
+                                </div> <!-- /controls -->				
+                        </div>
+                        
+            </div><!-- widget-content -->
+        </div><!-- /widget -->
+    </div><!-- /span8 -->   
+
+{%endblock %}

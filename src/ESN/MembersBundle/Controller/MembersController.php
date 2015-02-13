@@ -4,6 +4,8 @@ namespace ESN\MembersBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+use ESN\MembersBundle\Entity\Member;
+use Symfony\Component\HttpFoundation\Request;
 class MembersController extends Controller
 {   
     /**
@@ -17,7 +19,7 @@ class MembersController extends Controller
      * @param type $id
      * @return type
      */
-    public function indexAction($type,$action,$id=null)
+    public function indexAction($action,$type=null,$id=null)
     {
         $data = array(
             'title' => "Members", 
@@ -25,7 +27,7 @@ class MembersController extends Controller
             'action' => $action, 
             'id' => $id);
         return $this->render('ESNMembersBundle::index.html.twig', $data);
-    }
+    }//indexAction
     
     /**
      * Action à l'affichage de la liste des membres en fonction du type.
@@ -43,7 +45,7 @@ class MembersController extends Controller
         } else {
            return $this->render('ESNMembersBundle:Erasmus:list.html.twig', $liste_membres);  
         } 
-    }
+    }//listAction
     
     /**
      * Action à l'affichage d'une card d'un esner.
@@ -54,7 +56,7 @@ class MembersController extends Controller
         return $this->render('ESNMembersBundle:Esners:card.html.twig', array(
             'member' => $member
         )); 
-    }
+    }//cardEsnerAction
     
     /**
      * Action à l'affichage d'une card d'un Erasmus
@@ -65,7 +67,7 @@ class MembersController extends Controller
         return $this->render('ESNMembersBundle:Erasmus:card.html.twig', array(
             'member' => $member
         )); 
-    }
+    }//cardErasmusAction
     
     /**
      * Action à l'affichage des détails du profil d'un membre en fonction
@@ -76,18 +78,17 @@ class MembersController extends Controller
      */
     public function detailAction($type,$id)
     {
-           
         $member = array(
            'member' => $this->getAllMembers($type, $id)
         );
-       
+        
         if ($type == 'esners') {
             return $this->render('ESNMembersBundle:Esners:detail.html.twig', $member);
             
         } else {
             return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', $member);
         }
-    }
+    }//detailAction
     
     /**
      * Action à l'affichage de la page d'édition d'un membre en fonction
@@ -98,7 +99,6 @@ class MembersController extends Controller
      */
     public function editAction($type, $id)
     {
-        
         $member = array(
            'member' => $this->getAllMembers($type, $id)
         );
@@ -108,7 +108,7 @@ class MembersController extends Controller
         } else {
             return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $member);
         }
-    }
+    }//editAction
     
     /**
      * Si ID est fourni, retourne le membre, sinon retourne tout les membres
@@ -139,20 +139,45 @@ class MembersController extends Controller
                 }
             } 
         } else {
-          if ($type == "esners") {
-            $esner = $repositoryEsner->find($id); 
-            $esner_identity = $repositoryMember->find($esner->getMember()->getId());
-            array_push($list_member,array('esner'=>$esner,'identity'=>$esner_identity));
-          } else {
-            $erasmus = $repositoryEsner->find($id); 
-            $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());
-            array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$erasmus_identity));  
-          }
-          
+            if ($type == "esners") {
+                $esner = $repositoryEsner->find($id); 
+                $esner_identity = $repositoryMember->find($esner->getMember()->getId());
+                array_push($list_member,array('esner'=>$esner,'identity'=>$esner_identity));
+            } else {
+                $erasmus = $repositoryErasmus->find($id);
+                $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());
+                array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$erasmus_identity));  
+            }
         }
         return $list_member;
-        
     }//getElementMember
+    
+    public function createErasmusAction(Request $request) {
+        $identity_erasmus = new Member();
+
+        $form = $this->createFormBuilder($identity_erasmus)
+        ->add('name', 'text')      
+        ->add('surname','text')
+        ->add('email','email')
+        ->add('phone','text')
+        ->getForm();
+        
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+           $em = $this->getDoctrine()->getManager();
+           $em->persist($identity_erasmus);
+           $em->flush();
+           return $this->redirect($this->generateUrl('esn_members_homepage', array(
+               'type'=>'erasmus'
+           )));
+        }
+        
+        return $this->render('ESNMembersBundle:Erasmus:form_create.html.twig', array(
+            'form' => $form->createView()
+        )); 
+    }//createErasmusAction
+    
+    
         
         
 

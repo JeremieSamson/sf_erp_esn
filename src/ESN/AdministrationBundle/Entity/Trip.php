@@ -49,6 +49,19 @@ class Trip
      */
     private $description;
 
+    
+    /**
+    * @ORM\Column(type="decimal", scale=2)
+    */
+    private $price;
+    
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="ESN\PermanenceBundle\Entity\ParticipateTrip", mappedBy="member", cascade="persist")
+     */
+    public $members;
+    
+    
 
     /**
      * Get id
@@ -150,5 +163,91 @@ class Trip
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param string $prix
+     * @return Trip
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return string 
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Set price
+     *
+     * @param string $price
+     * @return Trip
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return string 
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add members
+     *
+     * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $members
+     * @return Trip
+     */
+    public function addMember(\ESN\PermanenceBundle\Entity\ParticipateTrip $members)
+    {
+        $this->members[] = $members;
+
+        return $this;
+    }
+
+    /**
+     * Remove members
+     *
+     * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $members
+     */
+    public function removeMember(\ESN\PermanenceBundle\Entity\ParticipateTrip $members)
+    {
+        $this->members->removeElement($members);
+    }
+
+    /**
+     * Get members
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMembers()
+    {
+        return $this->members;
     }
 }

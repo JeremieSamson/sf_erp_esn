@@ -1,4 +1,4 @@
-esnhr:
+esn_hr:
     resource: "@ESNHRBundle/Resources/config/routing.yml"
     prefix:   /
 

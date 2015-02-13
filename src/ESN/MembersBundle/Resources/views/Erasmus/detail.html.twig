@@ -4,11 +4,11 @@
         <div class="widget">
             <div class="widget-content">
                 
-                <a class="btn" href="{{ path('esn_members_erasmus_delete', {
-                        'id' : member.id }) }}">Delete</a>
-                <a class="btn" href="{{ path('esn_members_edit', {
+                <a class="btn btn-warning" href="{{ path('esn_members_erasmus_delete', {
+                        'id' : member[0].erasmus.id }) }}">Delete</a>
+                <a class="btn btn-info" href="{{ path('esn_members_edit', {
                         'type': 'erasmus',
-                        'id' : member.id }) }}">Edit</a>
+                        'id' : member[0].erasmus.id }) }}">Edit</a>
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -19,10 +19,12 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                
-                &nbsp; {{ member.email }} <br/>
-                &nbsp; {{ member.phone }} <br/>
-                &nbsp; <i class="icon-large icon-facebook-sign"></i> <a href="">georges.ciaoba</a>
+                <!--&nbsp; {{ member[0].identity.email }} <br/>
+                &nbsp; {{ member[0].identity.phone }} <br/>
+                &nbsp; <i class="icon-large icon-facebook-sign"></i> <a href="">georges.ciaoba</a>-->
+                <p>{{ member[0].identity.email }}</p>
+                <p>{{ member[0].identity.phone }}</p>
+                <p><i class="icon-large icon-facebook-sign"></i> <span>Facebook</span> </p>
 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -32,7 +34,7 @@
         <div class="widget">
             <div class="widget-content">
             
-                <h3>{{ member.name }}</h3>
+                <h3>{{ member[0].identity.name }}</h3>
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -52,21 +54,21 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Age</label>
                         <div class="controls">
-                            24 years old
+                            <span>{{ member[0].identity.getAge() }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
-                            08/07/1990
+                            <span>{{ member[0].identity.birthday|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            Captain
+                            <span>{{ member[0].identity.nationality }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -75,21 +77,21 @@
                     <div class="control-group">
                         <label class="control-label" for="arrival">ESN Card</label>
                         <div class="controls">
-                            624839GYL0
+                            {{ member[0].erasmus.esncard }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                            01/09/2013
+                            <span>{{ member[0].erasmus.arrivalDate|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
  
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            01/09/2015
+                            <span>{{ member[0].erasmus.leavingDate|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -98,14 +100,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            Master's Degree Computer Science
+                            <span>{{ member[0].identity.study }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            University Lille 1
+                            <span>{{ member[0].identity.university }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     

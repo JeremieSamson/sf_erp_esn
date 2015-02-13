@@ -5,7 +5,7 @@
         <div class="widget ">
             <div class="widget-content">
                 
-                <img style="width: 100%;" src="/img/user.png">
+                <img style="width: 100%;" src="{{ asset('img/user.png') }}">
                     
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -16,8 +16,8 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                &nbsp; {{ member.identity.name }} <br/>
-                &nbsp; {{ member.identity.phone }}
+                &nbsp; {{ member[0].identity.name }} <br/>
+                &nbsp; {{ member[0].identity.phone }}
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -28,7 +28,7 @@
         
         <div class="widget ">
             <div class="widget-content">
-                <h3>{{ member.identity.name }} - {#{{ role }}#}</h3>
+                <h3>{{ member[0].identity.name }}</h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -43,21 +43,21 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Age</label>
                         <div class="controls">
-                            Test years old
+                            <span>{{ member[0].identity.getAge() }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
-                           {{ member.identity.birthday|date('Y-m-d') }}
+                            <span>{{ member[0].identity.birthday|date('d/m/Y') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            {{ member.identity.nationality }}
+                            <span>{{ member[0].identity.nationality }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -66,21 +66,21 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            {{ member.esner.address }}
+                            <span>{{ member[0].esner.address }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
-                           {{ member.esner.city }}
+                            <span>{{ member[0].esner.city }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">Zip Code</label>
                         <div class="controls">
-                            {{ member.esner.zipcode }}
+                            <span>{{ member[0].esner.zipcode }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -89,14 +89,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            {{member.esner.study}}
+                            <span>{{member[0].identity.study}}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            {{member.esner.university}}
+                            <span>not implement</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -105,21 +105,21 @@
                     <div class="control-group">
                         <label class="control-label" for="language1">Language 1</label>
                         <div class="controls">
-                            not implement
+                            <span>not implement</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="language2">Language 2</label>
                         <div class="controls">
-                             not implement
+                             <span>not implement</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="language3">Language 3</label>
                         <div class="controls">
-                             not implement
+                             <span>not implement</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     

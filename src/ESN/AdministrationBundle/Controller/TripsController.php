@@ -36,7 +36,8 @@ class TripsController extends Controller{
         ->add('name', 'text')
         ->add('date', 'date')
         ->add('nbPlace', 'integer')
-        ->add('description', 'textarea')       
+        ->add('description', 'textarea')  
+        ->add('price', 'money')       
         ->getForm();
         
         $form->handleRequest($request);
@@ -85,7 +86,8 @@ class TripsController extends Controller{
         ->add('name', 'text')
         ->add('date', 'date')
         ->add('nbPlace', 'integer')
-        ->add('description', 'textarea')       
+        ->add('description', 'textarea')    
+        ->add('price', 'money')       
         ->getForm();
         
         $form->handleRequest($request);

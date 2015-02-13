@@ -1,9 +1,9 @@
-
-        
 <div class="span12">
         <div class="widget">
             <div class="widget-content">
+                <a href="{{ path('esn_permanence_enrollUserToTrip') }}">
                     <button class="btn btn-default">Enroll a member to a trip</button>
+                </a>
                     
                     <div class="panel panel-default">
 
@@ -13,31 +13,23 @@
                             <tr>
                               <th>Date</th>
                               <th>Name</th>
-                              <th>Number of participants</th>
+                              <th>Number of seats</th>
                               <th>Price</th>
                               <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                                <td>30/01/2015</td>
-                                <td>Trip in Paris</td>
-                                <td>50 / 55</td>
-                                <td>50€</td>
-                                <td>
-                                    <a href="">View Details</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>02/02/2015</td>
-                                <td>Trip in Amsterdam</td> 
-                                <td>10 / 20</td>
-                                <td>30€</td>
-                                <td>
-                                    <a href="">View Details</a>
-                                </td>
-                            </tr>
-                           
+                                {% for trip in trips %}
+                                         <tr> 
+                                            <td>{{trip.date|date('d/m/Y')}}</td>
+                                            <td>{{trip.name}}</td>
+                                            <td>{{trip.nbPlace}}</td>
+                                            <td>{{trip.price}} €</td>
+                                            <td><a href="{{ path('esn_permanence_seeTrip', {
+                                                    'id' : trip.id
+                                                   }) }}">See details</a></td>
+                                        </tr> 
+                                        {%endfor %}
                           </tbody>
                     </table>
                     </div>

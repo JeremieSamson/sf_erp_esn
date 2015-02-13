@@ -87,4 +87,12 @@ esn_administration_universities_delete:
 
 esn_administration_universities_edit:
     path:     /administration/universities/edit/{id}
-    defaults: { _controller: ESNAdministrationBundle:Universities:editUniversity }
+    defaults: { _controller: ESNAdministrationBundle:Universities:editUniversity }    
+    
+  #  CARDS
+ 
+esn_administration_cards:
+    path:     /administration/cards
+    defaults: { _controller: ESNAdministrationBundle:Card:addCard }
+
+ 

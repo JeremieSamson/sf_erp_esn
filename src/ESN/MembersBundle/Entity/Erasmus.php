@@ -40,14 +40,14 @@ class Erasmus
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="arrivalDate", type="date")
+     * @ORM\Column(name="arrivalDate", type="date", nullable=true)
      */
     private $arrivalDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="leavingDate", type="date")
+     * @ORM\Column(name="leavingDate", type="date", nullable=true)
      */
     private $leavingDate;
 
