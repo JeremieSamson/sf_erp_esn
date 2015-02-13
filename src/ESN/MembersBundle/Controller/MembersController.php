@@ -5,7 +5,9 @@ namespace ESN\MembersBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use ESN\MembersBundle\Entity\Member;
+use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\HttpFoundation\Request;
+
 class MembersController extends Controller
 {   
     /**
@@ -154,7 +156,7 @@ class MembersController extends Controller
     
     public function createErasmusAction(Request $request) {
         $identity_erasmus = new Member();
-
+        $erasmus  = new Erasmus();
         $form = $this->createFormBuilder($identity_erasmus)
         ->add('name', 'text')      
         ->add('surname','text')
@@ -165,7 +167,11 @@ class MembersController extends Controller
         $form->handleRequest($request);
         if ($form->isValid()) {
            $em = $this->getDoctrine()->getManager();
+           $erasmus->setMember($identity_erasmus);
+           $erasmus->setEsncard(55511552862);
            $em->persist($identity_erasmus);
+           $em->persist($erasmus);
+
            $em->flush();
            return $this->redirect($this->generateUrl('esn_members_homepage', array(
                'type'=>'erasmus'

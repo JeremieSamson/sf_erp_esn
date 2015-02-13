@@ -54,7 +54,12 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Age</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.getAge() }}</span>
+                            <span>
+                                {% if member[0].identity.birthday != null %}
+                                   {{ member[0].identity.getAge() }}
+                                {% endif %}
+                                
+                                </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
