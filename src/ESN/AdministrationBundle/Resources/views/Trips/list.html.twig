@@ -26,6 +26,7 @@
                                             <th>Description</th>
                                             <th>Date</th>
                                             <th>Number of seats</th>
+                                            <th>Price</th>
                                         </tr>
                                       </thead>
                                       <tbody>
@@ -36,6 +37,7 @@
                                             <td>{{ trip.description}}</td>
                                             <td>{{ trip.date.format('M j, Y h:m a')}}</td>
                                             <td>{{ trip.nbPlace}}</td>
+                                            <td>{{ trip.price}}</td>
                                             <td>
                                                 <a href="">View</a> &nbsp;
                                                 <a href="{{ path('esn_administration_trips_edit', {

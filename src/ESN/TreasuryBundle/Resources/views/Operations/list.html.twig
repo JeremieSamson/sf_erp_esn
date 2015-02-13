@@ -1,5 +1,14 @@
+{% extends '::base.html.twig' %}
 
+
+{% block subnavbar %}
+{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+
+{% block body %}
 <div class="row">
+<!--
 <div class="span7">
         <div class="widget">
             <div class="widget-content">
@@ -11,14 +20,14 @@
                 </div>
                 
             </div><!-- widget-content -->
-        </div><!-- /widget -->
-    </div><!-- /span4 -->    
+     <!--   </div><!-- /widget -->
+    <!--</div><!-- /span4 -->    
     
 <div class="span3">
         <div class="widget">
             <div class="widget-content">
             
-                <p style="float:left;display:block;"> Money in the fund : <span style="color:green;"> 3542.00 € </span> </p>
+                <p style="float:left;display:block;"> Money in the fund : <span style="color:green;"> {{ caisse.montant }} € </span> </p>
             
             </div><!-- widget-content -->
         </div><!-- /widget -->
@@ -54,22 +63,25 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                     
-                                        <tr> 
-                                            <td>01/01/2015</td>
-                                            <td>Remboursement Aymeric</td>
-                                            <td><span style="color:red;">- 25€</span></td>
-                                            <td></td>
-                                            <td><a href="{{ path('esn_treasury_see') }}">See details</a></td>
-                                      </a>
-                                        </tr>
-                                        <tr>
-                                             <td>01/01/2015</td>
-                                            <td>Cotisation Donatien</td>
-                                            <td></td>
-                                            <td><span style="color:green;">+ 5€</span></td>
-                                            <td><a href="{{ path('esn_treasury_see') }}">See details</a></td>
-                                        </tr>
+                                        {% for operation in operations %}
+                                         <tr> 
+
+                                            <td>{{operation.date|date('d/m/Y G:i ')}}</td>
+                                            <td>{{operation.libelle}}</td>
+
+                                            {% if operation.montant<0 %}
+                                                <td><span style="color:red;"> {{operation.montant}} €</span></td>
+                                                <td></td>
+                                            {% else %}
+                                                <td></td>  
+                                                <td><span style="color:green;"> +{{operation.montant}} €</span></td>
+                                            {%endif%}
+
+                                            <td><a href="{{ path('esn_treasury_see', {
+                                                    'id' : operation.id
+                                                   }) }}">See details</a></td>
+                                        </tr> 
+                                        {%endfor %}
                                       </tbody>
                                     </table>
                                 </div>
@@ -78,3 +90,4 @@
                     </div><!-- /span12 -->   
         
                     </div>
+{% endblock %}

@@ -8,13 +8,13 @@
 {% block body %}
 
 <div class="row">
-    
+       
+                
     <div class="span8">
         <div class="widget">
             <div class="widget-content">
-                <a href="{{ path('esn_treasury_list') }}"> Retour </a>
             
-                <h3>Add operation</h3>
+                <h3>Cards</h3>
                 
                 <hr/>
                     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
@@ -22,30 +22,23 @@
                     
                      <fieldset>
                     
-                        <div class="control-group">
-                            <label class="control-label" for="libelle">Libelle</label>
+                         <div class="control-group">
+                            <label class="control-label" for="oldnumber">Number of cards</label>
                             <div class="controls">
-                                {{ form_widget(form.libelle, { 'attr': {'class': 'span4'} }) }}
+                                <input type="number" id="form_oldnumber" name="oldnumber" required="required" class="span3" value="{{ nbCard.number }}" disabled>
                             </div> <!-- /controls -->			
                         </div> <!-- /control-group -->
-
+                         
                         <div class="control-group">
-                            <label class="control-label" for="description">Description</label>
+                            <label class="control-label" for="number">New number of cards</label>
                             <div class="controls">
-                                {{ form_widget(form.description, { 'attr': {'class': 'span4'}}) }}
+                                {{ form_widget(form.number, { 'attr': {'class': 'span3'} }) }}
                             </div> <!-- /controls -->			
                         </div> <!-- /control-group -->
-
-                        <div class="control-group">
-                            <label class="control-label" for="montant">Montant</label>
-                            <div class="controls">
-                                {{ form_widget(form.montant, { 'attr': {'class': 'span4'} }) }}
-                            </div> <!-- /controls -->			
-                        </div> <!-- /control-group -->
-
+                        
                          <div class="form-actions">
                             <input type="submit" class="btn btn-primary" value="Save"/> 
-                             <a class="btn" href="{{ path('esn_treasury_list') }}">Cancel</a>
+                             <a class="btn" href="{{ path('esn_administration_countries') }}">Cancel</a>
                         </div> <!-- /form-actions -->
                     </fieldset>
            
@@ -53,6 +46,8 @@
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
     </div>    
+            
+
     
 </div>
 {% endblock %}

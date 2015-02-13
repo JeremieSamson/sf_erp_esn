@@ -93,6 +93,14 @@ class Member
      */
     private $nationality;
 
+    /**
+     *
+     * @ORM\OneToMany(targetEntity="ESN\PermanenceBundle\Entity\ParticipateTrip", mappedBy="trip", cascade="persist")
+     */
+    public $trips;
+    
+    
+    
 
     /**
      * Get id
@@ -333,5 +341,45 @@ class Member
     public function getNationality()
     {
         return $this->nationality;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trips = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add trips
+     *
+     * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $trips
+     * @return Member
+     */
+    public function addTrip(\ESN\PermanenceBundle\Entity\ParticipateTrip $trips)
+    {
+        $this->trips[] = $trips;
+
+        return $this;
+    }
+
+    /**
+     * Remove trips
+     *
+     * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $trips
+     */
+    public function removeTrip(\ESN\PermanenceBundle\Entity\ParticipateTrip $trips)
+    {
+        $this->trips->removeElement($trips);
+    }
+
+    /**
+     * Get trips
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrips()
+    {
+        return $this->trips;
     }
 }

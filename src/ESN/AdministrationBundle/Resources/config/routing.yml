@@ -78,3 +78,11 @@ esn_administration_universities:
 esn_administration_universities_add:
     path:     /administration/universities/add
     defaults: { _controller: ESNAdministrationBundle:Administration:index, type:"universities", action:"add" }
+    
+    
+ #  CARDS
+esn_administration_cards:
+    path:     /administration/cards
+    defaults: { _controller: ESNAdministrationBundle:Card:addCard }
+
+ 
