@@ -5,7 +5,7 @@
         <div class="widget ">
             <div class="widget-content">
                 
-                <img style="width: 100%;" src="/img/user.png">
+                <img style="width: 100%;" src="{{ asset('img/user.png') }}">
                 <hr/>
                 <p>
                     <a href="">Change profil picture</a><br/>
@@ -22,8 +22,8 @@
                 
                 <hr/>
                 
-                Mail  <input type="text" value="{{member.email}}"/> <br/>
-                Phone  <input type="text" value="{{member.phone}}"/>
+                Mail  <input type="text" value="{{member[0].identity.email}}"/> <br/>
+                Phone  <input type="text" value="{{member[0].identity.phone}}"/>
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -34,8 +34,8 @@
         
         <div class="widget ">
             <div class="widget-content">
-                Firstname  &nbsp; <input type="text" value="{{member.name}}"/> &nbsp; &nbsp; &nbsp;
-                Surname  &nbsp; <input type="text" value="{{member.surname}}"/>
+                Firstname  &nbsp; <input type="text" value="{{member[0].identity.name}}"/> &nbsp; &nbsp; &nbsp;
+                Surname  &nbsp; <input type="text" value="{{member[0].identity.surname}}"/>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -60,7 +60,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="1992-07-08" >
+                            <input type="date" class="span6" id="birthday" value="{{ member[0].identity.birthday|date('Y-m-d') }}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -81,21 +81,21 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="address" value="M411 Résidence Bachelard - Cité Scientifique" >
+                            <input type="text" class="span6" id="address" value="{{ member[0].esner.address}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="city" value="Villeneuve d'Ascq" >
+                            <input type="text" class="span6" id="city" value="{{ member[0].esner.city}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">Zip Code</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value="59650" >
+                            <input type="text" class="span6" id="zip" value="{{ member[0].esner.zipcode}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -104,7 +104,7 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value="Master's Degree Computer Science" >
+                            <input type="text" class="span6" id="zip" value="{{ member[0].identity.study }}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     

@@ -1,3 +1,12 @@
+{% extends '::base.html.twig' %}
+
+
+{% block subnavbar %}
+{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+{% block body %}
+
 <div class="row">
     
     <div class="span3">
@@ -17,8 +26,8 @@
                 
                 <hr/>
                 
-                &nbsp; ay.bltl@gmail.com <br/>
-                &nbsp; +33 678 088 595
+                &nbsp; {{ infoEsner.esner.member.email }} <br/>
+                &nbsp; {{ infoEsner.esner.member.phone }}
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -29,7 +38,7 @@
         
         <div class="widget ">
             <div class="widget-content">
-                <h3>Aymeric Bultel</h3>
+                <h3>{{ infoEsner.esner.member.name }} {{ infoEsner.esner.member.surname }}</h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -38,61 +47,32 @@
                 
                 <h3>VP Information</h3>
                 <hr/>
-                <form id="edit-profile" class="form-horizontal">
+                
+                {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+                {{ form_errors(form)}}
+                
                 <fieldset>
                     
                     <div class="control-group">
-                        <label class="control-label" for="cluster">Cluster</label>
+                        <label class="control-label" for="roles">Cotisation </label>
                         <div class="controls">
-                            <select id="roles">
-                                <option>Culture</option>
-                                <option selected>Party</option>
-                                <option>Web</option>
-                            </select>
-                        </div> <!-- /controls -->           
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="roles">Roles</label>
-                        <div class="controls">
-                            <select id="roles">
-                                <option>Active Members</option>
-                                <option selected>President</option>
-                                <option>Vice-President</option>
-                            </select>
-                        </div> <!-- /controls -->           
-                    </div> <!-- /control-group -->
-                    
-                    <hr/>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="roles">Cotisation Paiement</label>
-                        <div class="controls">
-                            <input type="checkbox" checked>
+                            {{ form_widget(form.cotisation, { 'attr': {'class': 'span4'} }) }}
                         </div> <!-- /controls -->           
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
-                        <label class="control-label" for="roles">Date Paiement</label>
+                        <label class="control-label" for="roles">Comment</label>
                         <div class="controls">
-                            <input type="date" class="span2" id="birthday" value="2014-01-01" >
+                            {{ form_widget(form.comment, { 'attr': {'class': 'span4', 'cols': '10', 'rows': '5' }} ) }}
                         </div> <!-- /controls -->           
                     </div> <!-- /control-group -->
 
-                    <hr/>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="comments">Comments</label>
-                        <div class="controls">
-                            <textarea id="comments"></textarea>
-                        </div> <!-- /controls -->           
-                    </div> <!-- /control-group -->
                     
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">Save</button> 
             <button class="btn">Cancel</button>
                     </div> <!-- /form-actions -->
-                    
+                                        {{ form_end(form) }}
                 </fieldset>  
                 </form>    
             </div><!-- /widget-content -->
@@ -101,3 +81,4 @@
     </div><!-- /span9 -->
     
 </div><!-- /row -->
+{% endblock %}

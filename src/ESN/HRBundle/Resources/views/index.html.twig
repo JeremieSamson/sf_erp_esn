@@ -7,11 +7,11 @@
 
 {% block body %}
     {% if type == "association" %}
-        {{ render(controller("ESNHRBundle:HR:association")) }} 
+        {{ render(controller("ESNHRBundle:Association:listEsners")) }} 
     {% endif %}
     
     {% if type == "recruitment" %}
-        {{ render(controller("ESNHRBundle:HR:recruitment")) }}   
+        {{ render(controller("ESNHRBundle:Recruitment:listApply")) }}   
     {% endif %}
   
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace ESN\MembersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use \DateTime;
 
 /**
  * Member
@@ -45,35 +46,35 @@ class Member
     /**
      * @var string
      *
-     * @ORM\Column(name="sexe", type="string", length=5)
+     * @ORM\Column(name="sexe", type="string", length=5, nullable=true)
      */
     private $sexe;
 
     /**
      * @var \Date
      *
-     * @ORM\Column(name="inscription", type="date")
+     * @ORM\Column(name="inscription", type="date", nullable=true)
      */
     private $inscription;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=20)
+     * @ORM\Column(name="phone", type="string", length=20, nullable=true)
      */
     private $phone;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="university", type="integer")
+     * @ORM\Column(name="university", type="integer", nullable=true)
      */
     private $university;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="study", type="string", length=255)
+     * @ORM\Column(name="study", type="string", length=255, nullable=true)
      */
     private $study;
     
@@ -81,7 +82,7 @@ class Member
      * 
      * @var \DateTime
      * 
-     * @ORM\Column(name="birthday", type="date")
+     * @ORM\Column(name="birthday", type="date", nullable=true)
      */
     private $birthday;
     
@@ -89,7 +90,7 @@ class Member
      *
      * @var string
      * 
-     * @ORM\Column(name="nationality", type="string", length=50)
+     * @ORM\Column(name="nationality", type="string", length=50, nullable=true)
      */
     private $nationality;
 
@@ -318,6 +319,12 @@ class Member
     public function getBirthday()
     {
         return $this->birthday;
+    }
+    
+    public function getAge() {
+        $birthday = $this->getBirthday();
+        $date = new DateTime();
+        return date_format($date,'Y') - date_format($birthday, 'Y');
     }
 
     /**

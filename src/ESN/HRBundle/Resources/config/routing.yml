@@ -1,7 +1,27 @@
 esn_hr_association:
-    path:     /human-resources/association
-    defaults: { _controller: ESNHRBundle:HR:index, type:"association" }
+    path:     /human-ressources/association
+    defaults: { _controller: ESNHRBundle:Association:index}
     
+esn_hr_association_add:
+    path:   /human-ressources/association/add
+    defaults: { _controller: ESNHRBundle:Association:newESNer}
+
+esn_hr_association_delete:
+    path:   /human-ressources/association/delete/{id}
+    defaults: { _controller: ESNHRBundle:Association:deleteESNer}
+    
+esn_hr_association_edit:
+    path:   /human-ressources/association/edit/{id}
+    defaults: { _controller: ESNHRBundle:Association:editESNer}    
+
 esn_hr_recruitment:
-    path:     /human-resources/recruitment
-    defaults: { _controller: ESNHRBundle:HR:index, type:"recruitment" }
+    path:   /human-ressources/recruitment
+    defaults: { _controller : ESNHRBundle:Recruitment:index}
+    
+esn_hr_recruitment_view:
+    path:   /human-ressources/recruitment/view/{id}
+    defaults: { _controller : ESNHRBundle:Recruitment:viewApply}
+    
+esn_hr_recruitment_delete:
+    path:   /human-ressources/recruitment/delete/{id}
+    defaults: { _controller : ESNHRBundle:Recruitment:deleteApply}

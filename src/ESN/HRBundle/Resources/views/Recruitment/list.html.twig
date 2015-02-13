@@ -1,12 +1,6 @@
 <div class="row">
 
-                        <div class="span4">
-                                <div class="widget">
-                                    <div class="widget-content">
-                                        <button class="btn">Delete selected apply</button>
-                                    </div><!-- /widget-content --> 
-                                </div><!-- /widget -->    
-                            </div>
+                        
 
                     <div class="span12">
                         <div class="widget">
@@ -18,7 +12,6 @@
                                     <table class="table">
                                       <thead>
                                         <tr>
-                                            <th></th>
                                             <th>Name</th>
                                             <th>Surname</th>
                                             <th>Apply Date</th>
@@ -26,24 +19,17 @@
                                         </tr>
                                       </thead>
                                       <tbody>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Aymeric</td>
-                                            <td>Bultel</td>
-                                            <td>01/01/2014</td>
-                                            <td>
-                                                <a href="">View</a> &nbsp;
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>Aymeric</td>
-                                            <td>Bultel</td>
-                                            <td>01/01/2014</td>
-                                            <td>
-                                                <a href="">View</a> &nbsp;
-                                            </td>
-                                        </tr>
+                                        {% for apply in applies %}
+                                                <tr>
+                                                    <td>{{apply.name}}</td>
+                                                    <td>{{apply.surname}}</td>
+                                                    <td>{{apply.date|date('Y-m-d')}}</td>
+                                                    <td>
+                                                        <a href="{{ path('esn_hr_recruitment_view', {'id' : apply.id}) }}">View</a> &nbsp;
+                                                        <a href="{{ path('esn_hr_recruitment_delete', {'id' : apply.id}) }}">Delete</a>
+                                                    </td>
+                                                </tr>
+                                          {% endfor %} 
                                       </tbody>
                                     </table>
                                 </div>

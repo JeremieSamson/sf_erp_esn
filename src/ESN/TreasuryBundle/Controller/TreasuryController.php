@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TreasuryController extends Controller
 {
-     public function indexAction($type)
+    public function indexAction()
     {
         $data = array('title' => "Treasury", 'type' => $type);
         return $this->render('ESNTreasuryBundle::index.html.twig', $data);

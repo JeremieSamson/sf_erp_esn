@@ -4,9 +4,9 @@
         <div class="widget">
             <div class="widget-content">
                 
-                <a class="btn" href="{{ path('esn_members_erasmus_delete', {
+                <a class="btn btn-warning" href="{{ path('esn_members_erasmus_delete', {
                         'id' : member[0].erasmus.id }) }}">Delete</a>
-                <a class="btn" href="{{ path('esn_members_edit', {
+                <a class="btn btn-info" href="{{ path('esn_members_edit', {
                         'type': 'erasmus',
                         'id' : member[0].erasmus.id }) }}">Edit</a>
                 
@@ -19,10 +19,12 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                
-                &nbsp; {{ member[0].identity.email }} <br/>
+                <!--&nbsp; {{ member[0].identity.email }} <br/>
                 &nbsp; {{ member[0].identity.phone }} <br/>
-                &nbsp; <i class="icon-large icon-facebook-sign"></i> <a href="">georges.ciaoba</a>
+                &nbsp; <i class="icon-large icon-facebook-sign"></i> <a href="">georges.ciaoba</a>-->
+                <p>{{ member[0].identity.email }}</p>
+                <p>{{ member[0].identity.phone }}</p>
+                <p><i class="icon-large icon-facebook-sign"></i> <span>Facebook</span> </p>
 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -52,21 +54,21 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Age</label>
                         <div class="controls">
-                            Test years old
+                            <span>{{ member[0].identity.getAge() }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
-                            {{ member[0].identity.birthday|date('Y-m-d') }}
+                            <span>{{ member[0].identity.birthday|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            {{ member[0].identity.nationality }}
+                            <span>{{ member[0].identity.nationality }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -82,14 +84,14 @@
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                             {{ member[0].erasmus.arrivalDate|date('Y-m-d') }}
+                            <span>{{ member[0].erasmus.arrivalDate|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
  
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            {{ member[0].erasmus.leavingDate|date('Y-m-d') }}
+                            <span>{{ member[0].erasmus.leavingDate|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -98,14 +100,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            {{ member[0].identity.study }}
+                            <span>{{ member[0].identity.study }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            {{ member[0].identity.university }}
+                            <span>{{ member[0].identity.university }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     

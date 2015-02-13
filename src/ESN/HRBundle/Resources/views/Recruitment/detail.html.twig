@@ -1,3 +1,12 @@
+{% extends '::base.html.twig' %}
+
+
+{% block subnavbar %}
+{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+{% block body %}
+
 <div class="row">
     
     <div class="span3">
@@ -9,8 +18,8 @@
                 
                 <hr/>
                 
-                &nbsp; ay.bltl@gmail.com<br/>
-                &nbsp; <a href="facebook">Aymeric Bultel</a>
+                &nbsp; {{ apply.email }} <br/>
+               
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -21,115 +30,43 @@
         
         <div class="widget ">
             <div class="widget-content">
-                <h3> Aymeric Bultel</h3>
+                <h3> {{ apply.name }} {{ apply.surname }}</h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
         <div class="widget ">
             <div class="widget-content">
                 
-                <h3>Profil Information</h3>
+                <h3>Apply Information</h3>
                 <hr/>
                 <form id="edit-profile" class="form-horizontal">
                 <fieldset>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="age">Age</label>
-                        <div class="controls">
-                            22 years old
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="age">Birthday</label>
-                        <div class="controls">
-                            08/07/1992
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="address">Nationality</label>
-                        <div class="controls">
-                            French
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <hr/>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="address">Erasmus</label>
-                        <div class="controls">
-                            Erasmus à Lille du 01/01/2014 au 01/01/2015
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="study">Study</label>
-                        <div class="controls">
-                            Master's Degree in Computer Science
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="university">University</label>
-                        <div class="controls">
-                            University Lille 1
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <hr/>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="language1">Language 1</label>
-                        <div class="controls">
-                            English
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="language2">Language 2</label>
-                        <div class="controls">
-                            French
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="language3">Language 3</label>
-                        <div class="controls">
-                            Italian
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <hr/>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="time">Time Available</label>
-                        <div class="controls">
-                            12 hours / week
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
+
                     <div class="control-group">
                         <label class="control-label" for="motivation">Motivations</label>
                         <div class="controls">
-                            <textarea disabled>Je suis motivé car ...</textarea>
+                            {{ apply.motivation }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="skill">Skills</label>
                         <div class="controls">
-                            <textarea disabled>Je sais faire ...</textarea>
+                            {{ apply.skill }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="esnlille">ESN Lille</label>
                         <div class="controls">
-                            <textarea disabled>J'ai connu ESN par ...</textarea>
+                            {{ apply.knowEsn }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
+                    
+                    <div class="form-actions">
+                        <a class="btn" href="{{ path('esn_hr_recruitment') }}">Cancel</a>
+                    </div> <!-- /form-actions -->
                 </fieldset>  
                 </form>    
             </div><!-- /widget-content -->
@@ -138,3 +75,4 @@
     </div><!-- /span9 -->
     
 </div><!-- /row -->
+{% endblock %}
