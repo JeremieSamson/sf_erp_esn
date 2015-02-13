@@ -12,6 +12,11 @@ class HRController extends Controller
         return $this->render('ESNHRBundle::index.html.twig', $data);
     }
     
+    /**
+     * Affiche la liste ou le formulaire selon la valeur de action
+     * @param type $action
+     * @return type
+     */
     public function associationAction($action)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
@@ -28,6 +33,10 @@ class HRController extends Controller
         } 
     }
     
+    /**
+     * Affiche le detail des recrutement en cours
+     * @return type
+     */
     public function recruitmentAction()
     {
         return $this->render('ESNHRBundle:Recruitment:detail.html.twig');

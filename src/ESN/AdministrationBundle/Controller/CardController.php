@@ -9,8 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CardController extends Controller{
     
-    
-     public function addCardAction(Request $request)
+    /**
+     * Affiche le nombre de cartes disponibles et un formulaire pour ajouter de nouvelles cartes
+     * @param Request $request
+     * @return type
+     */
+    public function addCardAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         // CARD

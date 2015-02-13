@@ -16,6 +16,11 @@ class RulesController extends Controller{
         
     }
     
+    /**
+     * Lister les roles de la base de donnees
+     * @param Request $request
+     * @return type
+     */
     public function listRulesAction(Request $request)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Rule');
@@ -27,7 +32,12 @@ class RulesController extends Controller{
         
     }
     
-     public function newRuleAction(Request $request)
+    /**
+     * Ajouter un role dans la base de donnnées
+     * @param Request $request
+     * @return type
+     */
+    public function newRuleAction(Request $request)
     {
        
 // crée une tâche et lui donne quelques données par défaut pour cet exemple
@@ -55,6 +65,12 @@ class RulesController extends Controller{
         ));
     }
     
+    /**
+     * Supprimer le role passe en parametre
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function deleteRuleAction($id) {
         $em = $this->getDoctrine()->getManager();
         $rule = $em->getRepository('ESNAdministrationBundle:Rule')->find($id);
@@ -70,6 +86,13 @@ class RulesController extends Controller{
         
     }
     
+    /**
+     * Editer un role dans la base de données
+     * @param Request $request
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     function editRuleAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
         $rule = $em->getRepository('ESNAdministrationBundle:Rule')->find($id);
