@@ -15,6 +15,10 @@ class PermanenceController extends Controller
         return $this->render('ESNPermanenceBundle::index.html.twig', $data);
     }
     
+    /**
+     * Retourne le montant de la caisse et le nombre de carte disponible.
+     * @return type
+     */
     public function informationsAction()
     { 
         $em = $this->getDoctrine()->getManager();
@@ -57,23 +61,29 @@ class PermanenceController extends Controller
         return $this->render('ESNPermanenceBundle:Informations:index.html.twig',$informations);
     }
     
+    /**
+     * Retourne la liste des voyages
+     * @return type
+     */
     public function tripsListAction()
-    { 
-        $em = $this->getDoctrine()->getManager();
+    {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Trip');
        
-        
         $trips = array("trips" => $repository->findAll());
-        
-        
         
         return $this->render('ESNPermanenceBundle:Trips:listTrips.html.twig',$trips);
     }
     
+    /**
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function enrollUserToTripAction(Request $request)
     {
         $participateTrip = new ParticipateTrip();
         
+        // CREATE FORM
         $form = $this->createFormBuilder($participateTrip)
         ->add('trips', 'entity', array(
             'class' => 'ESNAdministrationBundle:Trip', 
@@ -85,33 +95,33 @@ class PermanenceController extends Controller
         
         $form->handleRequest($request);
         
+        // FORM VALID
         if ($form->isValid()) {
-            
-            // fait quelque chose comme sauvegarder la tâche dans la bdd
             $em = $this->getDoctrine()->getManager();
             $em->persist($participateTrip);
             $em->flush();
         }
         
-        
-       return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',array('form' => $form->createView(),'title' => "Permanence",
-        )); 
-    }
+        return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',array('form' => $form->createView(),'title' => "Permanence")); 
+    }//enrollUserToTripAction
     
+    /**
+     * Récupère un voyage en fonction de son ID
+     * @param type $id
+     * @return type
+     * @throws NotFoundHttpException
+     */
     public function detailTripsAction($id)
     {
-        
         $em = $this->getDoctrine()->getManager();
         
         $trip = $em->getRepository('ESNAdministrationBundle:Trip')->find($id);
         
         if (null === $trip) {
-        throw new NotFoundHttpException("Le voyage d'id ".$id." n'existe pas.");
+            throw new NotFoundHttpException("Le voyage d'id ".$id." n'existe pas.");
         }
-                
         
         $participants = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
-        
         
         $members = array();
         
@@ -121,26 +131,31 @@ class PermanenceController extends Controller
         }
                 
         return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig', array('erasmus' => $members,
-             'title' => "Permanence",'trip' => $trip));
-        
-    }
+             'title' => "Permanence",'trip' => $trip)); 
+    }//detailTripsAction
     
+    /**
+     * Retourne la liste des rapports et les donne à la vue
+     * @return type
+     */
     public function reportsListAction()
     {
-        
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNPermanenceBundle:PermanenceReport');
         
-        
-         $operations = array("reports" => $repository->findAll());
+        $operations = array("reports" => $repository->findAll());
                 
         return $this->render('ESNPermanenceBundle:Reports:listReports.html.twig',$operations);
-        
-        
-    }
+    }//reportsListAction
+    
+    /**
+     * Crée le formulaire de rapport et sauvegarde un nouveau rapport en base.
+     * @param type $type
+     * @param Request $request
+     * @return type
+     */
     public function createReportAction($type,Request $request)
     {
-        
-         $report = new PermanenceReport();
+        $report = new PermanenceReport();
          
         $form = $this->createFormBuilder($report)
         ->add('amountBefore', 'money')
@@ -154,23 +169,30 @@ class PermanenceController extends Controller
         $form->handleRequest($request);
         
         if ($form->isValid()) {
-             $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
             $em->persist($report);
             $em->flush();
-
             $request->getSession()->getFlashBag()->add('notice', 'Rapport bien enregistrée.');
         }
         
-         return $this->render('ESNPermanenceBundle:Reports:createReport.html.twig', array(
-             'title' => "Treasury",
-             'type' => $type,
+        return $this->render('ESNPermanenceBundle:Reports:createReport.html.twig', array(
+            'title' => "Treasury",
+            'type' => $type,
             'form' => $form->createView(),
         ));
-    }
+    }//createReportAction
     
+    /**
+     * récupère un rapport par son ID et le donne à la vue.
+     * @param type $type
+     * @param Request $request
+     * @param type $id
+     * @return type
+     * @throws type
+     */
     public function seeReportAction($type,Request $request,$id)
     {
-         $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
         $report = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->find($id);
         if (!$report) {
             throw $this->createNotFoundException(
@@ -178,7 +200,7 @@ class PermanenceController extends Controller
             );
         }    
                 
-         return $this->render('ESNPermanenceBundle:Reports:seeReport.html.twig', array(
+        return $this->render('ESNPermanenceBundle:Reports:seeReport.html.twig', array(
              'title' => "Permanence",'report' => $report));
-    }
+    }//seeReportAction
 }
