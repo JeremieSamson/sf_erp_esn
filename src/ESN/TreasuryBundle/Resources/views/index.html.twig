@@ -5,15 +5,3 @@
 {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
-{% block body %}
-     {% if type == "add" %}
-        {{ render(controller("ESNTreasuryBundle:Treasury:add")) }} 
-    {% endif %}
-    {% if type == "list" %}
-       {{ render(controller("ESNTreasuryBundle:Treasury:list")) }}    
-    {% endif %}
-    {% if type == "see" %}
-        {{ render(controller("ESNTreasuryBundle:Treasury:see")) }} 
-    {% endif %}
-    
-{% endblock %}

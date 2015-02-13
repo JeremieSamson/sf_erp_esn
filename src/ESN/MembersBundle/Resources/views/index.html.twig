@@ -16,4 +16,8 @@
     {% if action == "editer" %}
         {{ render(controller("ESNMembersBundle:Members:edit" , {'type': type,'id':id})) }}   
     {% endif %}
+    
+    {% if action == "create" %}
+        {{ render(controller("ESNMembersBundle:Members:createErasmus")) }}  
+    {% endif %}
 {% endblock %}

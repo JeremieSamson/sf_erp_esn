@@ -10,18 +10,7 @@
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
         
-        <div class="widget">
-            <div class="widget-content">
-                
-                <h3>Contact</h3>
-                
-                <hr/>
-                
-                &nbsp; ay.bltl@gmail.com <br/>
-                &nbsp; +33 678 088 595
-                               
-            </div><!-- /widget-content --> 
-        </div><!-- /widget -->
+       
         
     </div><!-- /span3 -->
     
@@ -29,7 +18,7 @@
         
         <div class="widget ">
             <div class="widget-content">
-                <h3>Aymeric Bultel</h3>
+                <h3>Add new ESNer</h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -41,10 +30,41 @@
                 <form id="edit-profile" class="form-horizontal">
                 <fieldset>
                     
+                     <div class="control-group">
+                        <label class="control-label" for="roles">Firstname</label>
+                        <div class="controls">
+                            <input>
+                        </div> <!-- /controls -->           
+                    </div> <!-- /control-group -->
+                    
+                     <div class="control-group">
+                        <label class="control-label" for="roles">Name</label>
+                        <div class="controls">
+                            <input>
+                        </div> <!-- /controls -->           
+                    </div> <!-- /control-group -->
+                    
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="roles">Mail address</label>
+                        <div class="controls">
+                            <input>
+                        </div> <!-- /controls -->           
+                    </div> <!-- /control-group -->
+                    
+                    <div class="control-group">
+                        <label class="control-label" for="roles">Phone number</label>
+                        <div class="controls">
+                            <input>
+                        </div> <!-- /controls -->           
+                    </div> <!-- /control-group -->
+                    
+                     <hr/>
+                    
                     <div class="control-group">
                         <label class="control-label" for="cluster">Cluster</label>
                         <div class="controls">
-                            <select id="roles" disabled>
+                            <select id="roles">
                                 <option>Culture</option>
                                 <option selected>Party</option>
                                 <option>Web</option>
@@ -55,7 +75,7 @@
                     <div class="control-group">
                         <label class="control-label" for="roles">Roles</label>
                         <div class="controls">
-                            <select id="roles" disabled>
+                            <select id="roles">
                                 <option>Active Members</option>
                                 <option selected>President</option>
                                 <option>Vice-President</option>
@@ -65,17 +85,18 @@
                     
                     <hr/>
                     
+                    
                     <div class="control-group">
                         <label class="control-label" for="roles">Cotisation Paiement</label>
                         <div class="controls">
-                            <input type="checkbox" checked disabled>
+                            <input type="checkbox" checked>
                         </div> <!-- /controls -->           
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="roles">Date Paiement</label>
                         <div class="controls">
-                            2014-01-01
+                            <input type="date" class="span2" id="birthday" value="2014-01-01" >
                         </div> <!-- /controls -->           
                     </div> <!-- /control-group -->
 
@@ -84,10 +105,14 @@
                     <div class="control-group">
                         <label class="control-label" for="comments">Comments</label>
                         <div class="controls">
-                            <textarea id="comments" disabled></textarea>
+                            <textarea id="comments"></textarea>
                         </div> <!-- /controls -->           
                     </div> <!-- /control-group -->
-                
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Add</button> 
+            <button class="btn">Cancel</button>
+                    </div> <!-- /form-actions -->
                     
                 </fieldset>  
                 </form>    

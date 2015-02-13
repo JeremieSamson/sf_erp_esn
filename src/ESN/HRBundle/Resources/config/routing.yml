@@ -25,4 +25,3 @@ esn_hr_recruitment_view:
 esn_hr_recruitment_delete:
     path:   /human-ressources/recruitment/delete/{id}
     defaults: { _controller : ESNHRBundle:Recruitment:deleteApply}
-    
