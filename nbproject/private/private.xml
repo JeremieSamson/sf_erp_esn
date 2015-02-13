@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/app/Resources/views/base.html.twig</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdministrationBundle/Resources/config/routing.yml</file>
             <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdministrationBundle/Resources/views/Countries/form.html.twig</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdministrationBundle/Controller/AdministrationController.php</file>
-            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdministrationBundle/Resources/views/index.html.twig</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdministrationBundle/Resources/config/routing.yml</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdministrationBundle/Controller/CountriesController.php</file>
+            <file>file:/home/helene/NetBeansProjects/esn-lille-administration/src/ESN/AdministrationBundle/Controller/UniversitiesController.php</file>
         </group>
     </open-files>
 </project-private>
