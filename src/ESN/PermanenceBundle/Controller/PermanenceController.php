@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Request;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\PermanenceBundle\Entity\PermanenceReport;
 
-use Doctrine\ORM\EntityRepository;
-
 class PermanenceController extends Controller
 {
     public function indexAction($type)
@@ -20,6 +18,8 @@ class PermanenceController extends Controller
     public function informationsAction()
     { 
         $em = $this->getDoctrine()->getManager();
+       
+        // CAISSE
         $query = $em->createQuery(
             'SELECT c
             FROM ESNTreasuryBundle:Caisse c
@@ -27,18 +27,31 @@ class PermanenceController extends Controller
             '
         )->setMaxResults(1);
         
-        $montant = $query->getSingleResult();
+        $montantQuery = $query->getOneOrNullresult();
         
-         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
+        if ($montantQuery == NULL) {
+            $montant = 0;
+        } else {
+            $montant = $montantQuery.getNumber();
+        }
+        
+        // CARD
+        $queryCard = $em->createQuery(
             'SELECT c
             FROM ESNAdministrationBundle:Card c
             ORDER BY c.date DESC
             '
         )->setMaxResults(1);
         
-        $nbCard = $query->getSingleResult();
         
+        $nbCardQuery = $queryCard->getOneOrNullresult();
+        if ($nbCardQuery == NULL) {
+            $nbCard = 0;
+        } else {
+            $nbCard = $nbCardQuery.getNumber();
+        }
+        
+        // RENDER RESULT
         $informations= array("caisse" => $montant,"nbCard" => $nbCard);
         
         return $this->render('ESNPermanenceBundle:Informations:index.html.twig',$informations);

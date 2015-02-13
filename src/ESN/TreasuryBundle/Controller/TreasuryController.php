@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ESN\TreasuryBundle\Entity\Operation;
 use ESN\TreasuryBundle\Entity\Caisse;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\ORM\NoResultException;
 
 class TreasuryController extends Controller
 {
@@ -25,7 +26,12 @@ class TreasuryController extends Controller
             '
         )->setMaxResults(1);
         
-        $montant = $query->getSingleResult();
+        try {
+            $montantQuery = $query->getSingleResult();
+            $montant = $montantQuery->getMontant();
+        } catch (NoResultException $e) {
+            $montant = 0;
+        }
         
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNTreasuryBundle:Operation');
         
@@ -77,13 +83,18 @@ class TreasuryController extends Controller
             ORDER BY c.date DESC
             '
             )->setMaxResults(1);
-        
-            $montant = $query->getSingleResult();
+            
+            try {
+                $montantQuery = $query->getSingleResult();
+                $montant = $montantQuery->getMontant();
+            } catch (NoResultException $e) {
+                $montant = 0;
+            }
             
             $em = $this->getDoctrine()->getManager();
             
             $caisse = new Caisse();
-            $caisse->setMontant($montant->getMontant()+$operation->getMontant());
+            $caisse->setMontant($montant+$operation->getMontant());
             
             $em->persist($caisse);
             $em->flush();
