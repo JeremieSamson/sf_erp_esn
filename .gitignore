@@ -31,6 +31,9 @@ phpunit.xml
 # Build data
 build/
 
+#PhpStorm
+.idea
+
 # Composer PHAR
 composer.phar
 nbproject/
