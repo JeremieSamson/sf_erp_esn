@@ -22,3 +22,8 @@ parameters:
     debug_toolbar:          true
     debug_redirects:        false
     use_assetic_controller: true
+
+    #Dashboard
+    facebook_page_id: ESNLillePage
+    facebook_group_id: 276842445810288
+    section_website: http://esnlille.fr/satellite
