@@ -89,7 +89,7 @@ class PermanenceController extends Controller
             'class' => 'ESNAdministrationBundle:Trip', 
             'property' => 'name'))
         ->add('members', 'entity', array(
-            'class' => 'ESNMembersBundle:Member',
+            'class' => 'ESNAdministrationBundle:Trip',
             'property' => 'name'))
         ->getForm();
         
@@ -101,7 +101,6 @@ class PermanenceController extends Controller
             $em->persist($participateTrip);
             $em->flush();
         }
-        
         return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',array('form' => $form->createView(),'title' => "Permanence")); 
     }//enrollUserToTripAction
     
