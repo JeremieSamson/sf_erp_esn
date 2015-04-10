@@ -17,6 +17,7 @@ class CardController extends Controller{
     public function addCardAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+
         // CARD
         $queryCard = $em->createQuery(
             'SELECT c

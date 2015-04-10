@@ -1,27 +1,20 @@
 {% extends '::base.html.twig' %}
 
-
 {% block subnavbar %}
-{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
 {% block body %}
-
 <div class="row">
-       
-                
     <div class="span8">
         <div class="widget">
             <div class="widget-content">
-            
                 <h3>Cards</h3>
-                
                 <hr/>
                     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
                     {{ form_errors(form)}}
                     
                      <fieldset>
-                    
                          <div class="control-group">
                             <label class="control-label" for="oldnumber">Number of cards</label>
                             <div class="controls">
@@ -41,13 +34,10 @@
                              <a class="btn" href="{{ path('esn_administration_countries') }}">Cancel</a>
                         </div> <!-- /form-actions -->
                     </fieldset>
-           
-            {{ form_end(form) }}
+
+                    {{ form_end(form) }}
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
-    </div>    
-            
-
-    
+    </div>
 </div>
 {% endblock %}
