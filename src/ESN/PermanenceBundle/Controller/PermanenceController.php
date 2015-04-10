@@ -2,6 +2,7 @@
 
 namespace ESN\PermanenceBundle\Controller;
 
+use ESN\AdministrationBundle\Entity\Card;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
@@ -161,8 +162,21 @@ class PermanenceController extends Controller
         
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            //Remove numbers of card
+            $sellcard = $report->getSellCard();
+            $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
+            $availableCard = $nbCard - $sellcard;
+
+            $Card = new Card();
+            $Card->setNumber($availableCard);
+            $em->persist($Card);
+            $em->flush();
+
+            $report->setAvailableCard($availableCard);
             $em->persist($report);
             $em->flush();
+
             $request->getSession()->getFlashBag()->add('notice', 'Rapport bien enregistrée.');
         }
         

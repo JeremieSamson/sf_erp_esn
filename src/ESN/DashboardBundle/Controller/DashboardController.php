@@ -118,7 +118,8 @@ class DashboardController extends Controller
      */
     private function getFacebookGroupMembers(){
         $group_id = $this->container->getParameter('facebook_group_id');
-        $access_token = "CAACEdEose0cBALReZByJBIG9yDZBX28AABBUbOJl8KZBmHFZCBHdZBdEIUp0MF8zjzpqoH82QCdrM6kSXkSMbd5DZAppaG04pTQrLxCkZClqHSA3q321Axwktssr7ZAF3bS8U18JUZBp4VmziEkZCeytdWwEdTpDWJzABIXM1SWaYnuvmjBZBYkZCieWrNXkx7DZBItnZAcNE0X2hZCZBOApFYhaO34ZC";
+
+        $access_token = "500984910050697|bZ9KdmLB98i1TwIZyFHJa-xFdoM";
         $base_url = "https://graph.facebook.com/";
         $url = $base_url . $group_id . '/members?access_token=' . $access_token;
 
