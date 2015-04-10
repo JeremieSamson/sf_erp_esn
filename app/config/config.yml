@@ -70,3 +70,16 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+# CAS Authentification
+#be_simple_sso_auth:
+#    admin_sso:
+#        protocol:
+#            id: cas
+#            version: 2
+#        server:
+#            id: cas
+#            login_url: http://galaxy.esn.org/login
+#            logout_url: http://galaxy.esn.org/logout
+#            validation_url: http://cas.server.tld/serviceValidate
+#            port: 443

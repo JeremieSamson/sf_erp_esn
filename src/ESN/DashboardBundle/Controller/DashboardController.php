@@ -49,8 +49,7 @@ class DashboardController extends Controller
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), null, 5, null);;
 
         //Events
-        //$events = $this->getEvents();
-        $events = null;
+        $events = $this->getEvents();
 
         $dashboard = array( "facebook"  => array("likes" => $likes, "group_members" => $group_members),
                             "members"   => array("esners" => $esners, "erasmus" => $erasmus),
@@ -118,7 +117,20 @@ class DashboardController extends Controller
      * @return numbers
      */
     private function getFacebookGroupMembers(){
-        return "1501";
+        $group_id = $this->container->getParameter('facebook_group_id');
+        $access_token = "CAACEdEose0cBALReZByJBIG9yDZBX28AABBUbOJl8KZBmHFZCBHdZBdEIUp0MF8zjzpqoH82QCdrM6kSXkSMbd5DZAppaG04pTQrLxCkZClqHSA3q321Axwktssr7ZAF3bS8U18JUZBp4VmziEkZCeytdWwEdTpDWJzABIXM1SWaYnuvmjBZBYkZCieWrNXkx7DZBItnZAcNE0X2hZCZBOApFYhaO34ZC";
+        $base_url = "https://graph.facebook.com/";
+        $url = $base_url . $group_id . '/members?access_token=' . $access_token;
+
+        $total_members = 0;
+        $content=file_get_contents($url);
+        $json=json_decode($content,true);
+        while (!empty($json['paging']['next'])){
+            $total_members += count($json['data']);
+            $content=file_get_contents($json['paging']['next']);
+            $json=json_decode($content,true);
+        }
+        return $total_members;
     }
 
     /*
