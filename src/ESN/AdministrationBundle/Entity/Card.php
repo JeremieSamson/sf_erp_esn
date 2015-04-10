@@ -3,13 +3,13 @@
 namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use ESN\AdministrationBundle\Entity\CardRepository;
 
 /**
  * Card
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\CardRepository")
  */
 class Card
 {

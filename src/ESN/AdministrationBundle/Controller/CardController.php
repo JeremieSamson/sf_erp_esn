@@ -18,21 +18,7 @@ class CardController extends Controller{
     {
         $em = $this->getDoctrine()->getManager();
 
-        // CARD
-        $queryCard = $em->createQuery(
-            'SELECT c
-            FROM ESNAdministrationBundle:Card c
-            ORDER BY c.date DESC
-            '
-        )->setMaxResults(1);
-
-
-        $nbCardQuery = $queryCard->getOneOrNullresult();
-        if ($nbCardQuery == NULL) {
-            $nbCard = 0;
-        } else {
-            $nbCard = $nbCardQuery->getNumber();
-        }
+        $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
 
         // CREATE CARD
         $rule = new Card();

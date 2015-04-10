@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\PermanenceBundle\Entity\PermanenceReport;
+use ESN\AdministrationBundle\Entity\CardRepository;
 
 class PermanenceController extends Controller
 {
@@ -30,30 +31,17 @@ class PermanenceController extends Controller
             ORDER BY c.date DESC
             '
         )->setMaxResults(1);
-        
+
         $montantQuery = $query->getOneOrNullresult();
-        
+
         if ($montantQuery == NULL) {
             $montant = 0;
         } else {
             $montant = $montantQuery->getMontant();
         }
-        
+
         // CARD
-        $queryCard = $em->createQuery(
-            'SELECT c
-            FROM ESNAdministrationBundle:Card c
-            ORDER BY c.date DESC
-            '
-        )->setMaxResults(1);
-        
-        
-        $nbCardQuery = $queryCard->getOneOrNullresult();
-        if ($nbCardQuery == NULL) {
-            $nbCard = 0;
-        } else {
-            $nbCard = $nbCardQuery->getNumber();
-        }
+        $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
         
         // RENDER RESULT
         $informations= array("caisse" => $montant,"nbCard" => $nbCard);
@@ -154,14 +142,18 @@ class PermanenceController extends Controller
      */
     public function createReportAction($type,Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $report = new PermanenceReport();
+
+        //Get number of cards
+        $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
          
         $form = $this->createFormBuilder($report)
         ->add('amountBefore', 'money')
         ->add('amountAfter', 'money')
         ->add('amountSell', 'money')
         ->add('sellCard', 'integer')
-        ->add('availableCard', 'integer')
+        ->add('availableCard', 'integer', array('attr' => array('value' => $nbCard)))
         ->add('comments', 'textarea')
         ->getForm();
         
