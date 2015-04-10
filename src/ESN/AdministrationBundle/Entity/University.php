@@ -28,6 +28,12 @@ class University
      */
     private $name;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cigle", type="text")
+     */
+    private $cigle;
 
     /**
      * Get id
@@ -60,5 +66,21 @@ class University
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCigle()
+    {
+        return $this->cigle;
+    }
+
+    /**
+     * @param string $cigle
+     */
+    public function setCigle($cigle)
+    {
+        $this->cigle = $cigle;
     }
 }

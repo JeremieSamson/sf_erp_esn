@@ -83,10 +83,9 @@ class MembersController extends Controller
         $member = array(
            'member' => $this->getAllMembers($type, $id)
         );
-        
+
         if ($type == 'esners') {
             return $this->render('ESNMembersBundle:Esners:detail.html.twig', $member);
-            
         } else {
             return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', $member);
         }
@@ -101,14 +100,20 @@ class MembersController extends Controller
      */
     public function editAction($type, $id)
     {
-        $member = array(
-           'member' => $this->getAllMembers($type, $id)
+        $em = $this->getDoctrine()->getManager();
+        $universities = $em->getRepository('ESNAdministrationBundle:University')->findAll();
+        $languages = $em->getRepository('ESNAdministrationBundle:Country')->findAll();
+
+        $data = array(
+            'member' => $this->getAllMembers($type, $id),
+            'universities' => $universities,
+            'languages' => $languages,
         );
         
         if ($type == 'esners') {
-            return $this->render('ESNMembersBundle:Esners:form.html.twig', $member);
+            return $this->render('ESNMembersBundle:Esners:form.html.twig', $data);
         } else {
-            return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $member);
+            return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $data);
         }
     }//editAction
     

@@ -89,7 +89,7 @@
                             {% for report in dashboard.reports %}
                                 <li>
                                     <div class="news-item-date"> <span class="news-item-day">{{ report.date|date("d") }}</span> <span class="news-item-month">{{ report.date|date("M") }}</span> </div>
-                                    <div class="news-item-detail"> <a>Rapport de permanence #{{ report.id }}</a>
+                                    <div class="news-item-detail"> <a href="{{ path('esn_permanence_seeReport', { 'id': report.id }) }}">Rapport de permanence #{{ report.id }}</a>
                                         <p class="news-item-preview">{{ report.comments }}</p>
                                     </div>
                                 </li>

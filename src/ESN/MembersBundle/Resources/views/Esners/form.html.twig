@@ -68,10 +68,9 @@
                         <label class="control-label" for="nationality">Nationality</label>
                         <div class="controls">
                             <select id="nationality">
-                                <option>English</option>
-                                <option selected>French</option>
-                                <option>Italian</option>
-                                <option>Spanish</option>
+                                {% for language in languages %}
+                                    <option value="{{ language.id }}">{{ language.nationality }}</option>
+                                {% endfor %}
                             </select>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
@@ -112,9 +111,9 @@
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
                             <select id="university">
-                                <option selected>University Lille 1</option>
-                                <option>University Lille 2</option>
-                                <option>University Lille 3</option>
+                                {% for univercity in universities %}
+                                    <option value="{{ univercity.id }}">{{ univercity.name }}</option>
+                                {% endfor %}
                             </select>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
@@ -125,10 +124,9 @@
                         <label class="control-label" for="language1">Language 1</label>
                         <div class="controls">
                             <select id="language1">
-                                <option selected>English</option>
-                                <option>French</option>
-                                <option>Italian</option>
-                                <option>Spanish</option>
+                                {% for language in languages %}
+                                    <option value="{{ language.id }}">{{ language.nationality }}</option>
+                                {% endfor %}
                             </select>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
@@ -137,10 +135,9 @@
                         <label class="control-label" for="language2">Language 2</label>
                         <div class="controls">
                             <select id="language2">
-                                <option>English</option>
-                                <option selected>French</option>
-                                <option>Italian</option>
-                                <option>Spanish</option>
+                                {% for language in languages %}
+                                    <option value="{{ language.id }}">{{ language.nationality }}</option>
+                                {% endfor %}
                             </select>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
@@ -149,10 +146,9 @@
                         <label class="control-label" for="language3">Language 3</label>
                         <div class="controls">
                             <select id="language3">
-                                <option>English</option>
-                                <option>French</option>
-                                <option selected>Italian</option>
-                                <option>Spanish</option>
+                                {% for language in languages %}
+                                    <option value="{{ language.id }}">{{ language.nationality }}</option>
+                                {% endfor %}
                             </select>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->

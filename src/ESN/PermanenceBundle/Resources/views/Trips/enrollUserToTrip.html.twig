@@ -10,14 +10,14 @@
         <div class="widget">
             <div class="widget-content">
                     <h2> Enrollment Trip </h2>
-                    
+
                     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
                     {{ form_errors(form)}}
                     <br>
                     <form class="form-horizontal" id="enroll-user">
                     <fieldset>
-                        
-                        <div class="control-group">											
+
+                        <div class="control-group">
                             <label class="span3" for="trip">Trip : </label>
                             <div class="controls">
                                 {% if form.trips.vars.choices %}
@@ -26,10 +26,10 @@
                                     Il n'y a pas encore de voyage de créé. <br>
                                     Pour en créer un <a href="{{ path('esn_administration_trips_add') }}">cliquez ici</a>.
                                 {% endif %}
-                            </div> <!-- /controls -->				
+                            </div> <!-- /controls -->
                         </div>
-                        
-                        <div class="control-group">											
+
+                        <div class="control-group">
                             <label class="span3" for="user">Member to enroll : </label>
                             <div class="controls">
                                 {% if form.members.vars.choices %}
@@ -38,11 +38,11 @@
                                     Il n'y a pas encore de membre de créé.<br>
                                     Pour en créer un <a href="{{ path('esn_hr_association_add') }}">cliquez ici</a>.
                                 {% endif %}
-                            </div> <!-- /controls -->				
+                            </div> <!-- /controls -->
                         </div>
-                        
+
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-primary" value="Save"/> 
+                            <input type="submit" class="btn btn-primary" value="Save"/>
                              <a class="btn" href="{{ path('esn_permanence_trips') }}">Cancel</a>
                         </div> <!-- /form-actions -->
                     </fieldset>

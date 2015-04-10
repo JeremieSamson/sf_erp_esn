@@ -323,8 +323,11 @@ class Member
     
     public function getAge() {
         $birthday = $this->getBirthday();
-        $date = new DateTime();
-        return date_format($date,'Y') - date_format($birthday, 'Y');
+
+        if (!is_null($birthday))
+            return date_format(new DateTime(),'Y') - date_format($birthday, 'Y');
+
+        return -1;
     }
 
     /**

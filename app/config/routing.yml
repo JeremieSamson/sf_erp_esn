@@ -26,3 +26,6 @@ esn_login:
     resource: "@ESNLoginBundle/Resources/config/routing.yml"
     prefix:   /
 
+esn_index:
+    path:     /
+    defaults: { _controller: ESNDashboardBundle:Dashboard:index }

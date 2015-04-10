@@ -49,7 +49,8 @@ class DashboardController extends Controller
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), null, 5, null);;
 
         //Events
-        $events = $this->getEvents();
+        //$events = $this->getEvents();
+        $events = null;
 
         $dashboard = array( "facebook"  => array("likes" => $likes, "group_members" => $group_members),
                             "members"   => array("esners" => $esners, "erasmus" => $erasmus),
@@ -68,7 +69,7 @@ class DashboardController extends Controller
     private function getEvents($limit = 5){
         $base_url = $this->container->getParameter('section_website');
 
-        $content = file_get_contents($base_url . "/events/feed");
+        $content = file_get_contents($base_url . "/events/feed/");
         $x = new SimpleXmlElement($content);
 
         $cpt = 0;

@@ -28,7 +28,7 @@
         
         <div class="widget ">
             <div class="widget-content">
-                <h3>{{ member[0].identity.name }}</h3>
+                <h3>{{ member[0].identity.surname ~ ' ' ~ member[0].identity.name }}</h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -43,21 +43,39 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Age</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.getAge() }}</span>
+                            <span>
+                                {% if member[0].identity.getAge() > 0 %}
+                                    {{ member[0].identity.getAge() }}
+                                {% else %}
+                                    Age non définit.
+                                {% endif %}
+                            </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.birthday|date('d/m/Y') }}</span>
+                            <span>
+                                {% if member[0].identity.getBirthday() %}
+                                    {{ member[0].identity.getBirthday()|date('d/m/Y') }}
+                                {% else %}
+                                    Date de naissance non définit.
+                                {% endif %}
+                            </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.nationality }}</span>
+                            <span>
+                                {% if member[0].identity.nationality %}
+                                    {{ member[0].identity.nationality }}
+                                {% else %}
+                                    Nationalité non définit.
+                                {% endif %}
+                            </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -66,21 +84,39 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            <span>{{ member[0].esner.address }}</span>
+                            <span>
+                                {% if member[0].identity.address %}
+                                    {{ member[0].identity.address }}
+                                {% else %}
+                                    Adresse non définit.
+                                {% endif %}
+                            </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
-                            <span>{{ member[0].esner.city }}</span>
+                            <span>
+                                {% if member[0].identity.city %}
+                                    {{ member[0].identity.city }}
+                                {% else %}
+                                    Ville non définit.
+                                {% endif %}
+                            </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">Zip Code</label>
                         <div class="controls">
-                            <span>{{ member[0].esner.zipcode }}</span>
+                            <span>
+                                {% if member[0].identity.zipcode %}
+                                    {{ member[0].identity.zipcode }}
+                                {% else %}
+                                    Code postal non définit.
+                                {% endif %}
+                            </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -89,14 +125,20 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <span>{{member[0].identity.study}}</span>
+                            <span>
+                                {% if member[0].identity.study %}
+                                    {{ member[0].identity.study }}
+                                {% else %}
+                                    Étude non définit.
+                                {% endif %}
+                            </span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            <span>not implement</span>
+                            <span>not implemented</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -105,21 +147,21 @@
                     <div class="control-group">
                         <label class="control-label" for="language1">Language 1</label>
                         <div class="controls">
-                            <span>not implement</span>
+                            <span>not implemented</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="language2">Language 2</label>
                         <div class="controls">
-                             <span>not implement</span>
+                             <span>not implemented</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="language3">Language 3</label>
                         <div class="controls">
-                             <span>not implement</span>
+                             <span>not implemented</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     

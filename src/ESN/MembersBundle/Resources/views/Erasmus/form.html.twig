@@ -10,7 +10,6 @@
                 
                 &nbsp; <input type="text" value="{{member[0].identity.email}}"> <br/>
                 &nbsp; <input type="text" value="{{member[0].identity.phone}}"> <br/>
-                &nbsp; <input type="text" value="georges.ciaoba">
 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -49,11 +48,9 @@
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
                             <select id="nationality">
-                                <option>English</option>
-                                <option>French</option>
-                                <option>Italian</option>
-                                <option selected>Romanian</option>
-                                <option>Spanish</option>
+                                {% for language in languages %}
+                                    <option value="{{ language.id }}">{{ language.nationality }}</option>
+                                {% endfor %}
                             </select>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
@@ -93,9 +90,9 @@
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
                             <select id="university">
-                                <option selected>University Lille 1</option>
-                                <option>University Lille 2</option>
-                                <option>University Lille 3</option>
+                                {% for univercity in universities %}
+                                    <option value="{{ univercity.id }}">{{ univercity.name }}</option>
+                                {% endfor %}
                             </select>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
