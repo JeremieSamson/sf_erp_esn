@@ -37,8 +37,10 @@ class DashboardController extends Controller
 
     private function getDashboard(){
         //Facebook
-        $likes         = ($this->getFacebookPageLikes() >= 0) ? $this->getFacebookPageLikes() : 0;
-        $group_members = ($this->getFacebookGroupMembers() >= 0) ? $this->getFacebookGroupMembers() : 0;
+        //$likes         = ($this->getFacebookPageLikes() >= 0) ? $this->getFacebookPageLikes() : 0;
+        $likes = 0;
+        //$group_members = ($this->getFacebookGroupMembers() >= 0) ? $this->getFacebookGroupMembers() : 0;
+        $group_members = 0;
 
         //Members
         $em      = $this->getDoctrine()->getManager();
@@ -49,7 +51,8 @@ class DashboardController extends Controller
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), null, 5, null);;
 
         //Events
-        $events = $this->getEvents();
+        //$events = $this->getEvents();
+        $events = null;
 
         $dashboard = array( "facebook"  => array("likes" => $likes, "group_members" => $group_members),
                             "members"   => array("esners" => $esners, "erasmus" => $erasmus),

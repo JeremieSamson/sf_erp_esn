@@ -42,6 +42,13 @@
                             </div> <!-- /controls -->			
                         </div> <!-- /control-group -->
 
+                         <div class="control-group">
+                             <label class="control-label" for="language">Phone</label>
+                             <div class="controls">
+                                 {{ form_widget(form.phone, { 'attr': {'class': 'span4'} }) }}
+                             </div> <!-- /controls -->
+                         </div> <!-- /control-group -->
+
                          <div class="form-actions">
                             <input type="submit" class="btn btn-primary" value="Save"/> 
                              <a class="btn" href="{{ path('esn_hr_association') }}">Cancel</a>

@@ -2,6 +2,8 @@
 
 namespace ESN\HRBundle\Controller;
 
+use ESN\HRBundle\Form\ESNerType;
+use ESN\HRBundle\Form\Handler\ESNerHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ESN\MembersBundle\Entity\Member;
 use ESN\MembersBundle\Entity\Esner;
@@ -38,43 +40,22 @@ class AssociationController extends Controller{
      */
     public function newEsnerAction(Request $request)
     {
-        $member = new Member();
-        $esner = new Esner();
-        $infoEsner = new InfoEsner();
-        
-        $form = $this->createFormBuilder($member)
-            ->add('name', 'text')
-            ->add('surname', 'text')
-            ->add('email', 'text')
-            ->getForm();
-        
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('form.factory')->create(new ESNerType());
+        $request = $this->get('request');
+        $formHandler = new ESNerHandler($em, $form, $request);
         $form->handleRequest($request);
-        
-        if ($form->isValid()) {
-            // fait quelque chose comme sauvegarder la tâche dans la bdd
-            $em = $this->getDoctrine()->getManager();
-            
-            $member->setInscription(new DateTime());
-            
-            $em->persist($member);
-    
-            $esner->setMember($member);
-            $infoEsner->setEsner($esner);
-            
-            $em->persist($esner);
-            $em->persist($infoEsner);
-            
-            $em->flush();
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-            
+
+        $process = $formHandler->process();
+        if ($process) {
             return $this->redirect($this->generateUrl('esn_hr_association'));
         }
-        
-        // retourne sur le formulaire 
+
         return $this->render('ESNHRBundle:Association:form.html.twig', array(
             'type' => "association",
+            'hasError' => $request->getMethod() == 'POST' && !$form->isValid(),
             'form' => $form->createView(),
-        ));   
+        ));
     }
     
     /**

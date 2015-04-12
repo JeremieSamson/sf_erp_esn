@@ -2,6 +2,10 @@
 
 namespace ESN\MembersBundle\Controller;
 
+use ESN\MembersBundle\Form\ErasmusType;
+use ESN\MembersBundle\Form\Handler\ErasmusHandler;
+use ESN\MembersBundle\Form\Handler\MembersHandler;
+use ESN\MembersBundle\Form\MembersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use ESN\MembersBundle\Entity\Member;
@@ -84,6 +88,8 @@ class MembersController extends Controller
            'member' => $this->getAllMembers($type, $id)
         );
 
+        //var_dump($member['member'][0]['esner']->getAddress());die();
+
         if ($type == 'esners') {
             return $this->render('ESNMembersBundle:Esners:detail.html.twig', $member);
         } else {
@@ -98,7 +104,7 @@ class MembersController extends Controller
      * @param type $id
      * @return type
      */
-    public function editAction($type, $id)
+    public function editAction(Request $request, $type, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $universities = $em->getRepository('ESNAdministrationBundle:University')->findAll();
@@ -109,12 +115,35 @@ class MembersController extends Controller
             'universities' => $universities,
             'languages' => $languages,
         );
-        
-        if ($type == 'esners') {
-            return $this->render('ESNMembersBundle:Esners:form.html.twig', $data);
-        } else {
-            return $this->render('ESNMembersBundle:Erasmus:form.html.twig', $data);
-        }
+
+
+        $form = $this->createFormBuilder()
+            ->add('email', null)
+            ->add('phone', null)
+            ->add('name', null)
+            ->add('surname', null)
+            ->add('birthday', null)
+            ->add('nationality', null)
+            ->add('address', null)
+            ->add('city', null)
+            ->add('zipcode', null)
+            ->add('study', null)
+            ->add('university', null)
+            ->add('language', null)
+            ->add('language', null)
+            ->add('language', null)
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        $template = ($type == 'esners') ? 'Esners' : 'Erasmus';
+
+        return $this->render("ESNMembersBundle:$template:form.html.twig", array(
+                "data" => $data,
+                "form" => $form->createView()
+            )
+        );
+
     }//editAction
     
     /**
@@ -160,32 +189,25 @@ class MembersController extends Controller
     }//getElementMember
     
     public function createErasmusAction(Request $request) {
-        $identity_erasmus = new Member();
-        $erasmus  = new Erasmus();
-        $form = $this->createFormBuilder($identity_erasmus)
-        ->add('name', 'text')      
-        ->add('surname','text')
-        ->add('email','email')
-        ->add('phone','text')
-        ->getForm();
-        
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        $form = $this->get('form.factory')->create(new ErasmusType());
+        $formHandler = new ErasmusHandler($em, $form, $request);
         $form->handleRequest($request);
-        if ($form->isValid()) {
-           $em = $this->getDoctrine()->getManager();
-           $erasmus->setMember($identity_erasmus);
-           $erasmus->setEsncard(55511552862);
-           $em->persist($identity_erasmus);
-           $em->persist($erasmus);
 
-           $em->flush();
-           return $this->redirect($this->generateUrl('esn_members_homepage', array(
-               'type'=>'erasmus'
-           )));
+        $process = $formHandler->process();
+
+        if ($process)
+        {
+            return $this->redirect($this->generateUrl('esn_members_homepage', array(
+                'type'=>'erasmus'
+            )));
         }
-        
-        return $this->render('ESNMembersBundle:Erasmus:form_create.html.twig', array(
-            'form' => $form->createView()
-        )); 
-    }//createErasmusAction
 
+        return $this->render('ESNMembersBundle:Erasmus:form_create.html.twig',
+            array(
+                'form' => $form->createView(),
+                'hasError' => $request->getMethod() == 'POST' && !$form->isValid()
+            ));
+    }//createErasmusAction
 }

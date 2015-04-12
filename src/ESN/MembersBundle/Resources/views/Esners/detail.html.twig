@@ -16,7 +16,7 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                &nbsp; {{ member[0].identity.name }} <br/>
+                &nbsp; {{ member[0].identity.surname }} {{ member[0].identity.name }} <br/>
                 &nbsp; {{ member[0].identity.phone }}
                                
             </div><!-- /widget-content --> 
@@ -47,7 +47,7 @@
                                 {% if member[0].identity.getAge() > 0 %}
                                     {{ member[0].identity.getAge() }}
                                 {% else %}
-                                    Age non définit.
+                                    ~
                                 {% endif %}
                             </span>
                         </div> <!-- /controls -->			
@@ -60,7 +60,7 @@
                                 {% if member[0].identity.getBirthday() %}
                                     {{ member[0].identity.getBirthday()|date('d/m/Y') }}
                                 {% else %}
-                                    Date de naissance non définit.
+                                    ~
                                 {% endif %}
                             </span>
                         </div> <!-- /controls -->			
@@ -73,7 +73,7 @@
                                 {% if member[0].identity.nationality %}
                                     {{ member[0].identity.nationality }}
                                 {% else %}
-                                    Nationalité non définit.
+                                    ~
                                 {% endif %}
                             </span>
                         </div> <!-- /controls -->			
@@ -85,10 +85,10 @@
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
                             <span>
-                                {% if member[0].identity.address %}
-                                    {{ member[0].identity.address }}
+                                {% if member[0].esner.address %}
+                                    {{ member[0].esner.address }}
                                 {% else %}
-                                    Adresse non définit.
+                                    ~
                                 {% endif %}
                             </span>
                         </div> <!-- /controls -->			
@@ -98,10 +98,10 @@
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
                             <span>
-                                {% if member[0].identity.city %}
-                                    {{ member[0].identity.city }}
+                                {% if member[0].esner.city %}
+                                    {{ member[0].esner.city }}
                                 {% else %}
-                                    Ville non définit.
+                                    ~
                                 {% endif %}
                             </span>
                         </div> <!-- /controls -->			
@@ -111,10 +111,10 @@
                         <label class="control-label" for="city">Zip Code</label>
                         <div class="controls">
                             <span>
-                                {% if member[0].identity.zipcode %}
-                                    {{ member[0].identity.zipcode }}
+                                {% if member[0].esner.zipcode %}
+                                    {{ member[0].esner.zipcode }}
                                 {% else %}
-                                    Code postal non définit.
+                                    ~
                                 {% endif %}
                             </span>
                         </div> <!-- /controls -->			
@@ -129,7 +129,7 @@
                                 {% if member[0].identity.study %}
                                     {{ member[0].identity.study }}
                                 {% else %}
-                                    Étude non définit.
+                                    ~
                                 {% endif %}
                             </span>
                         </div> <!-- /controls -->			

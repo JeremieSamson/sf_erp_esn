@@ -22,8 +22,8 @@
                 
                 <hr/>
                 
-                Mail  <input type="text" value="{{member[0].identity.email}}"/> <br/>
-                Phone  <input type="text" value="{{member[0].identity.phone}}"/>
+                Mail  <input type="text" value="{{data.member[0].identity.email}}"/> <br/>
+                Phone  <input type="text" value="{{data.member[0].identity.phone}}"/>
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -34,8 +34,8 @@
         
         <div class="widget ">
             <div class="widget-content">
-                Firstname  &nbsp; <input type="text" value="{{member[0].identity.name}}"/> &nbsp; &nbsp; &nbsp;
-                Surname  &nbsp; <input type="text" value="{{member[0].identity.surname}}"/>
+                Firstname  &nbsp; <input type="text" value="{{data.member[0].identity.name}}"/> &nbsp; &nbsp; &nbsp;
+                Surname  &nbsp; <input type="text" value="{{data.member[0].identity.surname}}"/>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -60,7 +60,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="{{ member[0].identity.birthday|date('Y-m-d') }}" >
+                            <input type="date" class="span6" id="birthday" value="{{ data.member[0].identity.birthday|date('Y-m-d') }}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -68,7 +68,7 @@
                         <label class="control-label" for="nationality">Nationality</label>
                         <div class="controls">
                             <select id="nationality">
-                                {% for language in languages %}
+                                {% for language in data.languages %}
                                     <option value="{{ language.id }}">{{ language.nationality }}</option>
                                 {% endfor %}
                             </select>
@@ -80,21 +80,21 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="address" value="{{ member[0].esner.address}}" >
+                            <input type="text" class="span6" id="address" value="{{ data.member[0].esner.address}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="city" value="{{ member[0].esner.city}}" >
+                            <input type="text" class="span6" id="city" value="{{ data.member[0].esner.city}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">Zip Code</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value="{{ member[0].esner.zipcode}}" >
+                            <input type="text" class="span6" id="zip" value="{{ data.member[0].esner.zipcode}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -103,7 +103,7 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value="{{ member[0].identity.study }}" >
+                            <input type="text" class="span6" id="zip" value="{{ data.member[0].identity.study }}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -111,7 +111,7 @@
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
                             <select id="university">
-                                {% for univercity in universities %}
+                                {% for univercity in data.universities %}
                                     <option value="{{ univercity.id }}">{{ univercity.name }}</option>
                                 {% endfor %}
                             </select>
@@ -124,7 +124,7 @@
                         <label class="control-label" for="language1">Language 1</label>
                         <div class="controls">
                             <select id="language1">
-                                {% for language in languages %}
+                                {% for language in data.languages %}
                                     <option value="{{ language.id }}">{{ language.nationality }}</option>
                                 {% endfor %}
                             </select>
@@ -135,7 +135,7 @@
                         <label class="control-label" for="language2">Language 2</label>
                         <div class="controls">
                             <select id="language2">
-                                {% for language in languages %}
+                                {% for language in data.languages %}
                                     <option value="{{ language.id }}">{{ language.nationality }}</option>
                                 {% endfor %}
                             </select>
@@ -146,7 +146,7 @@
                         <label class="control-label" for="language3">Language 3</label>
                         <div class="controls">
                             <select id="language3">
-                                {% for language in languages %}
+                                {% for language in data.languages %}
                                     <option value="{{ language.id }}">{{ language.nationality }}</option>
                                 {% endfor %}
                             </select>

@@ -72,7 +72,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                           <input type="date" class="span6" id="card" placeholder="esn card" value="" disabled>
+                            {{ form_widget(form.birthday, {'attr': {'class': 'span6' }}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -96,12 +96,9 @@
                     <div class="control-group">
                         <label class="control-label" for="card">ESN Card</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="card" placeholder="esn card" value="" disabled>
-                            {#{{ form_widget(form.esncard, {
-                                     'attr': {
-                                        'class': 'span6',
-                                        'id':'card', 
-                                        'placeholder' : 'esn card'} }) }} #}
+                            {{ form_widget(form.esncard, {
+                                'attr': {
+                                    'class': 'span6', 'id': 'esncard' }}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -109,7 +106,7 @@
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" placeholder="arrival date" value="" disabled>
+                            {{ form_widget(form.arrivalDate, {'attr': {'class': 'span6' }}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -117,7 +114,7 @@
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" placeholder="leaving date" value="" disabled>
+                            {{ form_widget(form.leavingDate, {'attr': {'class': 'span6' }}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     <hr/>
@@ -126,7 +123,7 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" placeholder="study" value="" disabled>
+                            {{ form_widget(form.study, {'attr': {'class': 'span6' }}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
