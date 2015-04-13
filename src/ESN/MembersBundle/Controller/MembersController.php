@@ -4,6 +4,7 @@ namespace ESN\MembersBundle\Controller;
 
 use ESN\MembersBundle\Form\ErasmusType;
 use ESN\MembersBundle\Form\Handler\ErasmusHandler;
+use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
 use ESN\MembersBundle\Form\Handler\MembersHandler;
 use ESN\MembersBundle\Form\MembersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -105,39 +106,22 @@ class MembersController extends Controller
     public function editAction(Request $request, $type, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $universities = $em->getRepository('ESNAdministrationBundle:University')->findAll();
-        $languages = $em->getRepository('ESNAdministrationBundle:Country')->findAll();
-
-        $data = array(
-            'member' => $this->getAllMembers($type, $id),
-            'universities' => $universities,
-            'languages' => $languages,
-        );
-
-
-        $form = $this->createFormBuilder()
-            ->add('email', null)
-            ->add('phone', null)
-            ->add('name', null)
-            ->add('surname', null)
-            ->add('birthday', null)
-            ->add('nationality', null)
-            ->add('address', null)
-            ->add('city', null)
-            ->add('zipcode', null)
-            ->add('study', null)
-            ->add('university', null)
-            ->add('language', null)
-            ->add('language', null)
-            ->add('language', null)
-            ->getForm();
-
+        $form = $this->get('form.factory')->create(new ErasmusType($em));
+        $formHandler = new ErasmusUpdateHandler($em, $form, $request);
         $form->handleRequest($request);
 
-        $template = ($type == 'esners') ? 'Esners' : 'Erasmus';
+        $process = $formHandler->process();
 
+        if ($process)
+        {
+            return $this->redirect($this->generateUrl('esn_members_homepage', array(
+                'type'=>'erasmus'
+            )));
+        }
+
+        $template = ($type == 'esners') ? 'Esners' : 'Erasmus';
         return $this->render("ESNMembersBundle:$template:form.html.twig", array(
-                "data" => $data,
+                "member" => $this->getAllMembers($type, $id),
                 "form" => $form->createView()
             )
         );
@@ -192,7 +176,6 @@ class MembersController extends Controller
     
     public function createErasmusAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
         $form = $this->get('form.factory')->create(new ErasmusType($em));
         $formHandler = new ErasmusHandler($em, $form, $request);
         $form->handleRequest($request);

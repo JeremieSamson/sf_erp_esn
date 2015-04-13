@@ -7,9 +7,9 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                
-                &nbsp; <input type="text" value="{{member[0].identity.email}}"> <br/>
-                &nbsp; <input type="text" value="{{member[0].identity.phone}}"> <br/>
+                {{ form_widget(form.email, {'value': member[0].identity.email}) }}
+                {{ form_widget(form.phone, {'value': member[0].identity.phone}) }}
+                <br/>
 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -19,8 +19,8 @@
         <div class="widget">
             <div class="widget-content">
             
-                Firstname  &nbsp; <input type="text" value="{{member[0].identity.name}}"/> &nbsp; &nbsp; &nbsp;
-                Surname  &nbsp; <input type="text" value="{{member[0].identity.surname}}"/>
+                Firstname  {{ form_widget(form.name, {'value': member[0].identity.name}) }}
+                Surname  {{ form_widget(form.surname, {'value': member[0].identity.surname}) }}
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -40,18 +40,14 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="{{ member[0].identity.birthday|date('Y-m-d') }}">
+                            {{ form_widget(form.birthday, {'value': member[0].identity.birthday|date('Y-m-d')}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            <select id="nationality">
-                                {% for language in languages %}
-                                    <option value="{{ language.id }}">{{ language.nationality }}</option>
-                                {% endfor %}
-                            </select>
+                            {{ form_widget(form.country, {'data': member[0].identity.nationality}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -60,21 +56,21 @@
                     <div class="control-group">
                         <label class="control-label" for="card">ESN Card</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="card" value="{{ member[0].erasmus.esncard }}">
+                            {{ form_widget(form.esncard, {'value': member[0].erasmus.esncard}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="{{ member[0].erasmus.arrivalDate|date('Y-m-d') }}">
+                            {{ form_widget(form.arrivalDate, {'value': member[0].erasmus.arrivalDate|date('Y-m-d')}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
  
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="{{ member[0].erasmus.leavingDate|date('Y-m-d') }}">
+                            {{ form_widget(form.leavingDate, {'value': member[0].erasmus.leavingDate|date('Y-m-d')}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     <hr/>
@@ -82,18 +78,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value=" {{ member[0].identity.study }}" >
+                            {{ form_widget(form.study, {'value': member[0].identity.study}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            <select id="university">
-                                {% for univercity in universities %}
-                                    <option value="{{ univercity.id }}">{{ univercity.name }}</option>
-                                {% endfor %}
-                            </select>
+                            {{ form_widget(form.university, {'data': member[0].identity.university}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
