@@ -83,4 +83,8 @@ class University
     {
         $this->cigle = $cigle;
     }
+
+    public function __toString(){
+        return (string) $this->getName();
+    }
 }

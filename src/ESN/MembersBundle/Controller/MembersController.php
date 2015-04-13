@@ -191,7 +191,7 @@ class MembersController extends Controller
     public function createErasmusAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
         $request = $this->get('request');
-        $form = $this->get('form.factory')->create(new ErasmusType());
+        $form = $this->get('form.factory')->create(new ErasmusType($em));
         $formHandler = new ErasmusHandler($em, $form, $request);
         $form->handleRequest($request);
 

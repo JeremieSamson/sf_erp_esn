@@ -131,11 +131,7 @@
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            <select id="university" disabled>
-                                <option selected>University Lille 1</option>
-                                <option>University Lille 2</option>
-                                <option>University Lille 3</option>
-                            </select>
+                            {{ form_widget(form.university, {'attr': {'class': 'span6' }}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     <!-- SUBMIT -->

@@ -8,14 +8,23 @@
 
 namespace ESN\MembersBundle\Form;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Repository\RepositoryFactory;
+use ESN\AdministrationBundle\Entity\University;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ErasmusType extends AbstractType
 {
+    private $em;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add('name', 'text')
             ->add('surname','text')
             ->add('email','email')
@@ -24,7 +33,8 @@ class ErasmusType extends AbstractType
             ->add('arrivalDate','date')
             ->add('leavingDate','date')
             ->add('esncard', 'text')
-            ->add('study', 'text');
+            ->add('study', 'text')
+            ->add('university', 'entity' , array('class' => 'ESNAdministrationBundle:University', 'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll()));
     }
 
     public function getName()
