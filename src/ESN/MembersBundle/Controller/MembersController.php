@@ -88,8 +88,6 @@ class MembersController extends Controller
            'member' => $this->getAllMembers($type, $id)
         );
 
-        //var_dump($member['member'][0]['esner']->getAddress());die();
-
         if ($type == 'esners') {
             return $this->render('ESNMembersBundle:Esners:detail.html.twig', $member);
         } else {
@@ -154,10 +152,12 @@ class MembersController extends Controller
      * @return array
      */
     private function getAllMembers($type,$id=null) {
-        $repositoryEsner = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner');
-        $repositoryErasmus = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus');
-        $repositoryMember = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
-        
+        $repositoryEsner      = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner');
+        $repositoryErasmus    = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus');
+        $repositoryMember     = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
+        $repositoryUniversity = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:University');
+        $repositoryCountry    = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Country');
+
         $list_member = array();
         if (!$id) {
             // Retourne un array avec 'esner':Object Esner, 'identity':Object Member
@@ -182,6 +182,8 @@ class MembersController extends Controller
             } else {
                 $erasmus = $repositoryErasmus->find($id);
                 $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());
+                $erasmus_identity->setUniversity($repositoryUniversity->find($erasmus_identity->getUniversity())->getName());
+                $erasmus_identity->setNationality($repositoryCountry->find($erasmus_identity->getNationality())->getNationality());
                 array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$erasmus_identity));  
             }
         }

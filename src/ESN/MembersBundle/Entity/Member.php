@@ -88,9 +88,9 @@ class Member
     
     /**
      *
-     * @var string
-     * 
-     * @ORM\Column(name="nationality", type="string", length=50, nullable=true)
+     * @var integer
+     *
+     * @ORM\Column(name="nationality", type="integer", nullable=true)
      */
     private $nationality;
 

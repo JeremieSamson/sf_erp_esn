@@ -34,7 +34,8 @@ class ErasmusType extends AbstractType
             ->add('leavingDate','date')
             ->add('esncard', 'text')
             ->add('study', 'text')
-            ->add('university', 'entity' , array('class' => 'ESNAdministrationBundle:University', 'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll()));
+            ->add('university', 'entity' , array('class' => 'ESNAdministrationBundle:University', 'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll()))
+            ->add('country', 'entity' , array('class' => 'ESNAdministrationBundle:Country', 'choices' => $this->em->getRepository('ESNAdministrationBundle:Country')->findAll()));
     }
 
     public function getName()

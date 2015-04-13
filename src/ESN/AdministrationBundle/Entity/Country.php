@@ -121,4 +121,8 @@ class Country
     {
         return $this->language;
     }
+
+    public function __toString(){
+        return $this->name;
+    }
 }

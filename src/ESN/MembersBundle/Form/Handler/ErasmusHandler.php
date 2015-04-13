@@ -44,8 +44,9 @@ class ErasmusHandler
             $identity_erasmus->setPhone($this->form->get('phone')->getData());
             $identity_erasmus->setStudy($this->form->get('study')->getData());
             $identity_erasmus->setBirthday($this->form->get('birthday')->getData());
-            $identity_erasmus->setUniversity($this->form->get('university')->getData());
-            
+            $identity_erasmus->setUniversity($this->form->get('university')->getData()->getId());
+            $identity_erasmus->setNationality($this->form->get('country')->getData()->getId());
+
             $erasmus  = new Erasmus();
             $erasmus->setMember($identity_erasmus);
             $erasmus->setEsncard($this->form->get('esncard')->getData());

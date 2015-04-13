@@ -80,13 +80,7 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            <select id="nationality" disabled>
-                                <option>English</option>
-                                <option>French</option>
-                                <option>Italian</option>
-                                <option selected>Romanian</option>
-                                <option>Spanish</option>
-                            </select>
+                            {{ form_widget(form.country, {'attr': {'class': 'span6' }}) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
