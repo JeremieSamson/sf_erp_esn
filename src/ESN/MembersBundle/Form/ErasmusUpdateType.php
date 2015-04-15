@@ -15,17 +15,26 @@ use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ErasmusType extends AbstractType
+class ErasmusUpdateType extends AbstractType
 {
     private $em;
+    private $erasmus;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Erasmus $erasmus = null)
     {
         $this->em = $em;
+        $this->erasmus = $erasmus;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $dataUni = 0;
+        $dataCountry = 0;
+        if ($this->erasmus != null){
+            $dataCountry = $this->erasmus->getMember()->getNationality();
+            $dataUni = $this->erasmus->getMember()->getUniversity();
+        }
+
         $choicesUni = array();
         foreach($this->em->getRepository('ESNAdministrationBundle:University')->findAll() as $university)
             $choicesUni[$university->getId()] = $university->getName();
@@ -43,12 +52,14 @@ class ErasmusType extends AbstractType
             ->add('leavingDate','date')
             ->add('esncard', 'text')
             ->add('study', 'text')
-            ->add('university', 'choice' , array('choices' => $choicesUni))
-            ->add('country', 'choice' , array('choices' => $choicesCountry));
+            ->add('id' , 'hidden', array('attr' => array( 'value' => $this->erasmus->getId())))
+            ->add('university', 'choice' , array('choices' => $choicesUni, 'data' => $dataUni))
+            ->add('country', 'choice' , array('choices' => $choicesCountry, 'data' => $dataCountry));
     }
+
 
     public function getName()
     {
-        return 'create_members';
+        return 'update_members';
     }
 }

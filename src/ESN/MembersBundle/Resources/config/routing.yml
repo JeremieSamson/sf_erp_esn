@@ -7,7 +7,13 @@ esn_members_detail:
     defaults: {  _controller: ESNMembersBundle:Members:index, action:"detailler" }
     requirements:
         id:  \d+
-        
+
+esn_members_erasmus_edit:
+    path: /members/erasmus/{id}/edit
+    defaults: { _controller: ESNMembersBundle:Members:editErasmus }
+    requirements:
+            id:  \d+
+
 esn_members_edit:
     path:     /members/{type}/{id}/edit
     defaults: {  _controller: ESNMembersBundle:Members:index, action:"editer" }
@@ -17,12 +23,14 @@ esn_members_edit:
 esn_members_erasmus_create:
     path: /members/erasmus/create
     defaults: { _controller: ESNMembersBundle:Members:createErasmus }
-        
+
+
+
 esn_members_erasmus_delete:
     path: /members/erasmus/{id}/delete
     defaults: { _controller: ESNMembersBundle:Members:delete }
     requirements:
         id: \d+
-        
+
 
         

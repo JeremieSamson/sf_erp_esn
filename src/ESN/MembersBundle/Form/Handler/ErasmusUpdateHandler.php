@@ -36,31 +36,30 @@ class ErasmusUpdateHandler
 
     public function process()
     {
-        if ('POST' == $this->request->getMethod()) {
-            var_dump($this->form);die();
-            $identity_erasmus = $this->em->getRepository('ESNMembersBundle:Member')->find(1);
-            $identity_erasmus->setName($this->form->get('name')->getData());
-            $identity_erasmus->setSurname($this->form->get('surname')->getData());
-            $identity_erasmus->setEmail($this->form->get('email')->getData());
-            $identity_erasmus->setPhone($this->form->get('phone')->getData());
-            $identity_erasmus->setStudy($this->form->get('study')->getData());
-            $identity_erasmus->setBirthday($this->form->get('birthday')->getData());
-            $identity_erasmus->setUniversity($this->form->get('university')->getData()->getId());
-            $identity_erasmus->setNationality($this->form->get('country')->getData()->getId());
+        if ($this->form->isValid()) {
+            if ('POST' == $this->request->getMethod()) {
 
-            $erasmus  = new Erasmus();
-            $erasmus->setMember($identity_erasmus);
-            $erasmus->setEsncard($this->form->get('esncard')->getData());
-            $erasmus->setArrivalDate($this->form->get('arrivalDate')->getData());
-            $erasmus->setLeavingDate($this->form->get('leavingDate')->getData());
+                $erasmus = $this->em->getRepository('ESNMembersBundle:Erasmus')->find($this->form->get('id')->getData());
+                $identity_erasmus = $this->em->getRepository('ESNMembersBundle:Member')->find($erasmus->getMember());
+                $identity_erasmus->setName($this->form->get('name')->getData());
+                $identity_erasmus->setSurname($this->form->get('surname')->getData());
+                $identity_erasmus->setEmail($this->form->get('email')->getData());
+                $identity_erasmus->setPhone($this->form->get('phone')->getData());
+                $identity_erasmus->setStudy($this->form->get('study')->getData());
+                $identity_erasmus->setBirthday($this->form->get('birthday')->getData());
+                $identity_erasmus->setUniversity($this->form->get('university')->getData());
+                $identity_erasmus->setNationality($this->form->get('country')->getData());
 
-            $this->em->persist($identity_erasmus);
-            $this->em->persist($erasmus);
-            $this->em->flush();
+                $erasmus->setMember($identity_erasmus);
+                $erasmus->setEsncard($this->form->get('esncard')->getData());
+                $erasmus->setArrivalDate($this->form->get('arrivalDate')->getData());
+                $erasmus->setLeavingDate($this->form->get('leavingDate')->getData());
 
-            return true;
+                $this->em->flush();
+
+                return true;
+            }
         }
-
         return false;
     }
 

@@ -3,12 +3,15 @@
 namespace ESN\MembersBundle\Controller;
 
 use ESN\MembersBundle\Form\ErasmusType;
+use ESN\MembersBundle\Form\ErasmusUpdateType;
 use ESN\MembersBundle\Form\Handler\ErasmusHandler;
 use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
 use ESN\MembersBundle\Form\Handler\MembersHandler;
 use ESN\MembersBundle\Form\MembersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use ESN\MembersBundle\Entity\Member;
 use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\HttpFoundation\Request;
@@ -95,10 +98,31 @@ class MembersController extends Controller
             return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', $member);
         }
     }//detailAction
+
+    /**
+     * @param type $id
+     */
+    public function deleteAction($id)
+    {
+        if (!$id) {
+            throw $this->createNotFoundException('No Erasmus found');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $erasmus = $em->getRepository('ESNMembersBundle:Erasmus')->find($id);
+
+        $em->remove($erasmus);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('esn_members_homepage', array(
+            'type'=>'erasmus'
+        )));
+    }//detailAction
     
     /**
      * Action à l'affichage de la page d'édition d'un membre en fonction
      * du type du membre et de son ID.
+     * @Method({"GET", "POST"})
      * @param type $type
      * @param type $id
      * @return type
@@ -106,14 +130,14 @@ class MembersController extends Controller
     public function editAction(Request $request, $type, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->get('form.factory')->create(new ErasmusType($em));
+        $erasmus= $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus')->find($id);
+        $form = $this->get('form.factory')->create(new ErasmusUpdateType($em, $erasmus));
         $formHandler = new ErasmusUpdateHandler($em, $form, $request);
         $form->handleRequest($request);
 
         $process = $formHandler->process();
 
-        if ($process)
-        {
+        if ($process){
             return $this->redirect($this->generateUrl('esn_members_homepage', array(
                 'type'=>'erasmus'
             )));
@@ -127,7 +151,36 @@ class MembersController extends Controller
         );
 
     }//editAction
-    
+
+    /**
+     * Action à l'affichage de la page d'édition d'un membre en fonction
+     * du type du membre et de son ID.
+     * @param type $id
+     */
+    public function editErasmusAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $erasmus= $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus')->find($id);
+        $form = $this->get('form.factory')->create(new ErasmusUpdateType($em, $erasmus));
+        $formHandler = new ErasmusUpdateHandler($em, $form, $request);
+        $form->handleRequest($request);
+
+        $process = $formHandler->process();
+
+        if ($process){
+            return $this->redirect($this->generateUrl('esn_members_detail', array(
+                'type' => 'Erasmus',
+                'id'=>$id
+            )));
+        }
+
+        return $this->render("ESNMembersBundle:Erasmus:edit.html.twig", array(
+                "member" => $this->getAllMembers("Erasmus", $id),
+                "form" => $form->createView()
+            )
+        );
+
+    }//editAction
     /**
      * Si ID est fourni, retourne le membre, sinon retourne tout les membres
      * Retourne 
@@ -166,8 +219,8 @@ class MembersController extends Controller
             } else {
                 $erasmus = $repositoryErasmus->find($id);
                 $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());
-                $erasmus_identity->setUniversity($repositoryUniversity->find($erasmus_identity->getUniversity())->getName());
-                $erasmus_identity->setNationality($repositoryCountry->find($erasmus_identity->getNationality())->getNationality());
+                $erasmus_identity->setUniversity($repositoryUniversity->find($erasmus_identity->getUniversity()));
+                $erasmus_identity->setNationality($repositoryCountry->find($erasmus_identity->getNationality()));
                 array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$erasmus_identity));  
             }
         }
