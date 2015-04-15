@@ -21,7 +21,7 @@ class HRController extends Controller
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
         $members = array( "members" => $repository->findAll() );
-        
+
         switch($action) {
             case "list" :
                 return $this->render('ESNHRBundle:Association:list.html.twig', $members);

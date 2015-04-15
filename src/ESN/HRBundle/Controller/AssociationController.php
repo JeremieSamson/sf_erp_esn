@@ -10,6 +10,7 @@ use ESN\MembersBundle\Entity\Esner;
 use ESN\HRBundle\Entity\InfoEsner;
 use Symfony\Component\HttpFoundation\Request;
 use DateTime;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AssociationController extends Controller{
        
@@ -48,6 +49,7 @@ class AssociationController extends Controller{
 
         $process = $formHandler->process();
         if ($process) {
+            $request->getSession()->getFlashBag()->add('notice', 'Profile added');
             return $this->redirect($this->generateUrl('esn_hr_association'));
         }
 
@@ -73,7 +75,7 @@ class AssociationController extends Controller{
         
         if (!$esner) {
             throw $this->createNotFoundException(
-                'Aucun produit trouvé pour cet id : '.$id
+                'Aucun esner trouvé pour cet id : '.$id
             );
         }       
         
@@ -81,6 +83,9 @@ class AssociationController extends Controller{
         $em->remove($esner);
         $em->remove($member);
         $em->flush();
+
+        // Add Message
+        $this->get('request')->getSession()->getFlashBag()->add('notice', 'ESNer deleted');
 
         // retourne sur la page d'accueil de human resources
         return $this->redirect($this->generateUrl('esn_hr_association'));
