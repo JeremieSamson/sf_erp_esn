@@ -20,24 +20,14 @@
                         <div class="control-group">
                             <label class="span3" for="trip">Trip : </label>
                             <div class="controls">
-                                {% if form.trips.vars.choices %}
                                   {{ form_widget(form.trips, { 'separator': '=====' }) }}
-                                {% else %}
-                                    Il n'y a pas encore de voyage de créé. <br>
-                                    Pour en créer un <a href="{{ path('esn_administration_trips_add') }}">cliquez ici</a>.
-                                {% endif %}
                             </div> <!-- /controls -->
                         </div>
 
                         <div class="control-group">
                             <label class="span3" for="user">Member to enroll : </label>
                             <div class="controls">
-                                {% if form.members.vars.choices %}
                                     {{ form_widget(form.members, { 'separator': '=====' }) }}
-                                {% else %}
-                                    Il n'y a pas encore de membre de créé.<br>
-                                    Pour en créer un <a href="{{ path('esn_hr_association_add') }}">cliquez ici</a>.
-                                {% endif %}
                             </div> <!-- /controls -->
                         </div>
 

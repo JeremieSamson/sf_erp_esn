@@ -3,6 +3,7 @@
 namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ESN\MembersBundle\Entity\Member;
 
 /**
  * Trip
@@ -60,8 +61,14 @@ class Trip
      * @ORM\OneToMany(targetEntity="ESN\PermanenceBundle\Entity\ParticipateTrip", mappedBy="member", cascade="persist")
      */
     public $members;
-    
-    
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -166,29 +173,6 @@ class Trip
     }
 
     /**
-     * Set prix
-     *
-     * @param string $prix
-     * @return Trip
-     */
-    public function setPrix($prix)
-    {
-        $this->prix = $prix;
-
-        return $this;
-    }
-
-    /**
-     * Get prix
-     *
-     * @return string 
-     */
-    public function getPrix()
-    {
-        return $this->prix;
-    }
-
-    /**
      * Set price
      *
      * @param string $price
@@ -210,13 +194,6 @@ class Trip
     {
         return $this->price;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Add members
@@ -224,9 +201,9 @@ class Trip
      * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $members
      * @return Trip
      */
-    public function addMember(\ESN\PermanenceBundle\Entity\ParticipateTrip $members)
+    public function addMember(Member $member)
     {
-        $this->members[] = $members;
+        $this->members[] = $member;
 
         return $this;
     }
@@ -236,9 +213,9 @@ class Trip
      *
      * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $members
      */
-    public function removeMember(\ESN\PermanenceBundle\Entity\ParticipateTrip $members)
+    public function removeMember(Member $member)
     {
-        $this->members->removeElement($members);
+        $this->members->removeElement($member);
     }
 
     /**

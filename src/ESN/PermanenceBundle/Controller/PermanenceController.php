@@ -3,6 +3,8 @@
 namespace ESN\PermanenceBundle\Controller;
 
 use ESN\AdministrationBundle\Entity\Card;
+use ESN\PermanenceBundle\Form\EnrollUserToTripType;
+use ESN\PermanenceBundle\Form\Handler\EnrollUserToTripHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
@@ -70,27 +72,24 @@ class PermanenceController extends Controller
      */
     public function enrollUserToTripAction(Request $request)
     {
-        $participateTrip = new ParticipateTrip();
-        
-        // CREATE FORM
-        $form = $this->createFormBuilder($participateTrip)
-        ->add('trips', 'entity', array(
-            'class' => 'ESNAdministrationBundle:Trip', 
-            'property' => 'name'))
-        ->add('members', 'entity', array(
-            'class' => 'ESNAdministrationBundle:Trip',
-            'property' => 'name'))
-        ->getForm();
-        
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->get('form.factory')->create(new EnrollUserToTripType());
+        $formHandler = new EnrollUserToTripHandler($em, $form, $request);
         $form->handleRequest($request);
-        
-        // FORM VALID
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($participateTrip);
-            $em->flush();
+
+        $process = $formHandler->process();
+
+        if ($process){
+            /*return $this->redirect($this->generateUrl('esn_members_detail', array(
+                'type' => 'esners',
+                'id'=>$id
+            )));*/
         }
-        return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',array('form' => $form->createView(),'title' => "Permanence")); 
+
+        return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',
+            array('form' => $form->createView(),
+                  'title' => "Permanence")
+        );
     }//enrollUserToTripAction
     
     /**
