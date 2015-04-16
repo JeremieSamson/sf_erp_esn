@@ -49,11 +49,27 @@
                              </div> <!-- /controls -->
                          </div> <!-- /control-group -->
 
+                         <!-- NATIONALITY -->
+                         <div class="control-group">
+                             <label class="control-label" for="address">Nationality</label>
+                             <div class="controls">
+                                 {{ form_widget(form.country, {'attr': {'class': 'span6' }}) }}
+                             </div> <!-- /controls -->
+                         </div> <!-- /control-group -->
+
+                         <div class="control-group">
+                             <label class="control-label" for="university">University</label>
+                             <div class="controls">
+                                 {{ form_widget(form.university, {'attr': {'class': 'span6' }}) }}
+                             </div> <!-- /controls -->
+                         </div> <!-- /control-group -->
+
                          <div class="form-actions">
                             <input type="submit" class="btn btn-primary" value="Save"/> 
                              <a class="btn" href="{{ path('esn_hr_association') }}">Cancel</a>
                         </div> <!-- /form-actions -->
-                        
+
+
                     </fieldset>
            
             {{ form_end(form) }}

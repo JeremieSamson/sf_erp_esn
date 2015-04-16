@@ -42,7 +42,7 @@ class AssociationController extends Controller{
     public function newEsnerAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->get('form.factory')->create(new ESNerType());
+        $form = $this->get('form.factory')->create(new ESNerType($em));
         $request = $this->get('request');
         $formHandler = new ESNerHandler($em, $form, $request);
         $form->handleRequest($request);

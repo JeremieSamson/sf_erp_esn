@@ -2,10 +2,13 @@
 
 namespace ESN\MembersBundle\Controller;
 
+use ESN\HRBundle\Form\Handler\ESNerHandler;
 use ESN\MembersBundle\Form\ErasmusType;
 use ESN\MembersBundle\Form\ErasmusUpdateType;
+use ESN\MembersBundle\Form\ESNerUpdateType;
 use ESN\MembersBundle\Form\Handler\ErasmusHandler;
 use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
+use ESN\MembersBundle\Form\Handler\ESNerUpdateHandler;
 use ESN\MembersBundle\Form\Handler\MembersHandler;
 use ESN\MembersBundle\Form\MembersType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -117,39 +120,35 @@ class MembersController extends Controller
         return $this->redirect($this->generateUrl('esn_members_homepage', array(
             'type'=>'erasmus'
         )));
-    }//detailAction
+    }//deleteAction
     
     /**
      * Action à l'affichage de la page d'édition d'un membre en fonction
      * du type du membre et de son ID.
-     * @Method({"GET", "POST"})
-     * @param type $type
      * @param type $id
-     * @return type
      */
-    public function editAction(Request $request, $type, $id)
+    public function editEsnerAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $erasmus= $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus')->find($id);
-        $form = $this->get('form.factory')->create(new ErasmusUpdateType($em, $erasmus));
-        $formHandler = new ErasmusUpdateHandler($em, $form, $request);
+        $esner= $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner')->find($id);
+        $form = $this->get('form.factory')->create(new ESNerUpdateType($em, $esner));
+        $formHandler = new ESNerUpdateHandler($em, $form, $request);
         $form->handleRequest($request);
 
         $process = $formHandler->process();
 
         if ($process){
-            return $this->redirect($this->generateUrl('esn_members_homepage', array(
-                'type'=>'erasmus'
+            return $this->redirect($this->generateUrl('esn_members_detail', array(
+                'type' => 'esners',
+                'id'=>$id
             )));
         }
 
-        $template = ($type == 'esners') ? 'Esners' : 'Erasmus';
-        return $this->render("ESNMembersBundle:$template:form.html.twig", array(
-                "member" => $this->getAllMembers($type, $id),
+        return $this->render("ESNMembersBundle:Esners:edit.html.twig", array(
+                "member" => $this->getAllMembers("esners", $id),
                 "form" => $form->createView()
             )
         );
-
     }//editAction
 
     /**

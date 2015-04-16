@@ -9,7 +9,6 @@
 namespace ESN\MembersBundle\Form;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Repository\RepositoryFactory;
 use ESN\AdministrationBundle\Entity\University;
 use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\Form\AbstractType;
@@ -20,7 +19,7 @@ class ErasmusUpdateType extends AbstractType
     private $em;
     private $erasmus;
 
-    public function __construct(EntityManager $em, Erasmus $erasmus = null)
+    public function __construct(EntityManager $em, Erasmus $erasmus)
     {
         $this->em = $em;
         $this->erasmus = $erasmus;
@@ -53,8 +52,17 @@ class ErasmusUpdateType extends AbstractType
             ->add('esncard', 'text')
             ->add('study', 'text')
             ->add('id' , 'hidden', array('attr' => array( 'value' => $this->erasmus->getId())))
-            ->add('university', 'choice' , array('choices' => $choicesUni, 'data' => $dataUni))
-            ->add('country', 'choice' , array('choices' => $choicesCountry, 'data' => $dataCountry));
+            ->add('university', 'entity' ,
+                array('class' => 'ESNAdministrationBundle:University',
+                      'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll(),
+                      'data' => $dataUni)
+                )
+            ->add('country', 'entity' ,
+                array('class' => 'ESNAdministrationBundle:Country',
+                      'choices' => $this->em->getRepository('ESNAdministrationBundle:Country')->findAll(),
+                      'data' => $dataCountry
+                )
+            );
     }
 
 

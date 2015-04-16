@@ -4,6 +4,8 @@ namespace ESN\MembersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
+use ESN\AdministrationBundle\Entity\Country;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Member
@@ -65,9 +67,8 @@ class Member
     private $phone;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="university", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\University", inversedBy="members", cascade="persist")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $university;
 
@@ -87,10 +88,9 @@ class Member
     private $birthday;
     
     /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="members", cascade="persist")
+     * @ORM\JoinColumn(nullable=false)
      *
-     * @var integer
-     *
-     * @ORM\Column(name="nationality", type="integer", nullable=true)
      */
     private $nationality;
 
@@ -99,9 +99,14 @@ class Member
      * @ORM\OneToMany(targetEntity="ESN\PermanenceBundle\Entity\ParticipateTrip", mappedBy="trip", cascade="persist")
      */
     public $trips;
-    
-    
-    
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trips = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -260,7 +265,6 @@ class Member
     public function setUniversity($university)
     {
         $this->university = $university;
-
         return $this;
     }
 
@@ -336,7 +340,7 @@ class Member
      * @param string $nationality
      * @return Member
      */
-    public function setNationality($nationality)
+    public function setNationality(Country $nationality)
     {
         $this->nationality = $nationality;
 
@@ -352,13 +356,7 @@ class Member
     {
         return $this->nationality;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->trips = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+
 
     /**
      * Add trips

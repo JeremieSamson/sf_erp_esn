@@ -14,9 +14,9 @@ esn_members_erasmus_edit:
     requirements:
             id:  \d+
 
-esn_members_edit:
-    path:     /members/{type}/{id}/edit
-    defaults: {  _controller: ESNMembersBundle:Members:index, action:"editer" }
+esn_members_esner_edit:
+    path:     /members/esners/{id}/edit
+    defaults: {  _controller: ESNMembersBundle:Members:editEsner }
     requirements:
         id:  \d+
         

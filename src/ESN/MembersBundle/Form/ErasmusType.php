@@ -26,14 +26,6 @@ class ErasmusType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $choicesUni = array();
-        foreach($this->em->getRepository('ESNAdministrationBundle:University')->findAll() as $university)
-            $choicesUni[$university->getId()] = $university->getName();
-
-        $choicesCountry = array();
-        foreach($this->em->getRepository('ESNAdministrationBundle:Country')->findAll() as $country)
-            $choicesCountry[$country->getId()] = $country->getNationality();
-
         $builder->add('name', 'text')
             ->add('surname','text')
             ->add('email','email')
@@ -43,8 +35,8 @@ class ErasmusType extends AbstractType
             ->add('leavingDate','date')
             ->add('esncard', 'text')
             ->add('study', 'text')
-            ->add('university', 'choice' , array('choices' => $choicesUni))
-            ->add('country', 'choice' , array('choices' => $choicesCountry));
+            ->add('university', 'entity' , array('class' => 'ESNAdministrationBundle:University', 'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll()))
+            ->add('country', 'entity' , array('class' => 'ESNAdministrationBundle:Country', 'choices' => $this->em->getRepository('ESNAdministrationBundle:Country')->findAll()));
     }
 
     public function getName()

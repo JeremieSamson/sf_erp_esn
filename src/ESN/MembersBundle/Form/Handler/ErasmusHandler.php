@@ -37,6 +37,7 @@ class ErasmusHandler
     public function process()
     {
         if ('POST' == $this->request->getMethod()) {
+
             $identity_erasmus = new Member();
             $identity_erasmus->setName($this->form->get('name')->getData());
             $identity_erasmus->setSurname($this->form->get('surname')->getData());

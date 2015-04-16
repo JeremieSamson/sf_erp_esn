@@ -2,7 +2,9 @@
 
 namespace ESN\AdministrationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use ESN\MembersBundle\Entity\Member;
 
 /**
  * University
@@ -34,6 +36,16 @@ class University
      * @ORM\Column(name="cigle", type="text")
      */
     private $cigle;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Member", mappedBy="university")
+     */
+    private $members;
+
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -86,5 +98,22 @@ class University
 
     public function __toString(){
         return (string) $this->getName();
+    }
+
+    public function addMember(Member $member)
+    {
+        $this->members[] = $member;
+        $member->setUniversity($this);
+        return $this;
+    }
+
+    public function removeMember(Member $member)
+    {
+        $this->members->removeElement($member);
+    }
+
+    public function getMembers()
+    {
+        return $this->members;
     }
 }

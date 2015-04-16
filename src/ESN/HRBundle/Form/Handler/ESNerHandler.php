@@ -44,6 +44,8 @@ class ESNerHandler
             $member->setSurname($this->form->get('surname')->getData());
             $member->setEmail($this->form->get('email')->getData());
             $member->setPhone($this->form->get('phone')->getData());
+            $member->setUniversity($this->form->get('university')->getData());
+            $member->setNationality($this->form->get('country')->getData());
             $member->setInscription(new \DateTime());
             $this->em->persist($member);
 

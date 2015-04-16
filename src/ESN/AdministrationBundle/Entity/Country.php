@@ -2,7 +2,9 @@
 
 namespace ESN\AdministrationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use ESN\MembersBundle\Entity\Member;
 
 /**
  * Country
@@ -42,6 +44,15 @@ class Country
      */
     private $language;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Member", mappedBy="nationality")
+     */
+    private $members;
+
+    public function __construct()
+    {
+        $this->members = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -124,5 +135,22 @@ class Country
 
     public function __toString(){
         return $this->name;
+    }
+
+    public function addMember(Member $member)
+    {
+        $this->members[] = $member;
+        $member->setNationality($this);
+        return $this;
+    }
+
+    public function removeMember(Member $member)
+    {
+        $this->members->removeElement($member);
+    }
+
+    public function getMembers()
+    {
+        return $this->members;
     }
 }
