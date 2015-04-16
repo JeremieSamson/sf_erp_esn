@@ -111,6 +111,8 @@ class MembersController extends Controller
             throw $this->createNotFoundException('No Erasmus found');
         }
 
+        $this->get('request')->getSession()->getFlashBag()->add('notice', 'Erasmus deleted');
+
         $em = $this->getDoctrine()->getManager();
         $erasmus = $em->getRepository('ESNMembersBundle:Erasmus')->find($id);
 
