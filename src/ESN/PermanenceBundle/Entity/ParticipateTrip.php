@@ -3,6 +3,8 @@
 namespace ESN\PermanenceBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ESN\AdministrationBundle\Entity\Trip;
+use ESN\MembersBundle\Entity\Member;
 
 /**
  * ParticipateTrip
@@ -85,7 +87,7 @@ use Doctrine\ORM\Mapping as ORM;
      * @param \ESN\AdministrationBundle\Entity\Trip $trip
      * @return ParticipateTrip
      */
-    public function setTrips(\ESN\AdministrationBundle\Entity\Trip $trip = null)
+    public function setTrips(Trip $trip = null)
     {
         $this->trip = $trip;
 
@@ -108,7 +110,7 @@ use Doctrine\ORM\Mapping as ORM;
      * @param \ESN\MembersBundle\Entity\Member $member
      * @return ParticipateTrip
      */
-    public function setMembers(\ESN\MembersBundle\Entity\Member $member = null)
+    public function setMembers(Member $member = null)
     {
         $this->member = $member;
         return $this;

@@ -23,6 +23,8 @@ class AppKernel extends Kernel
             new ESN\AdministrationBundle\ESNAdministrationBundle(),
             new ESN\PermanenceBundle\ESNPermanenceBundle(),
             new ESN\HRBundle\ESNHRBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
