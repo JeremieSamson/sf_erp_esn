@@ -25,10 +25,34 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $trip->setName("Trip to Paris");
         $trip->setDate(new \DateTime());
         $trip->setDescription("Super voyage à Paris");
-        $trip->setNbPlace(55);
+        $trip->setNbPlace(70);
         $trip->setPrice(30);
-
         $manager->persist($trip);
+
+        $trip = new Trip();
+        $trip->setName("Trip to Bruxelles");
+        $trip->setDate(new \DateTime());
+        $trip->setDescription("Super voyage à Bruxelles");
+        $trip->setNbPlace(55);
+        $trip->setPrice(60);
+        $manager->persist($trip);
+
+        $trip = new Trip();
+        $trip->setName("Trip to Nancy");
+        $trip->setDate(new \DateTime());
+        $trip->setDescription("Super voyage à Nancy");
+        $trip->setNbPlace(55);
+        $trip->setPrice(66);
+        $manager->persist($trip);
+
+        $trip = new Trip();
+        $trip->setName("Trip to Strasbourg");
+        $trip->setDate(new \DateTime());
+        $trip->setDescription("Super voyage à Strasbourg");
+        $trip->setNbPlace(55);
+        $trip->setPrice(80);
+        $manager->persist($trip);
+        
         $manager->flush();
     }
 
