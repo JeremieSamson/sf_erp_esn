@@ -22,11 +22,9 @@ class EnrollUserToTripType extends AbstractType
     {
         $builder
             ->add('trips', 'entity', array(
-                'class' => 'ESNAdministrationBundle:Trip',
-                'property' => 'name'))
+                'class' => 'ESNAdministrationBundle:Trip'))
             ->add('members', 'entity', array(
-                'class' => 'ESNMembersBundle:Member',
-                'property' => 'name'));
+                'class' => 'ESNMembersBundle:Member'));
     }
 
     public function getName()

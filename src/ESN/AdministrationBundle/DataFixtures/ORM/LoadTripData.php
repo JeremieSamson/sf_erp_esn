@@ -52,7 +52,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $trip->setNbPlace(55);
         $trip->setPrice(80);
         $manager->persist($trip);
-        
+
         $manager->flush();
     }
 

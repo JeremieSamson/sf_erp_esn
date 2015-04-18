@@ -227,4 +227,8 @@ class Trip
     {
         return $this->members;
     }
+
+    public function __toString(){
+        return  $this->getName();
+    }
 }

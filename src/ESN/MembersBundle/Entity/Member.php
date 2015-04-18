@@ -390,4 +390,8 @@ class Member
     {
         return $this->trips;
     }
+
+    public function __toString(){
+        return $this->getName() . " " . $this->getSurname();
+    }
 }
