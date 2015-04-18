@@ -36,4 +36,10 @@ build/
 
 # Composer PHAR
 composer.phar
+
+# NetBeans
 nbproject/
+
+#O2switch
+.ftpquota
+
