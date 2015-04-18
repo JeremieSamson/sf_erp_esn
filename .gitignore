@@ -42,4 +42,5 @@ nbproject/
 
 #O2switch
 .ftpquota
-
+.htaccess
+php.ini

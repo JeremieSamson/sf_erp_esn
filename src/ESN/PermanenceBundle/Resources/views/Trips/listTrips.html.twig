@@ -1,39 +1,51 @@
-<div class="span12">
-        <div class="widget">
-            <div class="widget-content">
-                <a href="{{ path('esn_permanence_enrollUserToTrip') }}">
-                    <button class="btn btn-default">Enroll a member to a trip</button>
-                </a>
-                    
-                    <div class="panel panel-default">
+<div class="span3">
+    <div class="widget">
+        <div class="widget-content">
+            <a href="{{ path('esn_permanence_enrollUserToTrip') }}">
+                <button class="btn btn-info">Enroll a member to a trip</button>
+            </a>
+        </div>
+        <!-- /widget-content -->
+    </div>
+    <!-- /widget -->
+</div>
 
-                        <!-- Table -->
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th>Date</th>
-                              <th>Name</th>
-                              <th>Number of seats</th>
-                              <th>Price</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                                {% for trip in trips %}
-                                         <tr> 
-                                            <td>{{trip.date|date('d/m/Y')}}</td>
-                                            <td>{{trip.name}}</td>
-                                            <td>{{trip.nbPlace}}</td>
-                                            <td>{{trip.price}} €</td>
-                                            <td><a href="{{ path('esn_permanence_seeTrip', {
-                                                    'id' : trip.id
-                                                   }) }}">See details</a></td>
-                                        </tr> 
-                                        {%endfor %}
-                          </tbody>
-                    </table>
-                    </div>
-                    
-            </div><!-- widget-content -->
-        </div><!-- /widget -->
-    </div><!-- /span8 -->   
+<div class="span12">
+    <div class="widget">
+        <div class="widget-content">
+
+
+            <div class="panel panel-default">
+
+                <!-- Table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Name</th>
+                        <th>Number of seats</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for trip in trips %}
+                        <tr>
+                            <td>{{ trip.date|date('d/m/Y') }}</td>
+                            <td>{{ trip.name }}</td>
+                            <td>{{ trip.nbPlace }}</td>
+                            <td>{{ trip.price }} €</td>
+                            <td><a href="{{ path('esn_permanence_seeTrip', {
+                                    'id' : trip.id
+                                }) }}">See details</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <!-- widget-content -->
+    </div>
+    <!-- /widget -->
+</div><!-- /span8 -->
