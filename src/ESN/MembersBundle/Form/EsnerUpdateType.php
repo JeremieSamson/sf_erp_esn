@@ -35,14 +35,6 @@ class ESNerUpdateType extends AbstractType{
             $dataUni = $this->esner->getMember()->getUniversity();
         }
 
-        $choicesUni = array();
-        foreach($this->em->getRepository('ESNAdministrationBundle:University')->findAll() as $university)
-            $choicesUni[$university->getId()] = $university->getName();
-
-        $choicesCountry = array();
-        foreach($this->em->getRepository('ESNAdministrationBundle:Country')->findAll() as $country)
-            $choicesCountry[$country->getId()] = $country->getNationality();
-
         $builder->add('name', 'text')
             ->add('surname','text')
             ->add('email','email')
@@ -53,8 +45,17 @@ class ESNerUpdateType extends AbstractType{
             ->add('city', 'text')
             ->add('zipcode', 'number')
             ->add('id' , 'hidden', array('attr' => array( 'value' => $this->esner->getId())))
-            ->add('university', 'choice' , array('choices' => $choicesUni, 'data' => $dataUni))
-            ->add('country', 'choice' , array('choices' => $choicesCountry, 'data' => $dataCountry));
+            ->add('university', 'entity' ,
+                array('class' => 'ESNAdministrationBundle:University',
+                    'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll(),
+                    'data' => $dataUni)
+            )
+            ->add('country', 'entity' ,
+                array('class' => 'ESNAdministrationBundle:Country',
+                    'choices' => $this->em->getRepository('ESNAdministrationBundle:Country')->findAll(),
+                    'data' => $dataCountry
+                )
+            );
     }
 
 
