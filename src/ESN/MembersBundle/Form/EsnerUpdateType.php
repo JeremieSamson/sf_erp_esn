@@ -47,7 +47,7 @@ class ESNerUpdateType extends AbstractType{
             ->add('surname','text')
             ->add('email','email')
             ->add('phone','text')
-            ->add('birthday','date')
+            ->add('birthday', 'date', array('widget' => 'single_text'))
             ->add('study', 'text')
             ->add('address', 'text')
             ->add('city', 'text')
