@@ -5,6 +5,8 @@ namespace ESN\PermanenceBundle\Controller;
 use ESN\AdministrationBundle\Entity\Card;
 use ESN\PermanenceBundle\Form\EnrollUserToTripType;
 use ESN\PermanenceBundle\Form\Handler\EnrollUserToTripHandler;
+use ESN\TreasuryBundle\Entity\Caisse;
+use ESN\TreasuryBundle\Entity\Operation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
@@ -170,13 +172,42 @@ class PermanenceController extends Controller
             $Card = new Card();
             $Card->setNumber($availableCard);
             $em->persist($Card);
-            $em->flush();
+
+            $operation = new Operation();
+            $operation->setMontant(-$report->getAmountSell());
+            $operation->setDate(new \DateTime());
+            $operation->setLibelle("Vente carte ESN pendant la perm");
+            $operation->setDescription("Vente de " . $report->getSellCard() . " cartes ESN");
+            $em->persist($operation);
+
+            // CAISSE
+            $query = $em->createQuery(
+                'SELECT c
+            FROM ESNTreasuryBundle:Caisse c
+            ORDER BY c.date DESC
+            '
+            )->setMaxResults(1);
+
+            $montantQuery = $query->getOneOrNullresult();
+
+            if ($montantQuery == NULL) {
+                $montant = 0;
+            } else {
+                $montant = $montantQuery->getMontant();
+            }
+
+            $caisse = new Caisse();
+            $caisse->setMontant($montant + $operation->getMontant());
+            $em->persist($caisse);
 
             $report->setAvailableCard($availableCard);
             $em->persist($report);
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('notice', 'Rapport bien enregistrée.');
+            return $this->redirect($this->generateUrl('esn_permanence_reports', array(
+                'type'=>'reports'
+            )));
         }
         
         return $this->render('ESNPermanenceBundle:Reports:createReport.html.twig', array(

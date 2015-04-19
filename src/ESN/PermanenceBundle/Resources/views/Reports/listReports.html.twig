@@ -1,3 +1,14 @@
+<div class="span12">
+    <p>
+        {% for message in app.session.flashbag.get('notice') %}
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong> Success!</strong> {{ message }}
+    </div>
+    {% endfor %}
+    </p>
+</div>
+
 <div class="span3">
     <div class="widget">
         <div class="widget-content">

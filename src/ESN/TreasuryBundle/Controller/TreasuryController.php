@@ -107,7 +107,7 @@ class TreasuryController extends Controller
             } catch (NoResultException $e) {
                 $montant = 0;
             }
-            
+
             $em = $this->getDoctrine()->getManager();
             
             $caisse = new Caisse();

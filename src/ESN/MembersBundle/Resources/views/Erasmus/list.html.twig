@@ -2,26 +2,25 @@
 
     <div class="span12">
         <p>
-            {# On affiche tous les messages flash dont le nom est « info » #}
             {% for message in app.session.flashbag.get('notice') %}
-        <div class="alert alert-success">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            <strong> Success!</strong> {{ message }}
-        </div>
-        {% endfor %}
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong> Success!</strong> {{ message }}
+                </div>
+            {% endfor %}
         </p>
     </div>
 
     <div class="span12">
         <div class="widget">
             <div class="widget-content">
-            
+
                 <a href="{{ path('esn_members_erasmus_create') }}" class="btn btn-info">Add new Erasmus</a> &nbsp;&nbsp;
                 <button class="btn">Delete selected Erasmus</button>
-                
+
                 <br/>
                 <br/>
-                
+
                 <input type="text" placeholder="Search by Name">&nbsp;&nbsp;
                 <input type="text" placeholder="Search by Nationality">&nbsp;&nbsp;
                 <select>
@@ -31,13 +30,15 @@
                     <option>University Lille 3</option>
                 </select>
 
-            </div><!-- /widget-content --> 
-        </div><!-- /widget -->    
+            </div>
+            <!-- /widget-content -->
+        </div>
+        <!-- /widget -->
     </div>
-    
-   <!-- injection test -->
+
+    <!-- injection test -->
     {% for membre in liste_membres %}
         {{ render(controller("ESNMembersBundle:Members:cardErasmus" , {'member': membre})) }}
-    {% endfor %}             
-    
+    {% endfor %}
+
 </div>
