@@ -4,6 +4,8 @@ namespace ESN\HRBundle\Controller;
 
 use ESN\HRBundle\Form\ESNerType;
 use ESN\HRBundle\Form\Handler\ESNerHandler;
+use ESN\HRBundle\Form\Handler\InfoESNerHandler;
+use ESN\HRBundle\Form\InfoEsnerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ESN\MembersBundle\Entity\Member;
 use ESN\MembersBundle\Entity\Esner;
@@ -43,7 +45,6 @@ class AssociationController extends Controller{
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->get('form.factory')->create(new ESNerType($em));
-        $request = $this->get('request');
         $formHandler = new ESNerHandler($em, $form, $request);
         $form->handleRequest($request);
 
@@ -71,15 +72,13 @@ class AssociationController extends Controller{
         $em = $this->getDoctrine()->getManager();
         $member = $em->getRepository('ESNMembersBundle:Member')->find($id);
         $esner = $em->getRepository('ESNMembersBundle:Esner')->findOneByMember($member);
-        $infoEsner = $em->getRepository('ESNHRBundle:InfoEsner')->findOneByEsner($esner);
-        
+
         if (!$esner) {
             throw $this->createNotFoundException(
                 'Aucun esner trouvé pour cet id : '.$id
             );
         }       
-        
-        $em->remove($infoEsner);
+
         $em->remove($esner);
         $em->remove($member);
         $em->flush();
@@ -102,34 +101,28 @@ class AssociationController extends Controller{
     function editEsnerAction(Request $request, $id) {
         
         $em = $this->getDoctrine()->getManager();
-        
         $member = $em->getRepository('ESNMembersBundle:Member')->find($id);
         $esner = $em->getRepository('ESNMembersBundle:Esner')->findOneByMember($member);
         $infoEsner = $em->getRepository('ESNHRBundle:InfoEsner')->findOneByEsner($esner);
 
         if (!$member) {
             throw $this->createNotFoundException(
-                'Aucun produit trouvé pour cet id : '.$id
+                'Aucun esner trouvé pour cet id : '.$id
             );
-        }        
-        
-        $form = $this->createFormBuilder($infoEsner)
-        ->add('cotisation', 'date')
-        ->add('comment', 'textarea')
-        ->getForm();
-        
-        $form->handleRequest($request);
-        
-        if ($form->isValid()) {
-            // fait quelque chose comme sauvegarder la tâche dans la bdd
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+        }
 
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
-            
+        $form = $this->get('form.factory')->create(new InfoEsnerType($em, $esner->getId()));
+        $formHandler = new InfoESNerHandler($em, $form, $request);
+        $form->handleRequest($request);
+
+        $process = $formHandler->process();
+        if ($process) {
+            $request->getSession()->getFlashBag()->add('notice', 'ESNer updated');
             return $this->redirect($this->generateUrl('esn_hr_association'));
         }
+
         return $this->render('ESNHRBundle:Association:edit.html.twig', array(
+            'esner'     => $esner,
             'infoEsner' => $infoEsner,
             'type' => "association",
             'form' => $form->createView(),

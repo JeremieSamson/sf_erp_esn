@@ -1,5 +1,10 @@
 # Created by https://www.gitignore.io
 
+#Capyfony
+.rsync_cache/
+Capfile
+app/config/deploy.rb
+
 ### Symfony ###
 # Cache and logs (Symfony2)
 app/cache/*
