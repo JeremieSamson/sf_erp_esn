@@ -2,23 +2,38 @@
 
 namespace ESN\LoginBundle\Controller;
 
+use ESN\LoginBundle\Security\User\UserProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class LoginController extends Controller
 {
     public function indexAction(Request $request)
     {
-        // Gestion d'un formulaire :
-        // Si la requête est un post, c'est uqe le visiteur a soumis le formulaire
-        if ($request->isMethod('POST')) {
-            //Puis on redirige vers la page de visualisation de cette annonce
-            return $this->redirect($this->generateUrl('esn_dashboard_homepage'));
-        }
-        // Si on n'est pas en Post, alors on affiche le formulaire
         return $this->render('ESNLoginBundle::index.html.twig');
     }
-    
-    
+
+    public function checkAction(Request $request){
+        $user = null;
+
+        $cas_host = $this->container->getParameter('cas_server');
+        $cas_port = $this->container->getParameter('cas_port');
+        $cas_context = $this->container->getParameter('cas_path');
+
+        $up = new UserProvider();
+        $user = $up->loadUser($cas_host, $cas_port, $cas_context);
+
+        if ($user != null){
+            $session = $this->container->get('session');
+            $session->set('user', $user);
+
+            return $this->redirect($this->generateUrl('esn_dashboard_homepage'));
+        }
+
+        $this->redirect($this->generateUrl('esn_login_homepage'));
+    }
 }

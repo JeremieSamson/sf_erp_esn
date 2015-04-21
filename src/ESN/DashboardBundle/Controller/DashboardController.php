@@ -4,6 +4,7 @@ namespace ESN\DashboardBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\SimpleXMLElement;
+use Symfony\Component\Security\Core\User\User;
 
 class DashboardController extends Controller
 {
@@ -49,7 +50,8 @@ class DashboardController extends Controller
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), null, 5, null);;
 
         //Events
-        $events = $this->getEvents();
+        //$events = $this->getEvents();
+        $events = null;
 
         $dashboard = array( "facebook"  => array("likes" => $likes, "group_members" => $group_members),
                             "members"   => array("esners" => $esners, "erasmus" => $erasmus),

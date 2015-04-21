@@ -27,3 +27,8 @@ parameters:
     facebook_page_id: ESNLillePage
     facebook_group_id: 276842445810288
     section_website: http://esnlille.fr/satellite
+
+    #CAS
+    cas_server:        galaxy.esn.org
+    cas_port:          443
+    cas_path:          /cas/

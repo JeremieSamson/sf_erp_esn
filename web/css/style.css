@@ -1290,3 +1290,18 @@ color: #333;
 	
 }
 
+/*------------------------------------------------------------------
+[Login]
+*/
+
+.btn-galaxy{
+    background-color: #ED008C;
+}
+
+.btn-galaxy:hover{
+    background-color: #7eb216;
+}
+
+.login-actions{
+    !important;margin: 0 auto 0 auto;
+}

@@ -1,3 +1,9 @@
 esn_login_homepage:
     path:     /login
     defaults: { _controller: ESNLoginBundle:Login:index }
+esn_login_check:
+    path:     /login_check
+    defaults: { _controller: ESNLoginBundle:Login:check }
+esn_logout_check:
+    path:   /logout
+    defaults: { _controller: ESNLoginBundle:Login:logout }
