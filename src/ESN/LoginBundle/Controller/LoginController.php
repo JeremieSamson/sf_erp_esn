@@ -36,4 +36,10 @@ class LoginController extends Controller
 
         $this->redirect($this->generateUrl('esn_login_homepage'));
     }
+    public function logoutAction(Request $request){
+        $session = $this->container->get('session');
+        $session->remove('user');
+
+        return $this->redirect($this->generateUrl('esn_login_homepage'));
+    }
 }

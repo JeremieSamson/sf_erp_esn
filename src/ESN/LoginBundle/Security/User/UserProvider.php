@@ -62,6 +62,13 @@ class UserProvider implements UserProviderInterface
         return $this->loadUserByUsername($user->getUsername());
     }
 
+    public function logout($cas_host, $cas_port, $cas_context){
+        phpCAS::setDebug();
+        phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
+        phpCAS::logout();
+        return true;
+    }
+
     public function supportsClass($class)
     {
         return $class === 'ESN\LoginBundle\Security\User\UserProvider';
