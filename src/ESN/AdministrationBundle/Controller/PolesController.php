@@ -45,6 +45,7 @@ class PolesController extends Controller{
         $pole->setNbMembers(0);
         $form = $this->createFormBuilder($pole)
         ->add('name', 'text')
+        ->add('color', 'text')
         ->add('description', 'textarea')       
         ->getForm();
         
@@ -56,7 +57,7 @@ class PolesController extends Controller{
             $em->persist($pole);
             $em->flush();
 
-            $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+            $request->getSession()->getFlashBag()->add('notice', 'Pôle bien enregistrée.');
             
             return $this->redirect($this->generateUrl('esn_administration_poles'));
         }

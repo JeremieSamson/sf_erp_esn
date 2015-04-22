@@ -47,6 +47,7 @@ class User implements UserInterface, EquatableInterface
         $this->section      = $attributes['section'];
         $this->country      = $attributes['country'];
         $this->sc           = $attributes['sc'];
+        $this->roles        = $attributes['roles'];
     }
 
     /**

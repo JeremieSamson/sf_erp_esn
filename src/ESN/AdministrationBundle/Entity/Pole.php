@@ -34,7 +34,7 @@ class Pole
      * @ORM\Column(name="description", type="text")
      */
     private $description;
-    
+
     /**
      * @var integer
      *
@@ -42,6 +42,12 @@ class Pole
      */
     private $nbMembers;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="color", type="text")
+     */
+    private $color;
 
     /**
      * Get id
@@ -120,5 +126,21 @@ class Pole
     public function getNbMembers()
     {
         return $this->nbMembers;
+    }
+
+    /**
+     * @return string
+     */
+    public function getColor()
+    {
+        return $this->color;
+    }
+
+    /**
+     * @param string $color
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
     }
 }
