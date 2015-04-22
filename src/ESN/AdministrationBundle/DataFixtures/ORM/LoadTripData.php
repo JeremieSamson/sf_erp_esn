@@ -14,7 +14,7 @@ use ESN\AdministrationBundle\Entity\Trip;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
-class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTripData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
      * {@inheritDoc}

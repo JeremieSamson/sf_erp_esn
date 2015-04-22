@@ -2,7 +2,9 @@
 
 namespace ESN\AdministrationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use ESN\MembersBundle\Entity\Esner;
 
 /**
  * Pole
@@ -36,11 +38,9 @@ class Pole
     private $description;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="nbMembers", type="integer", length=10, nullable=true)
+     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Esner", mappedBy="pole")
      */
-    private $nbMembers;
+    private $esners;
 
     /**
      * @var string
@@ -48,6 +48,11 @@ class Pole
      * @ORM\Column(name="color", type="text")
      */
     private $color;
+
+    public function __construct()
+    {
+        $this->esners = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -106,26 +111,26 @@ class Pole
     }
 
     /**
-     * Set nbMembers
+     * Set nbEsners
      *
-     * @param integer $nbMembers
+     * @param integer $nbEsners
      * @return Pole
      */
-    public function setNbMembers($nbMembers)
+    public function setNbEsners($nbEsners)
     {
-        $this->nbMembers = $nbMembers;
+        $this->nbEsners = $nbEsners;
 
         return $this;
     }
 
     /**
-     * Get nbMembers
+     * Get nbEsners
      *
      * @return integer 
      */
-    public function getNbMembers()
+    public function getNbEsners()
     {
-        return $this->nbMembers;
+        return $this->nbEsners;
     }
 
     /**
@@ -142,5 +147,22 @@ class Pole
     public function setColor($color)
     {
         $this->color = $color;
+    }
+
+    public function addEsner(Esner $esner)
+    {
+        $this->esners[] = $esner;
+        $esner->setPole($this);
+        return $this;
+    }
+
+    public function removeEsner(Esner $esner)
+    {
+        $this->esners->removeElement($esner);
+    }
+
+    public function getEsners()
+    {
+        return $this->esners;
     }
 }

@@ -3,6 +3,7 @@
 namespace ESN\MembersBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ESN\AdministrationBundle\Entity\Pole;
 
 /**
  * Esner
@@ -51,6 +52,11 @@ class Esner
      */
     private $zipcode;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Pole", inversedBy="esners", cascade="persist")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $pole;
 
     /**
      * Get id
@@ -154,5 +160,27 @@ class Esner
     public function getMember()
     {
         return $this->member;
+    }
+
+    /**
+     * Set pole
+     *
+     * @param entity $pole
+     * @return Esner
+     */
+    public function setPole(Pole $pole)
+    {
+        $this->pole = $pole;
+        return $this;
+    }
+
+    /**
+     * Get pole
+     *
+     * @return entity
+     */
+    public function getPole()
+    {
+        return $this->pole;
     }
 }

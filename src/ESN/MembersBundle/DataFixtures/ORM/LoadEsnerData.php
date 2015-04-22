@@ -21,11 +21,16 @@ class LoadEsnerData extends AbstractFixture implements OrderedFixtureInterface
     private $types = array("rue", "boulevard", "avenue");
     private $addresses = array("gosselin", "valenciennes", "béthune");
     private $cities = array("Lille", "Valenciennes", "Compiègne", "Clermont", "Lyon");
+    private $manager;
+
     /**
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager){
+        $this->manager = $manager;
         $esn_members = $manager->getRepository('ESNMembersBundle:Member')->findAll();
+        $poles = $manager->getRepository('ESNAdministrationBundle:Pole')->findAll();
+        $maxPoleId = $this->getMaxPoleId();
 
         foreach($esn_members as $member){
             $esner = new Esner();
@@ -33,13 +38,20 @@ class LoadEsnerData extends AbstractFixture implements OrderedFixtureInterface
             $esner->setAddress($this->getRandomAddress());
             $esner->setCity($this->getRandomCity());
             $esner->setZipcode($this->getRandomZipCode());
-
+            $esner->setPole($manager->getRepository('ESNAdministrationBundle:Pole')->findOneBy(array("id" => rand($maxPoleId - count($poles) + 1,$maxPoleId))));
             $manager->persist($esner);
         }
 
         $manager->flush();
     }
 
+    private function getMaxPoleId(){
+        return $this->manager->createQueryBuilder()
+            ->select('MAX(p.id)')
+            ->from('ESNAdministrationBundle:Pole', 'p')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
     private function getRandomAddress(){
         return rand(1,200) . " " . $this->getRandomType() . " " . $this->getRandomAddressName();
     }

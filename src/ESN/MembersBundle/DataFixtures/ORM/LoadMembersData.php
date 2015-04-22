@@ -28,7 +28,7 @@ class LoadMembersData extends AbstractFixture implements OrderedFixtureInterface
         $this->manager = $manager;
 
         //Create IS Members
-        for ($i=0 ; $i<2 ; $i++){
+        for ($i=0 ; $i<20 ; $i++){
             $member = new Member();
             $member->setName($this->getRandomName());
             $member->setSurname($this->getRandomSurname());
@@ -48,7 +48,7 @@ class LoadMembersData extends AbstractFixture implements OrderedFixtureInterface
         }
 
         //Create ESNer Members
-        for ($i=0 ; $i<60 ; $i++){
+        for ($i=0 ; $i<30 ; $i++){
             $member = new Member();
             $member->setName($this->getRandomName());
             $member->setSurname($this->getRandomSurname());

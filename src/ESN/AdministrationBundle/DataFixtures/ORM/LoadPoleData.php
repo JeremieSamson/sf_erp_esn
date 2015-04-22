@@ -17,6 +17,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 class LoadPoleData extends AbstractFixture implements OrderedFixtureInterface
 {
+    private $colors = array("black", "green", "blue", "pink", "orange", "red");
     /**
      * {@inheritDoc}
      */
@@ -25,39 +26,43 @@ class LoadPoleData extends AbstractFixture implements OrderedFixtureInterface
         $pole = new Pole();
         $pole->setName("Pole Web");
         $pole->setDescription("Pole des geeks");
-        $pole->setNbMembers(30);
+        $pole->setColor($this->getRandomColor());
         $manager->persist($pole);
 
         $pole = new Pole();
         $pole->setName("Pole Sport");
         $pole->setDescription("Pole des sportif");
-        $pole->setNbMembers(30);
+        $pole->setColor($this->getRandomColor());
         $manager->persist($pole);
 
         $pole = new Pole();
         $pole->setName("Pole Culture");
         $pole->setDescription("Pole des cultivé");
-        $pole->setNbMembers(30);
+        $pole->setColor($this->getRandomColor());
         $manager->persist($pole);
 
         $pole = new Pole();
         $pole->setName("Pole Soirées");
         $pole->setDescription("Pole des chouilleurs");
-        $pole->setNbMembers(30);
+        $pole->setColor($this->getRandomColor());
         $manager->persist($pole);
 
         $pole = new Pole();
         $pole->setName("Pole Partenariat");
         $pole->setDescription("Pole des vendeurs de rêve");
-        $pole->setNbMembers(30);
+        $pole->setColor($this->getRandomColor());
         $manager->persist($pole);
 
         $pole = new Pole();
         $pole->setName("Pole Communication");
         $pole->setDescription("Pole des acro a Facebook");
-        $pole->setNbMembers(30);
+        $pole->setColor($this->getRandomColor());
         $manager->persist($pole);
         $manager->flush();
+    }
+
+    public function getRandomColor(){
+        return $this->colors[rand(0, count($this->colors)-1)];
     }
 
     public function getOrder()
