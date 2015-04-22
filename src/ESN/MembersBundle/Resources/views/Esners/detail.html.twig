@@ -16,7 +16,7 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                &nbsp; {{ member[0].identity.surname }} {{ member[0].identity.name }} <br/>
+                &nbsp; {{ member[0].identity.email }} <br/>
                 &nbsp; {{ member[0].identity.phone }}
                                
             </div><!-- /widget-content --> 
@@ -138,7 +138,7 @@
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            <span>not implemented</span>
+                            <span>{{ member[0].identity.university }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
