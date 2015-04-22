@@ -165,4 +165,8 @@ class Pole
     {
         return $this->esners;
     }
+
+    public function __toString(){
+        return $this->getName();
+    }
 }

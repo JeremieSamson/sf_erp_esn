@@ -6,7 +6,10 @@
                 <a href="{{ path('esn_members_detail', {
                     'type': "esners",
                     'id' : member.esner.id
-                }) }}">{{ member.identity.name }}</a>
+                }) }}">{{ member.identity.name ~ ' ' ~ member.identity.surname }}</a>
+                <span style="background-color: {{ member.esner.pole.color }}">
+                    {{ member.esner.pole }}
+                </span>
             </h3>
             <h4>{#{{ member.role}}#}</h4>
 
