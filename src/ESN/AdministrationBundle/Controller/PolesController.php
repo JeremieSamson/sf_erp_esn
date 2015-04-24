@@ -106,6 +106,7 @@ class PolesController extends Controller{
         
         $form = $this->createFormBuilder($pole)
         ->add('name', 'text')
+        ->add('color', "hidden")
         ->add('description', 'textarea')       
         ->getForm();
         

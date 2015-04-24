@@ -59,6 +59,13 @@ class Esner
     private $pole;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="hascare", type="boolean", nullable=true)
+     */
+    private $hasCare;
+
+    /**
      * Get id
      *
      * @return integer 

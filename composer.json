@@ -24,7 +24,6 @@
         "sensio/generator-bundle": "~2.5",
         "symfony/security-bundle": "~2.6",
         "symfony/twig-bundle": "~2.6",
-        "gorg/cas-bundle": "dev-master"
     },
     "require-dev": {
     },
