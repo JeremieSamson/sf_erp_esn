@@ -17,7 +17,7 @@ use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 
 class LoadPoleData extends AbstractFixture implements OrderedFixtureInterface
 {
-    private $colors = array("black", "green", "blue", "pink", "orange", "red");
+    private $colors = array("219BF2", "DD007E", "E96800", "201C85", "70B918");
     /**
      * {@inheritDoc}
      */

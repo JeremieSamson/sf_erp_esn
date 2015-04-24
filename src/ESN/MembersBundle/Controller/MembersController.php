@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use ESN\MembersBundle\Entity\Member;
 use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class MembersController extends Controller
 {   
@@ -133,6 +134,9 @@ class MembersController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $esner= $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner')->find($id);
+        if (!$esner){
+            throw new NotFoundResourceException("No ESNer with this ID");
+        }
         $form = $this->get('form.factory')->create(new ESNerUpdateType($em, $esner));
         $formHandler = new ESNerUpdateHandler($em, $form, $request);
         $form->handleRequest($request);

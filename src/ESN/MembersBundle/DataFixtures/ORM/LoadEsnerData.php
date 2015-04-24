@@ -39,6 +39,8 @@ class LoadEsnerData extends AbstractFixture implements OrderedFixtureInterface
             $esner->setCity($this->getRandomCity());
             $esner->setZipcode($this->getRandomZipCode());
             $esner->setPole($manager->getRepository('ESNAdministrationBundle:Pole')->findOneBy(array("id" => rand($maxPoleId - count($poles) + 1,$maxPoleId))));
+            $esner->setErasmusProgramme($this->getRandomCountry());
+            $esner->setHasCare(rand(0,1));
             $manager->persist($esner);
         }
 
@@ -70,6 +72,10 @@ class LoadEsnerData extends AbstractFixture implements OrderedFixtureInterface
 
     private function getRandomCity(){
         return $this->cities[rand(0, count($this->cities)-1)];
+    }
+
+    private function getRandomCountry(){
+        return $this->manager->getRepository('ESNAdministrationBundle:Country')->find(rand(1,192));
     }
 
     public function getOrder()

@@ -30,7 +30,9 @@ class ESNerUpdateType extends AbstractType{
     {
         $dataUni = 0;
         $dataCountry = 0;
+        $erasmusCountry = 0;
         if ($this->esner != null){
+            $erasmusCountry = $this->esner->getErasmusProgramme();
             $dataCountry = $this->esner->getMember()->getNationality();
             $dataUni = $this->esner->getMember()->getUniversity();
         }
@@ -40,6 +42,15 @@ class ESNerUpdateType extends AbstractType{
             ->add('email','email')
             ->add('phone','text')
             ->add('birthday', 'date', array('widget' => 'single_text'))
+            ->add('hasCare', 'checkbox')
+            ->add('erasmus', 'entity' ,
+                array('class' => 'ESNAdministrationBundle:Country',
+                    'choices' => $this->em->getRepository('ESNAdministrationBundle:Country')->findAll(),
+                    'data' => $erasmusCountry
+                )
+            )
+            ->add('erasmusyearstart', 'date')
+            ->add('erasmusyearend', 'date')
             ->add('study', 'text')
             ->add('address', 'text')
             ->add('city', 'text')

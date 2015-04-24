@@ -60,6 +60,36 @@
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
+                    <div class="control-group">
+                        <label class="control-label" for="hasCare">Voiture</label>
+                        <div class="controls">
+                            {{ form_widget(form.hasCare) }}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
+
+                    <hr/>
+
+                    <div class="control-group">
+                        <label class="control-label" for="erasmus">Erasmus</label>
+                        <div class="controls">
+                            {{ form_widget(form.erasmus) }}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
+
+                    <div class="control-group">
+                        <label class="control-label" for="erasmusyearstart">Début</label>
+                        <div class="controls">
+                            {{ form_widget(form.erasmusyearstart, {'value': member[0].esner.erasmusyearstart|date('Y-m-d')}) }}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
+
+                    <div class="control-group">
+                        <label class="control-label" for="erasmusyearend">Fin</label>
+                        <div class="controls">
+                            {{ form_widget(form.erasmusyearend, {'value': member[0].esner.erasmusyearend|date('Y-m-d')}) }}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
+
                     <hr/>
 
                     <div class="control-group">

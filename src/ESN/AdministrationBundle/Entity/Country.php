@@ -4,6 +4,7 @@ namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use ESN\MembersBundle\Entity\Esner;
 use ESN\MembersBundle\Entity\Member;
 
 /**
@@ -49,9 +50,15 @@ class Country
      */
     private $members;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Esner", mappedBy="erasmusProgramme")
+     */
+    private $erasmusProgramme_esners;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->erasmusProgramme_esners = new ArrayCollection();
     }
 
     /**
@@ -152,5 +159,22 @@ class Country
     public function getMembers()
     {
         return $this->members;
+    }
+
+    public function addEsner(Esner $esner)
+    {
+        $this->erasmusProgramme_esners[] = $esner;
+        $esner->setErasmusProgramme($this);
+        return $this;
+    }
+
+    public function removeEsner(Esner $esner)
+    {
+        $this->erasmusProgramme_esners->removeElement($esner);
+    }
+
+    public function getEsnerErasmusProgramme()
+    {
+        return $this->erasmusProgramme_esners;
     }
 }

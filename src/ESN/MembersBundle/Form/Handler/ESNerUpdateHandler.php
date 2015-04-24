@@ -54,7 +54,10 @@ class ESNerUpdateHandler
                 $esner->setAddress($this->form->get('address')->getData());
                 $esner->setCity($this->form->get('city')->getData());
                 $esner->setZipcode($this->form->get('zipcode')->getData());
-
+                $esner->setErasmusProgramme($this->form->get('erasmus')->getData());
+                $esner->setErasmusYearStart($this->form->get('erasmusyearstart')->getData());
+                $esner->setErasmusYearEnd($this->form->get('erasmusyearend')->getData());
+                $esner->setHasCare($this->form->get('hasCare')->getData());
                 $this->em->flush();
 
                 return true;
