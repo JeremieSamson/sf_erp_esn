@@ -133,10 +133,14 @@ class MembersController extends Controller
     public function editEsnerAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $esner= $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner')->find($id);
+        $esner= $em->getRepository('ESNMembersBundle:Esner')->find($id);
+
         if (!$esner){
             throw new NotFoundResourceException("No ESNer with this ID");
         }
+
+        $trips= $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByMember($esner->getMember());
+
         $form = $this->get('form.factory')->create(new ESNerUpdateType($em, $esner));
         $formHandler = new ESNerUpdateHandler($em, $form, $request);
         $form->handleRequest($request);
@@ -146,6 +150,7 @@ class MembersController extends Controller
         if ($process){
             return $this->redirect($this->generateUrl('esn_members_detail', array(
                 'type' => 'esners',
+                'trips'=> $trips,
                 'id'=>$id
             )));
         }
@@ -199,6 +204,7 @@ class MembersController extends Controller
         $repositoryMember     = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
         $repositoryUniversity = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:University');
         $repositoryCountry    = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Country');
+        $repositoryParticipateTrips = $this->getDoctrine()->getManager()->getRepository('ESNPermanenceBundle:ParticipateTrip');
 
         $list_member = array();
         if (!$id) {
@@ -219,8 +225,9 @@ class MembersController extends Controller
         } else {
             if ($type == "esners") {
                 $esner = $repositoryEsner->find($id); 
-                $esner_identity = $repositoryMember->find($esner->getMember()->getId());
-                array_push($list_member,array('esner'=>$esner,'identity'=>$esner_identity));
+                $esner_identity = $esner->getMember();
+                $esner_trips= $repositoryParticipateTrips->findByMember($esner->getMember());
+                array_push($list_member,array('esner'=>$esner,'identity'=>$esner_identity,'trips'=>$esner_trips));
             } else {
                 $erasmus = $repositoryErasmus->find($id);
                 $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());

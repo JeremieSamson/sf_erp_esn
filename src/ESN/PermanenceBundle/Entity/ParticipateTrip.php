@@ -125,4 +125,8 @@ use ESN\MembersBundle\Entity\Member;
     {
         return $this->member;
     }
+
+     public function __toString(){
+         return  $this->getTrips()->getName();
+     }
 }

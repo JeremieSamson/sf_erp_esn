@@ -164,7 +164,20 @@
                              <span>not implemented</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
-                    
+
+                    <hr/>
+
+                    <div class="control-group">
+                        <label class="control-label" for="trips">Trips</label>
+                        <div class="controls">
+                            <ul id="trips">
+                                {% for trip in member[0].trips %}
+                                    <li>{{ '(' ~ trip.trip.date|date('Y/m/d') ~ ') ' ~ trip}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
+
                 </fieldset>  
                 </form>    
             </div><!-- /widget-content -->
