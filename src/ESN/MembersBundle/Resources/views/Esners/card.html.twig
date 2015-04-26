@@ -7,9 +7,11 @@
                     'type': "esners",
                     'id' : member.esner.id
                 }) }}">{{ member.identity.name ~ ' ' ~ member.identity.surname }}</a>
-                <span title="{{ member.esner.pole }}" style="background-color: #{{ member.esner.pole.color }};">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
+                {% if member.esner.pole %}
+                    <span title="{{ member.esner.pole }}" style="background-color: #{{ member.esner.pole.color }};">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                {% endif %}
             </h3>
             <h4>{#{{ member.role}}#}</h4>
 
