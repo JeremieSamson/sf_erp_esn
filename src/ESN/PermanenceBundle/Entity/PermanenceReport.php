@@ -17,37 +17,37 @@ use Doctrine\ORM\Mapping as ORM;
     * @ORM\GeneratedValue(strategy="AUTO")
     */
     private $id;
-       
-    
-    
+
+
+
      /**
     * @ORM\Column(type="decimal", scale=2)
     */
     private $amountBefore;
-    
+
     /**
     * @ORM\Column(type="decimal", scale=2)
     */
     private $amountAfter;
-    
+
      /**
     * @ORM\Column(type="decimal", scale=2)
     */
     private $amountSell;
-        
-    
-       
-    
+
+
+
+
     /**
     * @ORM\Column(name="sellCard", type="integer")
     */
     private $sellCard;
-    
+
     /**
     * @ORM\Column(name="availableCard", type="integer")
     */
     private $availableCard;
-    
+
     
     /**
      * @var string

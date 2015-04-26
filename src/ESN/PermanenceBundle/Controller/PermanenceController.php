@@ -2,16 +2,19 @@
 
 namespace ESN\PermanenceBundle\Controller;
 
-use ESN\AdministrationBundle\Entity\Card;
+
 use ESN\PermanenceBundle\Form\EnrollUserToTripType;
 use ESN\PermanenceBundle\Form\Handler\EnrollUserToTripHandler;
-use ESN\TreasuryBundle\Entity\Caisse;
+
 use ESN\TreasuryBundle\Entity\Operation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\PermanenceBundle\Entity\PermanenceReport;
+use ESN\AdministrationBundle\Entity\Card;
 use ESN\AdministrationBundle\Entity\CardRepository;
+use ESN\TreasuryBundle\Entity\Caisse;
+use ESN\TreasuryBundle\Entity\CaisseRepository;
 
 class PermanenceController extends Controller
 {
@@ -30,20 +33,7 @@ class PermanenceController extends Controller
         $em = $this->getDoctrine()->getManager();
        
         // CAISSE
-        $query = $em->createQuery(
-            'SELECT c
-            FROM ESNTreasuryBundle:Caisse c
-            ORDER BY c.date DESC
-            '
-        )->setMaxResults(1);
-
-        $montantQuery = $query->getOneOrNullresult();
-
-        if ($montantQuery == NULL) {
-            $montant = 0;
-        } else {
-            $montant = $montantQuery->getMontant();
-        }
+        $montant = $em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
 
         // CARD
         $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
@@ -129,9 +119,9 @@ class PermanenceController extends Controller
     {
         $repository = $this->getDoctrine()->getManager()->getRepository('ESNPermanenceBundle:PermanenceReport');
         
-        $operations = array("reports" => $repository->findAll());
-                
-        return $this->render('ESNPermanenceBundle:Reports:listReports.html.twig',$operations);
+        $reports = array("reports" => $repository->findAll());
+
+        return $this->render('ESNPermanenceBundle:Reports:listReports.html.twig',$reports);
     }//reportsListAction
     
     /**
@@ -143,15 +133,13 @@ class PermanenceController extends Controller
     public function createReportAction($type,Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $report = new PermanenceReport();
-
-        //Get number of cards
+        $caisse = $em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
         $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
-         
+
+        $report = new PermanenceReport();
         $form = $this->createFormBuilder($report)
-        ->add('amountBefore', 'money')
-        ->add('amountAfter', 'money')
-        ->add('amountSell', 'money')
+        ->add('amountBefore', 'integer', array('attr' => array('value' => $caisse)))
+        ->add('amountAfter', 'integer', array('attr' => array('value' => $caisse)))
         ->add('sellCard', 'integer')
         ->add('availableCard', 'integer', array('attr' => array('value' => $nbCard)))
         ->add('comments', 'textarea')
@@ -167,32 +155,23 @@ class PermanenceController extends Controller
             $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
             $availableCard = $nbCard - $sellcard;
 
+            $report->setAmountBefore($caisse);
+            $report->setAmountSell($report->getSellCard()*5);
+            $report->setAmountAfter($caisse + $report->getAmountSell());
+
             $Card = new Card();
             $Card->setNumber($availableCard);
             $em->persist($Card);
 
             $operation = new Operation();
-            $operation->setMontant(-$report->getAmountSell());
+            $operation->setMontant($report->getAmountSell());
             $operation->setDate(new \DateTime());
             $operation->setLibelle("Vente carte ESN pendant la perm");
             $operation->setDescription("Vente de " . $report->getSellCard() . " cartes ESN");
             $em->persist($operation);
 
             // CAISSE
-            $query = $em->createQuery(
-                'SELECT c
-            FROM ESNTreasuryBundle:Caisse c
-            ORDER BY c.date DESC
-            '
-            )->setMaxResults(1);
-
-            $montantQuery = $query->getOneOrNullresult();
-
-            if ($montantQuery == NULL) {
-                $montant = 0;
-            } else {
-                $montant = $montantQuery->getMontant();
-            }
+            $montant = $em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
 
             $caisse = new Caisse();
             $caisse->setMontant($montant + $operation->getMontant());
@@ -207,11 +186,15 @@ class PermanenceController extends Controller
                 'type'=>'reports'
             )));
         }
+
+
         
         return $this->render('ESNPermanenceBundle:Reports:createReport.html.twig', array(
             'title' => "Treasury",
-            'type' => $type,
-            'form' => $form->createView(),
+            'type'  => $type,
+            'form'  => $form->createView(),
+            'cards' => $nbCard,
+            'money' => $caisse
         ));
     }//createReportAction
     

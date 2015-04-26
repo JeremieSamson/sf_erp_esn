@@ -11,6 +11,7 @@ namespace ESN\PermanenceBundle\Form\Handler;
 use Doctrine\ORM\EntityManager;
 use ESN\MembersBundle\Entity\Erasmus;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
+use ESN\TreasuryBundle\Entity\Caisse;
 use ESN\TreasuryBundle\Entity\Operation;
 use Symfony\Component\Form\Form;
 use ESN\MembersBundle\Entity\Member;
@@ -55,6 +56,11 @@ class EnrollUserToTripHandler
                 $operation->setLibelle("Payment for a trip");
                 $operation->setMontant($trip->getPrice());
 
+                $montant = $this->em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
+                $caisse = new Caisse();
+                $caisse->setMontant($montant + $operation->getMontant());
+
+                $this->em->persist($caisse);
                 $this->em->persist($operation);
                 $this->em->persist($participateTrip);
 

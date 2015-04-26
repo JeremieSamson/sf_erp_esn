@@ -6,7 +6,6 @@
  * Time: 15:52
  */
 
-// src/ESN/AdministrationBundle/Entity/CardRepository.php
 namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
