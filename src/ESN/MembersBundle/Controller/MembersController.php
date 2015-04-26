@@ -44,7 +44,26 @@ class MembersController extends Controller
             'id' => $id);
         return $this->render('ESNMembersBundle::index.html.twig', $data);
     }//indexAction
-    
+
+    /**
+     * Action à l'affichage de la liste des membres en fonction du type.
+     * @param type $type
+     * @return type
+     */
+    public function listAction($type)
+    {
+        $liste_membres = array(
+            'liste_membres' => $this->getAllMembers($type)
+        );
+
+        if ($type == 'esners') {
+            return $this->render('ESNMembersBundle:Esners:list.html.twig',  $liste_membres);
+        } else {
+            return $this->render('ESNMembersBundle:Erasmus:list.html.twig', $liste_membres);
+        }
+    }//listAction
+
+
     /**
      * Action à l'affichage de la liste des membres en fonction du type.
      * @param type $type
