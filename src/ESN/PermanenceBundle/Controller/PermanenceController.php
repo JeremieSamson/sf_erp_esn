@@ -82,10 +82,13 @@ class PermanenceController extends Controller
         $process = $formHandler->process();
 
         if ($process){
-            /*return $this->redirect($this->generateUrl('esn_members_detail', array(
-                'type' => 'esners',
-                'id'=>$id
-            )));*/
+            $trip = $em->getRepository('ESNAdministrationBundle:Trip')->find($form->get('trips')->getData());
+            $participants = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
+            $request->getSession()->getFlashBag()->add('notice', 'participant bien enregistré.');
+            return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig',
+                array('participants' => $participants,
+                      'title' => "Permanence",
+                      'trip' => $trip));
         }
 
         return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',
@@ -105,22 +108,17 @@ class PermanenceController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $trip = $em->getRepository('ESNAdministrationBundle:Trip')->find($id);
-        
+
         if (null === $trip) {
             throw new NotFoundHttpException("Le voyage d'id ".$id." n'existe pas.");
         }
-        
+
         $participants = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
-        
-        $members = array();
-        
-        foreach ($participants as $participant) {
-                    $member = $em->getRepository('ESNMembersBundle:Member')->find($participant->getMembers());
-                    array_push($members,$member);
-        }
-                
-        return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig', array('erasmus' => $members,
-             'title' => "Permanence",'trip' => $trip)); 
+
+        return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig',
+            array('participants' => $participants,
+                  'title' => "Permanence",
+                  'trip' => $trip));
     }//detailTripsAction
     
     /**

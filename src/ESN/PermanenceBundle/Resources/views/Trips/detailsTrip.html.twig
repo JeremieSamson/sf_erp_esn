@@ -2,69 +2,89 @@
 
 
 {% block subnavbar %}
-{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
 {% block body %}
 
-<div class="span12">
+    <div class="span12">
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    <strong> Success!</strong> {{ message }}
+                </div>
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="span12">
         <div class="widget">
             <div class="widget-content">
                 <a href="{{ path('esn_permanence_trips') }}"> Retour </a>
-                    <br/>
-                    <br/>
-                    <div class ="tabbable">
-                        
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                              <a href="#details" data-toggle="tab">Details</a>
-                            </li>
-                            <li class=""><a href="#participants" data-toggle="tab">Participants</a></li>
-                        </ul>
-                        
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="details">
-                                <div class="panel panel-default">
-                                    <h3>{{trip.name}}</h3>
-                                    <p> {{trip.description}}</p>
-                                    <p> {{trip.date|date('d/m/Y')}} </p> 
-                                    <p> Price : {{trip.price}} € </p>
-                                    <p> Number of participants : {{erasmus|length}} / {{trip.nbPlace}}</p>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="participants">
-                                <div class="panel panel-default">
-                                    <h3> {{trip.name}} </h3>
-                                    <p> {{trip.date|date('d/m/Y')}} </p> 
-                                    <!-- Table -->
-                                    <table class="table">
-                                      <thead>
-                                        <tr>
-                                          <th>#</th>
-                                          <th>FirstName</th>
-                                          <th>Surname</th>
-                                          <th>Phone Number</th>
-                                          <th>Birthdate</th>      
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {% for member in erasmus %}
-                                         <tr> 
-                                            <td>{{ loop.index }}</td>
-                                            <td>{{member.name}}</td>
-                                            <td>{{member.surname}}</td>
-                                            <td>{{member.phone}}</td>
-                                            <td>{{member.birthday|date('d/m/Y')}}</td>
-                                        </tr> 
-                                        {%endfor %}
+                <br/>
+                <br/>
 
-                                      </tbody>
-                                    </table>
-                                </div>
+                <div class="tabbable">
+
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#details" data-toggle="tab">Details</a>
+                        </li>
+                        <li class=""><a href="#participants" data-toggle="tab">Participants</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="details">
+                            <div class="panel panel-default">
+                                <h3>{{ trip.name }}</h3>
+
+                                <p> {{ trip.description }}</p>
+
+                                <p> {{ trip.date|date('d/m/Y') }} </p>
+
+                                <p> Price : {{ trip.price }} € </p>
+
+                                <p> Number of participants : {{ participants|length }} / {{ trip.nbPlace }}</p>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="participants">
+                            <div class="panel panel-default">
+                                <h3> {{ trip.name }} </h3>
+
+                                <p> {{ trip.date|date('d/m/Y') }} </p>
+                                <!-- Table -->
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>FirstName</th>
+                                        <th>Surname</th>
+                                        <th>Phone Number</th>
+                                        <th>Birthdate</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for participant in participants %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>{{ participant.member.name }}</td>
+                                            <td>{{ participant.member.surname }}</td>
+                                            <td>{{ participant.member.phone }}</td>
+                                            <td>{{ participant.member.birthday|date('d/m/Y') }}</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-            </div><!-- widget-content -->
-        </div><!-- /widget -->
-    </div><!-- /span8 -->   
+                </div>
+            </div>
+            <!-- widget-content -->
+        </div>
+        <!-- /widget -->
+    </div><!-- /span8 -->
 {% endblock %}
