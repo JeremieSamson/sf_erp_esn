@@ -12,4 +12,32 @@ use Doctrine\ORM\EntityRepository;
  */
 class EsnerRepository extends EntityRepository
 {
+    public function findWithSearch($where){
+        //var_dump($where['pole']);die();
+        $query = $this->createQueryBuilder('e')
+            ->leftJoin("e.member", "m");
+
+        if ($where['pole'] != null){
+            $query = $query
+                ->where("e.pole = :pole")
+                ->setParameter('pole', $where['pole']);
+        }
+        if ($where['university'] != null){
+            $query = $query
+                ->andWhere("m.university = :university")
+                ->setParameter('university', $where['university']);
+        }
+        if ($where['country'] != null){
+            $query = $query
+                ->andWhere("m.nationality= :country")
+                ->setParameter('country', $where['country']);
+        }
+
+        $query = $query
+            ->orderBy("m.name", "ASC")
+            ->getQuery();
+
+        $result = $query->getResult();
+        return $result;
+    }
 }

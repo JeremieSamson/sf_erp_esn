@@ -10,7 +10,9 @@ use ESN\MembersBundle\Form\Handler\ErasmusHandler;
 use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
 use ESN\MembersBundle\Form\Handler\ESNerUpdateHandler;
 use ESN\MembersBundle\Form\Handler\MembersHandler;
+use ESN\MembersBundle\Form\Handler\SearchHandler;
 use ESN\MembersBundle\Form\MembersType;
+use ESN\MembersBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -48,17 +50,38 @@ class MembersController extends Controller
      * @param type $type
      * @return type
      */
-    public function listAction($type)
+    public function listEsnerAction()
     {
-        $liste_membres = array(
-            'liste_membres' => $this->getAllMembers($type)
-        );
-               
-        if ($type == 'esners') {
-           return $this->render('ESNMembersBundle:Esners:list.html.twig',  $liste_membres); 
-        } else {
-           return $this->render('ESNMembersBundle:Erasmus:list.html.twig', $liste_membres);  
-        } 
+        $em = $this->getDoctrine()->getManager();
+        $request = $this->get('request');
+        $form = $this->get('form.factory')->create(new SearchType($em));
+        $formHandler = new SearchHandler($em, $form, $request);
+        $form->handleRequest($request);
+        $where = array();
+        //$process = $formHandler->process();
+
+        if ('POST' == $request->getMethod()) {
+            $where["pole"] = $form->get('pole')->getData();
+            $where["university"] = $form->get('university')->getData();
+            $where["country"] = $form->get('country')->getData();
+        }else{
+            $where["pole"] = null;
+            $where["university"] = null;
+            $where["country"] = null;
+        }
+
+        $list_membres = $this->getAllMembers("esners", null, $where);
+
+        /*if ($process){
+            $list_membres = "";
+        }else{
+
+        }*/
+
+        return $this->render('ESNMembersBundle:Esners:list.html.twig',  array(
+            'liste_membres' => $list_membres,
+            "form" => $form->createView()
+        ));
     }//listAction
     
     /**
@@ -198,7 +221,7 @@ class MembersController extends Controller
      * @param type $id
      * @return array
      */
-    private function getAllMembers($type,$id=null) {
+    private function getAllMembers($type,$id=null,$where=null) {
         $repositoryEsner      = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner');
         $repositoryErasmus    = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus');
         $repositoryMember     = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
@@ -210,7 +233,7 @@ class MembersController extends Controller
         if (!$id) {
             // Retourne un array avec 'esner':Object Esner, 'identity':Object Member
             if ($type == "esners") {
-                $list_esner = $repositoryEsner->findAll();
+                $list_esner = $repositoryEsner->findWithSearch($where);
                 foreach ($list_esner as $esner) {
                     $member = $repositoryMember->find($esner->getMember()->getId());
                     array_push($list_member,array('esner'=>$esner,'identity'=>$member));

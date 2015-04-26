@@ -1,3 +1,7 @@
+esn_members_homepage_esners:
+    path:     /members/esners
+    defaults: { _controller: ESNMembersBundle:Members:listEsner }
+
 esn_members_homepage:
     path:     /members/{type}
     defaults: { _controller: ESNMembersBundle:Members:index, action:"lister" }

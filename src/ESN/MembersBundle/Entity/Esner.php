@@ -276,5 +276,4 @@ class Esner
     {
         $this->erasmus_year_end = $erasmus_year_end;
     }
-
 }

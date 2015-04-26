@@ -1,21 +1,44 @@
-<div class="row">	      	
-    
+{% extends '::base.html.twig' %}
+
+{% block subnavbar %}
+    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+{% block body %}
+<div class="row">
+
+    <script>
+        $(document).ready( function() {
+            $('#search_filter_pole').change(function() {
+                this.form.submit();
+            });
+            $('#search_filter_university').change(function() {
+                this.form.submit();
+            });
+            $('#search_filter_country').change(function() {
+                this.form.submit();
+            });
+        });
+    </script>
+
     <div class="span12">
         <div class="widget">
             <div class="widget-content">
-            
-                <input type="text" placeholder="Search by Name">&nbsp;&nbsp;
-                <input type="text" placeholder="Search by Nationality">&nbsp;&nbsp;
-                <input type="text" placeholder="Search by Role">
-            
-            </div><!-- /widget-content --> 
-        </div><!-- /widget -->    
-    </div><!-- /span12 --> 
-    
-    
+                {{ form_start(form) }}
+                {{ form_widget(form.pole) }}
+                {{ form_widget(form.university) }}
+                {{ form_widget(form.country) }}
+                    <input type="reset" name="reset" value="reset">
+                {{ form_end(form) }}
+            </div><!-- /widget-content -->
+        </div><!-- /widget -->
+    </div><!-- /span12 -->
+
+
     <!-- injection test -->
     {% for membre in liste_membres %}
         {{ render(controller("ESNMembersBundle:Members:cardEsner" , {'member': membre})) }}
     {% endfor %}
-    
-</div><!-- /row --> 
+
+</div><!-- /row -->
+{% endblock %}
