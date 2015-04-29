@@ -58,6 +58,8 @@ class ESNerUpdateHandler
                 $esner->setErasmusYearStart($this->form->get('erasmusyearstart')->getData());
                 $esner->setErasmusYearEnd($this->form->get('erasmusyearend')->getData());
                 $esner->setHasCare($this->form->get('hasCare')->getData());
+                $esner->setPost($this->form->get('post')->getData());
+                $esner->setPole($this->form->get('pole')->getData());
                 $this->em->flush();
 
                 return true;

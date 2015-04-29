@@ -50,22 +50,22 @@ class ESNerUpdateType extends AbstractType{
                     'choices' => $this->em->getRepository('ESNAdministrationBundle:Pole')->findAll(),
                     'data' => $dataPole)
             )
-            ->add('email','email')
-            ->add('phone','text')
+            ->add('email','email', array("required" => false))
+            ->add('phone','text', array("required" => false))
             ->add('birthday', 'date', array('widget' => 'single_text'))
-            ->add('hasCare', 'checkbox')
+            ->add('hasCare', 'checkbox', array("required" => false))
             ->add('erasmus', 'entity' ,
                 array('class' => 'ESNAdministrationBundle:Country',
                     'choices' => $this->em->getRepository('ESNAdministrationBundle:Country')->findAll(),
                     'data' => $erasmusCountry
                 )
             )
-            ->add('erasmusyearstart', 'date')
-            ->add('erasmusyearend', 'date')
-            ->add('study', 'text')
-            ->add('address', 'text')
-            ->add('city', 'text')
-            ->add('zipcode', 'number')
+            ->add('erasmusyearstart', 'date', array("required" => false))
+            ->add('erasmusyearend', 'date', array("required" => false))
+            ->add('study', 'text', array("required" => false))
+            ->add('address', 'text', array("required" => false))
+            ->add('city', 'text', array("required" => false))
+            ->add('zipcode', 'number', array("required" => false))
             ->add('id' , 'hidden', array('attr' => array( 'value' => $this->esner->getId())))
             ->add('university', 'entity' ,
                 array('class' => 'ESNAdministrationBundle:University',
