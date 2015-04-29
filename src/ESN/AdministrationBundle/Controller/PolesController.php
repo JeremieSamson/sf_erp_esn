@@ -42,7 +42,6 @@ class PolesController extends Controller{
        
 // crée une tâche et lui donne quelques données par défaut pour cet exemple
         $pole = new Pole();
-        $pole->setNbMembers(0);
         $form = $this->createFormBuilder($pole)
         ->add('name', 'text')
         ->add('color', 'text')

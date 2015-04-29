@@ -9,14 +9,9 @@ use ESN\MembersBundle\Form\ESNerUpdateType;
 use ESN\MembersBundle\Form\Handler\ErasmusHandler;
 use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
 use ESN\MembersBundle\Form\Handler\ESNerUpdateHandler;
-use ESN\MembersBundle\Form\Handler\MembersHandler;
 use ESN\MembersBundle\Form\Handler\SearchHandler;
-use ESN\MembersBundle\Form\MembersType;
 use ESN\MembersBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use ESN\MembersBundle\Entity\Member;
 use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\HttpFoundation\Request;

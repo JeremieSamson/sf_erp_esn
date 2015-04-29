@@ -9,7 +9,6 @@
 namespace ESN\MembersBundle\Form;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Repository\RepositoryFactory;
 use ESN\AdministrationBundle\Entity\University;
 use ESN\MembersBundle\Entity\Erasmus;
 use ESN\MembersBundle\Entity\Esner;
