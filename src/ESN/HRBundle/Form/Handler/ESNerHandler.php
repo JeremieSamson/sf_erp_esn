@@ -53,6 +53,8 @@ class ESNerHandler
             $esner->setMember($member);
             $esner->setPole($this->form->get('pole')->getData());
             $esner->setErasmusProgramme($this->form->get('erasmus')->getData());
+            $esner->setPost($this->form->get('post')->getData());
+
             $infoEsner = new InfoEsner();
             $infoEsner->setEsner($esner);
 

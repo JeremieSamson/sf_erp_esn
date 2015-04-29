@@ -29,8 +29,9 @@
         <div class="widget ">
             <div class="widget-content">
                 <h3>
-                    {{ member[0].identity.surname ~ ' ' ~ member[0].identity.name }}
+                    {{ member[0].identity.surname ~ ' ' ~ member[0].identity.name ~ ' | '}}
                     {% if member[0].esner.pole %}
+                        {{ member[0].esner.post ~ ' | '}}
                         {{ member[0].esner.pole }}
                     {% endif %}
 

@@ -28,8 +28,10 @@
         <div class="widget">
             <div class="widget-content">
 
-                Firstname  {{ form_widget(form.name, {'value': member[0].identity.name}) }}
-                Surname  {{ form_widget(form.surname, {'value': member[0].identity.surname}) }}
+                {{ form_widget(form.name, {'value': member[0].identity.name}) }}
+                {{ form_widget(form.surname, {'value': member[0].identity.surname}) }}
+                {{ form_widget(form.post, {'value': member[0].esner.post}) }}
+                {{ form_widget(form.pole, {'value': member[0].esner.pole}) }}
 
             </div><!-- /widget-content -->
         </div><!-- /widget -->

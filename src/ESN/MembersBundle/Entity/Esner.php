@@ -59,6 +59,12 @@ class Esner
     private $pole;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Post", inversedBy="esners", cascade="persist")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $post;
+    
+    /**
      * @var boolean
      *
      * @ORM\Column(name="hascare", type="boolean", nullable=true)
@@ -275,5 +281,21 @@ class Esner
     public function setErasmusYearEnd($erasmus_year_end)
     {
         $this->erasmus_year_end = $erasmus_year_end;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param mixed $post
+     */
+    public function setPost($post)
+    {
+        $this->post = $post;
     }
 }

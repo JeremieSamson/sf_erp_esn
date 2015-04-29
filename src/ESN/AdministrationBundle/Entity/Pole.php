@@ -169,6 +169,7 @@ class Pole
     public function nbMembers(){
         return $this->esners->count();
     }
+
     public function __toString(){
         return $this->getName();
     }

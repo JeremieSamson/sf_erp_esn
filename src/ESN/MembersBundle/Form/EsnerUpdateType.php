@@ -34,10 +34,22 @@ class ESNerUpdateType extends AbstractType{
             $erasmusCountry = $this->esner->getErasmusProgramme();
             $dataCountry = $this->esner->getMember()->getNationality();
             $dataUni = $this->esner->getMember()->getUniversity();
+            $dataPole = $this->esner->getPole();
+            $dataPost = $this->esner->getPost();
         }
 
         $builder->add('name', 'text')
             ->add('surname','text')
+            ->add('post', 'entity' ,
+                array('class' => 'ESNAdministrationBundle:Post',
+                    'choices' => $this->em->getRepository('ESNAdministrationBundle:Post')->findAll(),
+                    'data' => $dataPost)
+            )
+            ->add('pole', 'entity' ,
+                array('class' => 'ESNAdministrationBundle:Pole',
+                    'choices' => $this->em->getRepository('ESNAdministrationBundle:Pole')->findAll(),
+                    'data' => $dataPole)
+            )
             ->add('email','email')
             ->add('phone','text')
             ->add('birthday', 'date', array('widget' => 'single_text'))
