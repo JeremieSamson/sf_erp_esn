@@ -38,7 +38,6 @@ class SearchHandler
     {
         if ('POST' == $this->request->getMethod()) {
             $pole = $this->form->get('pole')->getData();
-            var_dump($pole->getId());
             return true;
         }
 

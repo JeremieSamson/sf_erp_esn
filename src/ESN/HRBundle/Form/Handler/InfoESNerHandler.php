@@ -48,13 +48,13 @@ class InfoESNerHandler {
                     $info_esner = new InfoEsner();
 
                 $info_esner->setEsner($esner);
+                $info_esner->setComment($this->form->get('comment')->getData());
+                $info_esner->setCotisation($this->form->get('cotisation')->getData());
+                $esner->setActive($this->form->get('active')->getData());
+
+                if (!$update)
+                    $this->em->persist($info_esner);
             }
-
-            $info_esner->setComment($this->form->get('comment')->getData());
-            $info_esner->setCotisation($this->form->get('cotisation')->getData());
-
-            if (!$update)
-                $this->em->persist($info_esner);
 
             $this->em->flush();
 

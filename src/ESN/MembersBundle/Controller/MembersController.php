@@ -78,10 +78,12 @@ class MembersController extends Controller
             $where["pole"] = $form->get('pole')->getData();
             $where["university"] = $form->get('university')->getData();
             $where["country"] = $form->get('country')->getData();
+            $where["active"] = $form->get('active')->getData();
         }else{
             $where["pole"] = null;
             $where["university"] = null;
             $where["country"] = null;
+            $where["active"] = null;
         }
 
         $list_membres = $this->getAllMembers("esners", null, $where);

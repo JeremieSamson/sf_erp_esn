@@ -67,9 +67,16 @@ class Esner
     /**
      * @var boolean
      *
-     * @ORM\Column(name="hascare", type="boolean", nullable=true)
+     * @ORM\Column(name="hascare", type="boolean")
      */
-    private $hasCare;
+    private $hasCare = 0;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = 1;
 
     /**
      * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="erasmusProgramme_esners", cascade="persist")
@@ -297,5 +304,21 @@ class Esner
     public function setPost($post)
     {
         $this->post = $post;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param boolean $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
     }
 }

@@ -32,10 +32,17 @@ class EsnerRepository extends EntityRepository
                 ->andWhere("m.nationality= :country")
                 ->setParameter('country', $where['country']);
         }
+        if ($where['active'] != null){
+            $query = $query
+                ->andWhere("e.active = :active")
+                ->setParameter('active', $where['active']);
+        }
 
         $query = $query
             ->orderBy("m.name", "ASC")
             ->getQuery();
+
+        var_dump($query);die();
 
         $result = $query->getResult();
         return $result;

@@ -30,8 +30,10 @@ class InfoEsnerType extends AbstractType{
                 'widget' => 'single_text',
                 // this is actually the default format for single_text
                 'format' => 'yyyy-MM-dd',
+                "required" => false
             ))
-            ->add('comment', 'textarea')
+            ->add('comment', 'textarea', array("required" => false))
+            ->add('active', 'checkbox', array("required" => false, "mapped" => false))
             ->add('id_esner', 'hidden', array('attr' => array('value' =>$this->id_esner)));
     }
 

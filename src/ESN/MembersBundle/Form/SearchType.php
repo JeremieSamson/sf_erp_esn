@@ -28,6 +28,9 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('active', 'choice', array(
+                'choices'   => array('1' => 'Actif', '0' => 'Non actif')
+            ))
             ->add('university', 'entity' ,
                 array('class' => 'ESNAdministrationBundle:University',
                     'empty_value' => '',
