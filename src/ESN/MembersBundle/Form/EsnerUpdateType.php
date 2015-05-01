@@ -15,7 +15,7 @@ use ESN\MembersBundle\Entity\Esner;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ESNerUpdateType extends AbstractType{
+class EsnerUpdateType extends AbstractType{
     private $em;
     private $esner;
 

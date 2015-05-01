@@ -2,13 +2,13 @@
 
 namespace ESN\MembersBundle\Controller;
 
-use ESN\HRBundle\Form\Handler\ESNerHandler;
+use ESN\HRBundle\Form\Handler\EsnerHandler;
 use ESN\MembersBundle\Form\ErasmusType;
 use ESN\MembersBundle\Form\ErasmusUpdateType;
-use ESN\MembersBundle\Form\ESNerUpdateType;
+use ESN\MembersBundle\Form\EsnerUpdateType;
 use ESN\MembersBundle\Form\Handler\ErasmusHandler;
 use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
-use ESN\MembersBundle\Form\Handler\ESNerUpdateHandler;
+use ESN\MembersBundle\Form\Handler\EsnerUpdateHandler;
 use ESN\MembersBundle\Form\Handler\SearchHandler;
 use ESN\MembersBundle\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -178,8 +178,8 @@ class MembersController extends Controller
 
         $trips= $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByMember($esner->getMember());
 
-        $form = $this->get('form.factory')->create(new ESNerUpdateType($em, $esner));
-        $formHandler = new ESNerUpdateHandler($em, $form, $request);
+        $form = $this->get('form.factory')->create(new EsnerUpdateType($em, $esner));
+        $formHandler = new EsnerUpdateHandler($em, $form, $request);
         $form->handleRequest($request);
 
         $process = $formHandler->process();
