@@ -3,6 +3,7 @@
 #Capyfony
 .rsync_cache/
 Capfile
+shared/
 app/config/deploy.rb
 
 ### Symfony ###

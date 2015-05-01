@@ -6,7 +6,7 @@
                 <li {% if '/dashboard' in (app.request.server.get('PHP_SELF')) %}class="active"{% endif %}><a
                             href="{{ path('esn_dashboard_homepage') }}"><i
                                 class="icon-dashboard"></i><span>Dashboard</span> </a></li>
-                {% if "Local.activeMember" in app.session.get('user').roles|keys %}
+
                     <li class="dropdown {% if '/members' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-group"></i>
@@ -30,8 +30,6 @@
                             <li><a href="{{ path('esn_permanence_informations') }}">Informations</a></li>
                         </ul>
                     </li>
-                {% endif %}
-                {% if "Local.treasurer" in app.session.get('user').roles|keys %}
                     <li class="dropdown {% if '/treasury' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-group"></i>
@@ -43,8 +41,6 @@
                             <li><a href="{{ path('esn_treasury_add') }}">Add operation</a></li>
                         </ul>
                     </li>
-                {% endif %}
-                {% if "Local.vicePresident" in app.session.get('user').roles|keys %}
                     <li class="dropdown {% if '/human-ressources' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
 
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -57,8 +53,6 @@
                             <li><a href="{{ path('esn_hr_recruitment') }}">Recruitement</a></li>
                         </ul>
                     </li>
-                {% endif %}
-                {% if "Local.webmaster" in app.session.get('user').roles|keys %}
                     <li class="dropdown
                         {% if '/administration' in (app.request.server.get('PHP_SELF')) %}
                             active
@@ -77,7 +71,6 @@
                             <li><a href="{{ path('esn_administration_universities') }}">Universities</a></li>
                         </ul>
                     </li>
-                {% endif %}
             </ul>
 
         </div>
