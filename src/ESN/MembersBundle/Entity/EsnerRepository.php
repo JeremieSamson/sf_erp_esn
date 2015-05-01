@@ -42,8 +42,6 @@ class EsnerRepository extends EntityRepository
             ->orderBy("m.name", "ASC")
             ->getQuery();
 
-        var_dump($query);die();
-
         $result = $query->getResult();
         return $result;
     }
