@@ -28,6 +28,7 @@ class ESNerType extends AbstractType
             ->add('surname','text')
             ->add('email','email')
             ->add('phone','text')
+            ->add('facebook_id', 'text')
             ->add('post', 'entity' , array('class' => 'ESNAdministrationBundle:Post', 'choices' => $this->em->getRepository('ESNAdministrationBundle:Post')->findAll()))
             ->add('pole', 'entity' , array('class' => 'ESNAdministrationBundle:Pole', 'choices' => $this->em->getRepository('ESNAdministrationBundle:Pole')->findAll()))
             ->add('university', 'entity' , array('class' => 'ESNAdministrationBundle:University', 'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll()))

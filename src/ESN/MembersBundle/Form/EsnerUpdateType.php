@@ -50,6 +50,7 @@ class EsnerUpdateType extends AbstractType{
                     'choices' => $this->em->getRepository('ESNAdministrationBundle:Pole')->findAll(),
                     'data' => $dataPole)
             )
+            ->add('facebook_id', 'text', array("required" => false, "data" => $this->esner->getMember()->getFacebookId()))
             ->add('email','email', array("required" => false))
             ->add('phone','text', array("required" => false))
             ->add('birthday', 'date', array('widget' => 'single_text'))

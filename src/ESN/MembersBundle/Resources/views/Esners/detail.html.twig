@@ -4,7 +4,6 @@
         
         <div class="widget ">
             <div class="widget-content">
-                
                 <img style="width: 100%;" src="{{ asset('img/user.png') }}">
                     
             </div><!-- /widget-content --> 
@@ -29,6 +28,13 @@
         <div class="widget ">
             <div class="widget-content">
                 <h3>
+                    {% if member[0].esner.member.getFacebookId() %}
+                        <a href="{{ member[0].esner.member.getFacebookId() }}" target="_blank">
+                            <img src="https://www.facebook.com/images/fb_icon_325x325.png" width="20">
+                        </a>
+                    {% endif %}
+
+
                     {{ member[0].identity.surname ~ ' ' ~ member[0].identity.name ~ ' | '}}
                     {% if member[0].esner.pole %}
                         {{ member[0].esner.post ~ ' | '}}

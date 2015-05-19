@@ -95,10 +95,15 @@ class Member
     private $nationality;
 
     /**
-     *
      * @ORM\OneToMany(targetEntity="ESN\PermanenceBundle\Entity\ParticipateTrip", mappedBy="trip", cascade="persist")
      */
     public $trips;
+
+    /**
+     * @var string
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     */
+    private $facebook_id;
 
     /**
      * Constructor
@@ -393,5 +398,21 @@ class Member
 
     public function __toString(){
         return $this->getName() . " " . $this->getSurname();
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebook_id;
+    }
+
+    /**
+     * @param int $facebook_id
+     */
+    public function setFacebookId($facebook_id)
+    {
+        $this->facebook_id = $facebook_id;
     }
 }

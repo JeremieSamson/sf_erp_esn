@@ -67,14 +67,14 @@ class Esner
     /**
      * @var boolean
      *
-     * @ORM\Column(name="hascare", type="boolean")
+     * @ORM\Column(name="hascare", type="boolean", nullable=true)
      */
     private $hasCare = 0;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean", nullable=true)
      */
     private $active = 1;
 

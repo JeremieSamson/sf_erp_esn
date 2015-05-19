@@ -47,6 +47,7 @@ class ESNerHandler
             $member->setUniversity($this->form->get('university')->getData());
             $member->setNationality($this->form->get('country')->getData());
             $member->setInscription(new \DateTime());
+            $member->setFacebookId($this->form->get('facebook_id')->getData());
             $this->em->persist($member);
 
             $esner = new Esner();

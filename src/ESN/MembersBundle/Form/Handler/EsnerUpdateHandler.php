@@ -49,6 +49,7 @@ class EsnerUpdateHandler
                 $member->setBirthday($this->form->get('birthday')->getData());
                 $member->setUniversity($this->form->get('university')->getData());
                 $member->setNationality($this->form->get('country')->getData());
+                $member->setFacebookId($this->form->get('facebook_id')->getData());
 
                 $esner->setMember($member);
                 $esner->setAddress($this->form->get('address')->getData());

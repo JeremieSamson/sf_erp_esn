@@ -30,8 +30,8 @@
 
                 {{ form_widget(form.name, {'value': member[0].identity.name}) }}
                 {{ form_widget(form.surname, {'value': member[0].identity.surname}) }}
-                {{ form_widget(form.post, {'value': member[0].esner.post}) }}
-                {{ form_widget(form.pole, {'value': member[0].esner.pole}) }}
+                {{ form_widget(form.post, {'data': member[0].esner.post}) }}
+                {{ form_widget(form.pole, {'data': member[0].esner.pole}) }}
 
             </div><!-- /widget-content -->
         </div><!-- /widget -->
@@ -41,12 +41,18 @@
         <div class="widget">
             <div class="widget-content">
 
-                <h3>Erasmus Information</h3>
+                <h3>Personal Information</h3>
 
                 <hr/>
 
-
                 <fieldset>
+
+                    <div class="control-group">
+                        <label class="control-label" for="birthday">Facebook url</label>
+                        <div class="controls">
+                            {{ form_widget(form.facebook_id) }}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
@@ -68,6 +74,8 @@
                             {{ form_widget(form.hasCare) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
+
+                    <h3>Erasmus Information</h3>
 
                     <hr/>
 
