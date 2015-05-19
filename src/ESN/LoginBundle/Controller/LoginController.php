@@ -6,6 +6,7 @@ use ESN\LoginBundle\Security\User\UserProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -36,6 +37,7 @@ class LoginController extends Controller
 
         $this->redirect($this->generateUrl('esn_login_homepage'));
     }
+
     public function logoutAction(Request $request){
         $session = $this->container->get('session');
         $session->remove('user');

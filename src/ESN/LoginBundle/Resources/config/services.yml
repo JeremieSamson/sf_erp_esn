@@ -1,1 +1,10 @@
 services:
+    login_listener:
+        class: ESN\LoginBundle\EventListener\LoginListener
+        arguments:
+                - "@router"
+        tags:
+            -
+                  name: kernel.event_listener
+                  event: kernel.request
+                  method: onKernelRequest
