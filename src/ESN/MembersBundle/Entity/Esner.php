@@ -2,6 +2,7 @@
 
 namespace ESN\MembersBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use ESN\AdministrationBundle\Entity\Pole;
 
@@ -97,6 +98,26 @@ class Esner
      * @ORM\Column(name="erasmus_year_end", type="date", nullable=true)
      */
     private $erasmus_year_end;
+
+    /**
+     * @var Esner
+     *
+     * @ORM\ManyToOne(targetEntity="ESN\MembersBundle\Entity\Esner", inversedBy="mentees")
+     *
+     */
+    private $mentor;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Esner", mappedBy="mentor")
+     */
+    private $mentees;
+
+    public function __construct()
+    {
+        $this->mentees = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -320,5 +341,51 @@ class Esner
     public function setActive($active)
     {
         $this->active = $active;
+    }
+
+    /**
+     * @return Esner
+     */
+    public function getMentor()
+    {
+        return $this->mentor;
+    }
+
+    /**
+     * @param Esner $mentor
+     */
+    public function setMentor(Esner $mentor)
+    {
+        $this->mentor = $mentor;
+    }
+
+    /**
+     * @param \ESN\MembersBundle\Entity\Esner $esner
+     *
+     * @return $this
+     */
+    public function addMentee(Esner $esner)
+    {
+        $this->mentees->add($esner);
+
+        $esner->setMentor($this);
+
+        return $this;
+    }
+
+    /**
+     * @param \ESN\MembersBundle\Entity\Esner $esner
+     */
+    public function removeMentee(Esner $esner)
+    {
+        $this->mentees->removeElement($esner);
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getMentees()
+    {
+        return $this->mentees;
     }
 }

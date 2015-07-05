@@ -22,13 +22,13 @@ use ESN\MembersBundle\Entity\Member;
     private $id;
    
      /**
-   * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Trip", inversedBy="members")
+   * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Trip", inversedBy="trips")
    * @ORM\JoinColumn(name="trip", referencedColumnName="id")
    */
     public $trip; 
     
     /**
-    * @ORM\ManyToOne(targetEntity="ESN\MembersBundle\Entity\Member", inversedBy="trips")
+    * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Trip", inversedBy="members")
     * @ORM\JoinColumn(name="member", referencedColumnName="id")
     */
     public $member; 
