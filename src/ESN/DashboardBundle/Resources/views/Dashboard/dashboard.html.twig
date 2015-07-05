@@ -10,7 +10,7 @@
                 <div class="widget-content">
                   
                   <div id="big_stats" class="cf">
-                    <div class="stat"> <i class="icon-thumbs-up-alt"></i> <span class="value">{{ dashboard.facebook.likes }}</span> </div>
+                    <div class="stat"> <i class="icon-thumbs-up-alt"></i> <span class="value">{% if dashboard.facebook.likes is defined %}{{ dashboard.facebook.likes }}{% endif %}</span> </div>
                     <div class="stat"> <i class="icon-group"></i> <span class="value">{{ dashboard.facebook.group_members }}</span> </div>
                   </div>
                 </div>
