@@ -2,6 +2,7 @@
 
 namespace ESN\HRBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HRController extends Controller
@@ -45,6 +46,7 @@ class HRController extends Controller
     public function treeceratopsAction()
     {
         $esners = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner')->findAll();
+
         return $this->render('ESNHRBundle:Recruitment:treeceratops.html.twig', array("esners" => $esners));
     }
 }

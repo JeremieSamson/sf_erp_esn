@@ -11,18 +11,18 @@
     <section>
         <div class="tree">
             {% for esner in esners %}
-                {% if esner.mentees|length > 0 %}
+
+                {% if esner.mentees|length > 0 and esner.mentor is null %}
                     <ul>
                         <li>
                             <a href="#">{{ esner }}</a>
-
                                 <ul>
                                     {% include "@ESNHR/Recruitment/tree.html.twig" with {'mentees': esner.mentees} %}
                                 </ul>
-
                         </li>
                     </ul>
                 {% endif %}
+
             {% endfor %}
         </div>
     </section>
