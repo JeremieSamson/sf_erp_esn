@@ -3,7 +3,7 @@
         <a href="#">{{ mentee }}</a>
         {% if mentee.mentees|length > 0 %}
             <ul>
-                {% include "tree.html.twig" with {'mentees': mentee.mentees} %}
+                {% include "@ESNHR/Recruitment/tree.html.twig" with {'mentees': mentee.mentees} %}
             </ul>
         {% endif %}
     </li>
