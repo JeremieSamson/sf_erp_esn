@@ -36,6 +36,7 @@ class EsnerUpdateType extends AbstractType{
             $dataUni = $this->esner->getMember()->getUniversity();
             $dataPole = $this->esner->getPole();
             $dataPost = $this->esner->getPost();
+            $dataMentor = $this->esner->getMentor();
         }
 
         $builder->add('name', 'text')
@@ -72,6 +73,13 @@ class EsnerUpdateType extends AbstractType{
                 array('class' => 'ESNAdministrationBundle:University',
                     'choices' => $this->em->getRepository('ESNAdministrationBundle:University')->findAll(),
                     'data' => $dataUni)
+            )
+            ->add('mentor', 'entity' ,
+                array('class'       => 'ESNMembersBundle:Esner',
+                      'choices'     => $this->em->getRepository('ESNMembersBundle:Esner')->findAll(),
+                      'data'        => $dataMentor,
+                      'empty_data'  => ''
+                )
             )
             ->add('country', 'entity' ,
                 array('class' => 'ESNAdministrationBundle:Country',

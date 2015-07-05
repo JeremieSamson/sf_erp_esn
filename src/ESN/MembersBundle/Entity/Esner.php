@@ -388,4 +388,8 @@ class Esner
     {
         return $this->mentees;
     }
+
+    public function __toString(){
+        return $this->getMember()->getName();
+    }
 }

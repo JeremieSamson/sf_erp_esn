@@ -134,7 +134,31 @@
                     </div> <!-- /control-group -->
                     
                     <hr/>
-                    
+
+                    <div class="control-group">
+                        <label class="control-label" for="hasCare">Mentor</label>
+                        <div class="controls">
+                            {% if member[0].esner.mentor %}
+                                {{ member[0].esner.mentor }}
+                            {% else %}
+                                ~
+                            {% endif %}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
+
+                    <div class="control-group">
+                        <label class="control-label" for="hasCare">Mentee</label>
+                        <div class="controls">
+                            {% if member[0].esner.mentees|length > 0 %}
+                                {% for mentee in member[0].esner.mentees %}
+                                    {{ mentee }}{% if not loop.last %}, {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
+
+                    <hr/>
+
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">

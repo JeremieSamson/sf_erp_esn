@@ -61,6 +61,7 @@ class EsnerUpdateHandler
                 $esner->setHasCare($this->form->get('hasCare')->getData());
                 $esner->setPost($this->form->get('post')->getData());
                 $esner->setPole($this->form->get('pole')->getData());
+                $esner->setMentor($this->form->get('mentor')->getData());
                 $this->em->flush();
 
                 return true;
