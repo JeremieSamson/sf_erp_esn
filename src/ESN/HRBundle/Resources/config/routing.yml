@@ -17,7 +17,11 @@ esn_hr_association_edit:
 esn_hr_recruitment:
     path:   /human-ressources/recruitment
     defaults: { _controller : ESNHRBundle:Recruitment:index}
-    
+
+esn_hr_treeceratops:
+    path:   /human-ressources/treeceratops
+    defaults: { _controller : ESNHRBundle:HR:treeceratops}
+
 esn_hr_recruitment_view:
     path:   /human-ressources/recruitment/view/{id}
     defaults: { _controller : ESNHRBundle:Recruitment:viewApply}

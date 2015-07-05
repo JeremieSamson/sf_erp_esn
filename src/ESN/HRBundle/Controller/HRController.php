@@ -41,4 +41,10 @@ class HRController extends Controller
     {
         return $this->render('ESNHRBundle:Recruitment:detail.html.twig');
     }
+
+    public function treeceratopsAction()
+    {
+        $esners = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner')->findAll();
+        return $this->render('ESNHRBundle:Recruitment:treeceratops.html.twig', array("esners" => $esners));
+    }
 }
