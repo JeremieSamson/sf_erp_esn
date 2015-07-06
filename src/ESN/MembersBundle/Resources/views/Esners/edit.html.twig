@@ -116,21 +116,21 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            {{ form_widget(form.address) }}
+                            {{ form_widget(form.address, {'value': member[0].esner.address}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
-                        <label class="control-label" for="address">Zipcode</label>
+                        <label class="control-label" for="zipcode">Zipcode</label>
                         <div class="controls">
-                            {{ form_widget(form.zipcode) }}
+                            {{ form_widget(form.zipcode, {'value': member[0].esner.zipcode}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
-                        <label class="control-label" for="address">Ville</label>
+                        <label class="control-label" for="ville">Ville</label>
                         <div class="controls">
-                            {{ form_widget(form.city) }}
+                            {{ form_widget(form.city, {'value': member[0].esner.city}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
