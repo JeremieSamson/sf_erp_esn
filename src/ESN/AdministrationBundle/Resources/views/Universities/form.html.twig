@@ -4,7 +4,7 @@
 {% block subnavbar %}
 {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
-
+x
 {% block body %}
     
 <div class="row">
@@ -27,10 +27,17 @@
                             {{ form_widget(form.name, { 'attr': {'class': 'span4'} }) }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
+
+                    <div class="control-group">
+                        <label class="control-label" for="name">Cigle</label>
+                        <div class="controls">
+                            {{ form_widget(form.cigle, { 'attr': {'class': 'span4'} }) }}
+                        </div> <!-- /controls -->
+                    </div> <!-- /control-group -->
                     
                     <div class="form-actions">
                         <input type="submit" class="btn btn-primary" value="Save"/> 
-			<a class="btn" href="{{ path('esn_administration_universities') }}">Cancel</a>
+			            <a class="btn" href="{{ path('esn_administration_universities') }}">Cancel</a>
                     </div> <!-- /form-actions -->
                 {{ form_end(form) }}    
             </div><!-- /widget-content --> 

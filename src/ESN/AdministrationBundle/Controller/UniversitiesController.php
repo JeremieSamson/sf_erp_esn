@@ -43,7 +43,8 @@ class UniversitiesController extends Controller
 // crée une tâche et lui donne quelques données par défaut pour cet exemple
         $university = new University();
         $form = $this->createFormBuilder($university)
-        ->add('name', 'text')
+            ->add('name', 'text')
+            ->add('cigle', 'text')
         ->getForm();
         
         $form->handleRequest($request);
