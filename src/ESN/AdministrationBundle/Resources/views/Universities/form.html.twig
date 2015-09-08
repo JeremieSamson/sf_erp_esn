@@ -2,47 +2,46 @@
 
 
 {% block subnavbar %}
-{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
-x
-{% block body %}
-    
-<div class="row">
-    
-    <div class="span8">
-        <div class="widget">
-            <div class="widget-content">
-            
-                <h3>University</h3>
-                
-                <hr/>
-                {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
-                {{ form_errors(form)}}
-                
-                <fieldset>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="name">Name</label>
-                        <div class="controls">
-                            {{ form_widget(form.name, { 'attr': {'class': 'span4'} }) }}
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
 
-                    <div class="control-group">
-                        <label class="control-label" for="name">Cigle</label>
-                        <div class="controls">
-                            {{ form_widget(form.cigle, { 'attr': {'class': 'span4'} }) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
-                    
-                    <div class="form-actions">
-                        <input type="submit" class="btn btn-primary" value="Save"/> 
-			            <a class="btn" href="{{ path('esn_administration_universities') }}">Cancel</a>
-                    </div> <!-- /form-actions -->
-                {{ form_end(form) }}    
-            </div><!-- /widget-content --> 
-        </div><!-- /widget -->    
-    </div>    
-    
-</div>
+{% block body %}
+    <div class="row">
+
+        <div class="span8">
+            <div class="widget">
+                <div class="widget-content">
+
+                    <h3>University</h3>
+
+                    <hr/>
+                    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+                    {{ form_errors(form)}}
+
+                    <fieldset>
+
+                        <div class="control-group">
+                            <label class="control-label" for="name">Name</label>
+                            <div class="controls">
+                                {{ form_widget(form.name, { 'attr': {'class': 'span4'} }) }}
+                            </div> <!-- /controls -->
+                        </div> <!-- /control-group -->
+
+                        <div class="control-group">
+                            <label class="control-label" for="cigle">Cigle</label>
+                            <div class="controls">
+                                {{ form_widget(form.cigle, { 'attr': {'class': 'span4'} }) }}
+                            </div> <!-- /controls -->
+                        </div> <!-- /control-group -->
+
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-primary" value="Save"/>
+                            <a class="btn" href="{{ path('esn_administration_universities') }}">Cancel</a>
+                        </div> <!-- /form-actions -->
+                    {{ form_end(form) }}
+                </div><!-- /widget-content -->
+            </div><!-- /widget -->
+        </div>
+
+    </div>
 {% endblock %}

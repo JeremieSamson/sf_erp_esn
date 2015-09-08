@@ -104,6 +104,7 @@ class UniversitiesController extends Controller
         
         $form = $this->createFormBuilder($university)
         ->add('name', 'text')
+        ->add('cigle', 'text')
         ->getForm();
         
         $form->handleRequest($request);
