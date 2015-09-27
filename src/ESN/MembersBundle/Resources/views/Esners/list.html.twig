@@ -22,27 +22,51 @@
                 this.form.submit();
             });
         });
+
+        $(document).ready(function() {
+            $('#datatable').DataTable( {
+                "bPaginate": false,
+                "bInfo" : false
+            } );
+        } );
     </script>
 
-    <div class="span12">
-        <div class="widget">
-            <div class="widget-content">
-                {{ form_start(form) }}
-                {{ form_widget(form.pole) }}
-                {{ form_widget(form.university) }}
-                {{ form_widget(form.country) }}
-                {{ form_widget(form.active) }}
-                    <a class="btn btn-warning" href="{{ path('esn_members_homepage_esners') }}">Reset</a>
-                {{ form_end(form) }}
-            </div><!-- /widget-content -->
-        </div><!-- /widget -->
-    </div><!-- /span12 -->
+    <table id="datatable" class="display" cellspacing="0" width="80%">
+        <thead>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Poste</th>
+                <th>Pôle</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+            </tr>
+        </thead>
 
+        <tbody>
+            {% for membre in liste_membres %}
+                <tr>
+                    <td>{{ membre.identity.name }}</td>
+                    <td>{{ membre.identity.surname }}</td>
+                    <td>{{ membre.esner.post }}</td>
+                    <td>{{ membre.esner.pole }}</td>
+                    <td>{{ membre.identity.email }}</td>
+                    <td>{{ membre.identity.phone }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
 
-    <!-- injection test -->
-    {% for membre in liste_membres %}
-        {{ render(controller("ESNMembersBundle:Members:cardEsner" , {'member': membre})) }}
-    {% endfor %}
+        <tfoot>
+            <tr>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Poste</th>
+                <th>Pôle</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+            </tr>
+        </tfoot>
+    </table>
 
 </div><!-- /row -->
 {% endblock %}
