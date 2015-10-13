@@ -415,4 +415,8 @@ class Member
     {
         $this->facebook_id = $facebook_id;
     }
+
+    public function getFullName(){
+        return $this->getName() . " " . $this->getSurname();
+    }
 }
