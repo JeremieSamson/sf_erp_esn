@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use ESN\AdministrationBundle\Entity\University;
 use ESN\MembersBundle\Entity\Erasmus;
 use ESN\MembersBundle\Entity\Esner;
+use ESN\MembersBundle\Entity\EsnerRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -76,9 +77,13 @@ class EsnerUpdateType extends AbstractType{
             )
             ->add('mentor', 'entity' ,
                 array('class'       => 'ESNMembersBundle:Esner',
-                      'choices'     => $this->em->getRepository('ESNMembersBundle:Esner')->findAll(),
                       'data'        => $dataMentor,
-                      'empty_data'  => ''
+                      'empty_value'  => '',
+                      'query_builder' => function(EsnerRepository $er) {
+                            return $er->createQueryBuilder('e')
+                                ->leftJoin("e.member", "m")
+                                ->orderBy("m.name", "ASC");
+                      }
                 )
             )
             ->add('country', 'entity' ,

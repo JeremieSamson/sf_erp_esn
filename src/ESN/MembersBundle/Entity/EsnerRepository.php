@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityRepository;
 class EsnerRepository extends EntityRepository
 {
     public function findWithSearch($where){
-        //var_dump($where['pole']);die();
         $query = $this->createQueryBuilder('e')
             ->leftJoin("e.member", "m");
 
@@ -44,5 +43,15 @@ class EsnerRepository extends EntityRepository
 
         $result = $query->getResult();
         return $result;
+    }
+
+    public function findByOrdered(){
+        $query = $this->createQueryBuilder('e')
+                      ->leftJoin("e.member", "m")
+                      ->orderBy("m.name", "ASC")
+                      ->getQuery()
+                      ;
+
+        return $query->getResult();
     }
 }

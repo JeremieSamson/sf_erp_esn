@@ -390,6 +390,6 @@ class Esner
     }
 
     public function __toString(){
-        return $this->getMember()->getName();
+        return $this->getMember()->getFullName();
     }
 }
