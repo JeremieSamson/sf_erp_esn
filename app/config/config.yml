@@ -85,3 +85,8 @@ doctrine_migrations:
 #            login_url: http://galaxy.esn.org/login
 #            logout_url: http://galaxy.esn.org/logout
 #            validation_url: http://cas.server.tld/serviceValidate
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: ESN\UserBundle\User

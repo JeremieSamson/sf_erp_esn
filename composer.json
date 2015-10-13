@@ -23,7 +23,8 @@
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
         "sensio/generator-bundle": "~2.5",
         "symfony/security-bundle": "~2.6",
-        "symfony/twig-bundle": "~2.6"
+        "symfony/twig-bundle": "~2.6",
+        "friendsofsymfony/user-bundle": "~2.0@dev"
     },
     "require-dev": {
     },
