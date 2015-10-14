@@ -14,6 +14,7 @@ security:
         main:
             pattern: ^/
             form_login:
+                login_path: /caslogin
                 provider: fos_userbundle
                 csrf_provider: security.csrf.token_manager
             logout:       true
@@ -23,4 +24,3 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }

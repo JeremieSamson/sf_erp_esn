@@ -1,5 +1,5 @@
 esn_login_homepage:
-    path:     /login
+    path:     /caslogin
     defaults: { _controller: ESNLoginBundle:Login:index }
 esn_login_check:
     path:     /login_check
