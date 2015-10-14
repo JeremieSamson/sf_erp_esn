@@ -54,6 +54,7 @@ class LoginController extends Controller
                 $user->setUsername($user_cas->getEmail());
                 $user->setUsernameCanonical($user_cas->getEmail());
                 $user->setEmail($user_cas->getEmail());
+                $user->setRoles(array('ROLE_USER'));
                 $user->setRandomPassword();
                 $em->persist($user);
             }
@@ -77,9 +78,9 @@ class LoginController extends Controller
         $this->redirect($this->generateUrl('esn_login_homepage'));
     }
 
-    public function logoutAction(Request $request){
-        $session = $this->container->get('session');
-        $session->remove('user');
+    public function logoutAction(){
+        $this->get('security.context')->setToken(null);
+        $this->get('request')->getSession()->invalidate();
 
         return $this->redirect($this->generateUrl('esn_login_homepage'));
     }

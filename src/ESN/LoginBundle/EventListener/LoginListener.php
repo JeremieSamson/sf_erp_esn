@@ -7,6 +7,7 @@
  */
 
 namespace ESN\LoginBundle\EventListener;
+use ESN\UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\Router;
@@ -32,9 +33,10 @@ class LoginListener {
 
     public function onKernelRequest(GetResponseEvent $event){
         $request = $event->getRequest();
-        $session = $event->getRequest()->getSession();
 
-        if (!$this->securityContext->getToken()->getUser()){
+        $user = $this->securityContext->getToken()->getUser();
+
+        if (!$user instanceof User){
             if($request->get('_route') != null
                 && $request->get('_route') != "esn_login_homepage"
                 && $request->get('_route') != "esn_login_check"

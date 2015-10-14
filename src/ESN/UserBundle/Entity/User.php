@@ -268,4 +268,38 @@ class User extends BaseUser
         }
         $this->setPlainPassword(implode($pass)); //turn the array into a string
     }
+
+    /**
+     * Check permission according to galaxy roles
+     *
+     * 1 => string 'National.webmaster' (length=18)
+     * 2 => string 'Local.activeMember' (length=18)
+     * 3 => string 'Local.regularBoardMember' (length=24)
+     * 4 => string 'Local.webmaster' (length=15)
+     * 5 => string 'National.projectCoordinator' (length=27)
+     *
+     * @param string $block
+     *
+     * @return bool
+     */
+    public function hasPermissionFor($block){
+        //Super permission for local webmaster
+        if (in_array('Local.webmaster', explode(',', $this->getGalaxyRoles())))
+            return true;
+
+        switch($block){
+            case 'dashboard' :
+                return in_array('Local.activeMember', explode(',', $this->getGalaxyRoles()));
+            break;
+            case 'treasury' :
+                return in_array('localTreasurer', explode(',', $this->getGalaxyRoles()));
+            break;
+            case 'human-ressources':
+                return in_array('localVicePresident', explode(',', $this->getGalaxyRoles()));
+            break;
+            case 'administration':
+                return in_array('Local.webmaster', explode(',', $this->getGalaxyRoles()));
+            break;
+        }
+    }
 }

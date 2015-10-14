@@ -7,6 +7,7 @@
                             href="{{ path('esn_dashboard_homepage') }}"><i
                                 class="icon-dashboard"></i><span>Dashboard</span> </a></li>
 
+                {% if app.user.hasPermissionFor('dashboard') %}
                     <li class="dropdown {% if '/members' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="icon-group"></i>
@@ -18,60 +19,69 @@
                             <li><a href="{{ path('esn_members_homepage', {'type': "erasmus"}) }}">Erasmus Student</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown {% if '/permanence' in (app.request.server.get('PHP_SELF')) %}active{% endif %}">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-home"></i>
-                            <span>Permanence</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('esn_permanence_trips') }}">Trips</a></li>
-                            <li><a href="{{ path('esn_permanence_reports') }}">Reports</a></li>
-                            <li><a href="{{ path('esn_permanence_informations') }}">Informations</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown {% if '/treasury' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-group"></i>
-                            <span>Treasury</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('esn_treasury_list') }}">See operations</a></li>
-                            <li><a href="{{ path('esn_treasury_add') }}">Add operation</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown {% if '/human-ressources' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
+                    {% if app.user.hasPermissionFor('treasury') %}
+                        <li class="dropdown {% if '/permanence' in (app.request.server.get('PHP_SELF')) %}active{% endif %}">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-home"></i>
+                                <span>Permanence</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('esn_permanence_trips') }}">Trips</a></li>
+                                <li><a href="{{ path('esn_permanence_reports') }}">Reports</a></li>
+                                <li><a href="{{ path('esn_permanence_informations') }}">Informations</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if app.user.hasPermissionFor('treasury') %}
+                        <li class="dropdown {% if '/treasury' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-group"></i>
+                                <span>Treasury</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('esn_treasury_list') }}">See operations</a></li>
+                                <li><a href="{{ path('esn_treasury_add') }}">Add operation</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if app.user.hasPermissionFor('human-ressources') %}
+                        <li class="dropdown {% if '/human-ressources' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
 
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-group"></i>
-                            <span>Human Ressources</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('esn_hr_association') }}">Association</a></li>
-                            <li><a href="{{ path('esn_hr_recruitment') }}">Recruitement</a></li>
-                            <li><a href="{{ path('esn_hr_treeceratops')  }}">Treeceratops</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown
-                        {% if '/administration' in (app.request.server.get('PHP_SELF')) %}
-                            active
-                        {% endif %} ">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-group"></i>
-                            <span>Administration</span>
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ path('esn_administration_trips') }}">Trips</a></li>
-                            <li><a href="{{ path('esn_administration_rules') }}">Rules</a></li>
-                            <li><a href="{{ path('esn_administration_cards') }}">Cards</a></li>
-                            <li><a href="{{ path('esn_administration_poles') }}">Poles</a></li>
-                            <li><a href="{{ path('esn_administration_countries') }}">Countries</a></li>
-                            <li><a href="{{ path('esn_administration_universities') }}">Universities</a></li>
-                        </ul>
-                    </li>
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-group"></i>
+                                <span>Human Ressources</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('esn_hr_association') }}">Association</a></li>
+                                <li><a href="{{ path('esn_hr_recruitment') }}">Recruitement</a></li>
+                                <li><a href="{{ path('esn_hr_treeceratops')  }}">Treeceratops</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if app.user.hasPermissionFor('administration') %}
+                        <li class="dropdown
+                            {% if '/administration' in (app.request.server.get('PHP_SELF')) %}
+                                active
+                            {% endif %} ">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-group"></i>
+                                <span>Administration</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('esn_administration_trips') }}">Trips</a></li>
+                                <li><a href="{{ path('esn_administration_rules') }}">Rules</a></li>
+                                <li><a href="{{ path('esn_administration_cards') }}">Cards</a></li>
+                                <li><a href="{{ path('esn_administration_poles') }}">Poles</a></li>
+                                <li><a href="{{ path('esn_administration_countries') }}">Countries</a></li>
+                                <li><a href="{{ path('esn_administration_universities') }}">Universities</a></li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                {% endif %}
             </ul>
 
         </div>
