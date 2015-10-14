@@ -6,43 +6,51 @@
 
 {% block body %}
 <div class="row">
+    <table id="esners" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Âge</th>
+            <th>Pôle</th>
+            <th>Poste</th>
+            <th>Téléphone</th>
+            <th>University</th>
+            <th></th>
+        </tr>
+        </thead>
 
-    <script>
-        $(document).ready( function() {
-            $('#search_filter_pole').change(function() {
-                this.form.submit();
-            });
-            $('#search_filter_university').change(function() {
-                this.form.submit();
-            });
-            $('#search_filter_country').change(function() {
-                this.form.submit();
-            });
-            $('#search_filter_active').change(function() {
-                this.form.submit();
-            });
-        });
-    </script>
-
-    <div class="span12">
-        <div class="widget">
-            <div class="widget-content">
-                {{ form_start(form) }}
-                {{ form_widget(form.pole) }}
-                {{ form_widget(form.university) }}
-                {{ form_widget(form.country) }}
-                {{ form_widget(form.active) }}
-                    <a class="btn btn-warning" href="{{ path('esn_members_homepage_esners') }}">Reset</a>
-                {{ form_end(form) }}
-            </div><!-- /widget-content -->
-        </div><!-- /widget -->
-    </div><!-- /span12 -->
-
-
-    <!-- injection test -->
-    {% for membre in liste_membres %}
-        {{ render(controller("ESNMembersBundle:Members:cardEsner" , {'member': membre})) }}
-    {% endfor %}
-
+        {% for esner in esners %}
+            <tbody>
+                <tr>
+                    <th>{{ esner.firstname }}</th>
+                    <th>{{ esner.lastname }}</th>
+                    <th>{% if esner.getAge() > 0 %} {{ esner.getAge() }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.pole %} {{ esner.pole }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.post %} {{ esner.post }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.mobile %} {{ esner.mobile }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.university %} {{ esner.university }} {% else %} ~ {% endif %}</th>
+                    <th>
+                        <a href="{{ path('esn_members_esner_edit', {'id': esner.id}) }}">
+                            <i class="icon-edit icon-large" style="color: green;"></i>
+                        </a>
+                        <a href="">
+                            <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                        </a>
+                    </th>
+                </tr>
+            </tbody>
+        {% endfor %}
+    </table>
 </div><!-- /row -->
+
+<script>
+    $(document).ready(function() {
+        $('#esners').dataTable( {
+            "bPaginate": false,
+            "oLanguage": { "sSearch": "" },
+            "bInfo": false,
+        } );
+    } );
+</script>
 {% endblock %}

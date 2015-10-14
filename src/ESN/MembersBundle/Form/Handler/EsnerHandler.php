@@ -14,7 +14,7 @@ use Symfony\Component\Form\Form;
 use ESN\MembersBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\Request;
 
-class EsnerUpdateHandler
+class EsnerHandler
 {
     protected $em;
     protected $request;

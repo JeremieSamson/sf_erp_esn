@@ -17,8 +17,8 @@
                 {{ form_start(form) }}
 
                 <hr/>
-                {{ form_widget(form.email, {'value': member[0].identity.email}) }}
-                {{ form_widget(form.phone, {'value': member[0].identity.phone}) }}
+                {{ form_widget(form.email, {'value': user.email}) }}
+                {{ form_widget(form.mobile, {'value': user.mobile}) }}
                 <br/>
 
             </div><!-- /widget-content -->
@@ -28,10 +28,10 @@
         <div class="widget">
             <div class="widget-content">
 
-                {{ form_widget(form.name, {'value': member[0].identity.name}) }}
-                {{ form_widget(form.surname, {'value': member[0].identity.surname}) }}
-                {{ form_widget(form.post, {'data': member[0].esner.post}) }}
-                {{ form_widget(form.pole, {'data': member[0].esner.pole}) }}
+                {{ form_widget(form.firstname, {'value': user.firstname}) }}
+                {{ form_widget(form.lastname, {'value': user.lastname}) }}
+                {{ form_widget(form.post, {'data': user.post}) }}
+                {{ form_widget(form.pole, {'data': user.pole}) }}
 
             </div><!-- /widget-content -->
         </div><!-- /widget -->
@@ -57,14 +57,14 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            {{ form_widget(form.birthday, {'value': member[0].identity.birthday|date('Y-m-d')}) }}
+                            {{ form_widget(form.birthdate, {'value': user.birthdate|date('Y-m-d')}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            {{ form_widget(form.country) }}
+                            {{ form_widget(form.nationality) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
@@ -93,21 +93,21 @@
                     <div class="control-group">
                         <label class="control-label" for="erasmus">Erasmus</label>
                         <div class="controls">
-                            {{ form_widget(form.erasmus) }}
+                            {{ form_widget(form.erasmusProgramme) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="erasmusyearstart">Début</label>
                         <div class="controls">
-                            {{ form_widget(form.erasmusyearstart, {'value': member[0].esner.erasmusyearstart|date('Y-m-d')}) }}
+                            {{ form_widget(form.erasmusyearstart, {'value': user.erasmusyearstart|date('Y-m-d')}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="erasmusyearend">Fin</label>
                         <div class="controls">
-                            {{ form_widget(form.erasmusyearend, {'value': member[0].esner.erasmusyearend|date('Y-m-d')}) }}
+                            {{ form_widget(form.erasmusyearend, {'value': user.erasmusyearend|date('Y-m-d')}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
@@ -116,21 +116,21 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            {{ form_widget(form.address, {'value': member[0].esner.address}) }}
+                            {{ form_widget(form.address, {'value': user.address}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="zipcode">Zipcode</label>
                         <div class="controls">
-                            {{ form_widget(form.zipcode, {'value': member[0].esner.zipcode}) }}
+                            {{ form_widget(form.zipcode, {'value': user.zipcode}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="ville">Ville</label>
                         <div class="controls">
-                            {{ form_widget(form.city, {'value': member[0].esner.city}) }}
+                            {{ form_widget(form.city, {'value': user.city}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
@@ -138,14 +138,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            {{ form_widget(form.study, {'value': member[0].identity.study}) }}
+                            {{ form_widget(form.study, {'value': user.study}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            {{ form_widget(form.university, {'data': member[0].identity.university}) }}
+                            {{ form_widget(form.university, {'data': user.university}) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 

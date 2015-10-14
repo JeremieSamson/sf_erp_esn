@@ -9,12 +9,14 @@ namespace ESN\UserBundle\Entity;
  * Time: 22:44
  */
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="User")
+ * @ORM\Entity(repositoryClass="ESN\UserBundle\Entity\UserRepository")
  */
 class User extends BaseUser
 {
@@ -38,6 +40,27 @@ class User extends BaseUser
      * @ORM\Column(name="lastname", type="string", length=255)
      */
     private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="address", type="string", length=255, nullable=true)
+     */
+    private $address;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=50, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zipcode", type="string", length=5, nullable=true)
+     */
+    private $zipcode;
 
     /**
      * @var string
@@ -89,11 +112,133 @@ class User extends BaseUser
     private $mobile;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Pole", inversedBy="esners", cascade="persist")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $pole;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Post", inversedBy="esners", cascade="persist")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $post;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="hascare", type="boolean", nullable=true)
+     */
+    private $hasCare = 0;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=true)
+     */
+    private $active = 1;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="erasmusProgramme_esners", cascade="persist")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $erasmusProgramme;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="erasmus_year_start", type="date", nullable=true)
+     */
+    private $erasmus_year_start;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="erasmus_year_end", type="date", nullable=true)
+     */
+    private $erasmus_year_end;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="ESN\UserBundle\Entity\User", inversedBy="mentees")
+     *
+     */
+    private $mentor;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ESN\UserBundle\Entity\User", mappedBy="mentor")
+     */
+    private $mentees;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="esncard", type="string", length=50)
+     */
+    private $esncard;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="arrivalDate", type="date", nullable=true)
+     */
+    private $arrivalDate;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="leavingDate", type="date", nullable=true)
+     */
+    private $leavingDate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="esner", type="boolean")
+     */
+    private $esner;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="inscription", type="date", nullable=true)
+     */
+    private $inscription;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\University", inversedBy="users", cascade="persist")
+     */
+    private $university;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="study", type="string", length=255, nullable=true)
+     */
+    private $study;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="users", cascade="persist")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     */
+    private $nationality;
+
+    /**
+     * @var string
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     */
+    private $facebook_id;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
+        $this->mentees = new ArrayCollection();
     }
 
     /**
@@ -219,6 +364,18 @@ class User extends BaseUser
     }
 
     /**
+     * Calculate Age
+     *
+     * @return string
+     */
+    public function getAge(){
+        $date = new \DateTime($this->getBirthdate()->format('Y-m-d'));
+        $now = new \DateTime();
+        $interval = $now->diff($date);
+        return $interval->y;
+    }
+
+    /**
      * @param \DateTime $birthdate
      */
     public function setBirthdate($birthdate)
@@ -283,8 +440,7 @@ class User extends BaseUser
      * @return bool
      */
     public function hasPermissionFor($block){
-        //Super permission for local webmaster
-        if (in_array('Local.webmaster', explode(',', $this->getGalaxyRoles())))
+        if ($this->isSuperAdmin())
             return true;
 
         switch($block){
@@ -301,5 +457,377 @@ class User extends BaseUser
                 return in_array('Local.webmaster', explode(',', $this->getGalaxyRoles()));
             break;
         }
+
+        return false;
+    }
+
+    public function isSuperAdmin(){
+        return in_array("ROLE_SUPER_ADMIN", $this->getRoles());
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param string $address
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return string
+     */
+    public function getZipcode()
+    {
+        return $this->zipcode;
+    }
+
+    /**
+     * @param string $zipcode
+     */
+    public function setZipcode($zipcode)
+    {
+        $this->zipcode = $zipcode;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPole()
+    {
+        return $this->pole;
+    }
+
+    /**
+     * @param mixed $pole
+     */
+    public function setPole($pole)
+    {
+        $this->pole = $pole;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPost()
+    {
+        return $this->post;
+    }
+
+    /**
+     * @param mixed $post
+     */
+    public function setPost($post)
+    {
+        $this->post = $post;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isHasCare()
+    {
+        return $this->hasCare;
+    }
+
+    /**
+     * @param boolean $hasCare
+     */
+    public function setHasCare($hasCare)
+    {
+        $this->hasCare = $hasCare;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param boolean $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getErasmusProgramme()
+    {
+        return $this->erasmusProgramme;
+    }
+
+    /**
+     * @param mixed $erasmusProgramme
+     */
+    public function setErasmusProgramme($erasmusProgramme)
+    {
+        $this->erasmusProgramme = $erasmusProgramme;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getErasmusYearStart()
+    {
+        return $this->erasmus_year_start;
+    }
+
+    /**
+     * @param \DateTime $erasmus_year_start
+     */
+    public function setErasmusYearStart($erasmus_year_start)
+    {
+        $this->erasmus_year_start = $erasmus_year_start;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getErasmusYearEnd()
+    {
+        return $this->erasmus_year_end;
+    }
+
+    /**
+     * @param \DateTime $erasmus_year_end
+     */
+    public function setErasmusYearEnd($erasmus_year_end)
+    {
+        $this->erasmus_year_end = $erasmus_year_end;
+    }
+
+    /**
+     * @return User
+     */
+    public function getMentor()
+    {
+        return $this->mentor;
+    }
+
+    /**
+     * @param User $mentor
+     */
+    public function setMentor($mentor)
+    {
+        $this->mentor = $mentor;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getMentees()
+    {
+        return $this->mentees;
+    }
+
+    /**
+     * @param \ESN\UserBundle\Entity\User $esner
+     *
+     * @return $this
+     */
+    public function addMentee($esner)
+    {
+        $this->mentees->add($esner);
+
+        $esner->setMentor($this);
+
+        return $this;
+    }
+
+    /**
+     * @param \ESN\UserBundle\Entity\User $esner
+     */
+    public function removeMentee(User $esner)
+    {
+        $this->mentees->removeElement($esner);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEsncard()
+    {
+        return $this->esncard;
+    }
+
+    /**
+     * @param string $esncard
+     */
+    public function setEsncard($esncard)
+    {
+        $this->esncard = $esncard;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getArrivalDate()
+    {
+        return $this->arrivalDate;
+    }
+
+    /**
+     * @param \DateTime $arrivalDate
+     */
+    public function setArrivalDate($arrivalDate)
+    {
+        $this->arrivalDate = $arrivalDate;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLeavingDate()
+    {
+        return $this->leavingDate;
+    }
+
+    /**
+     * @param \DateTime $leavingDate
+     */
+    public function setLeavingDate($leavingDate)
+    {
+        $this->leavingDate = $leavingDate;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEsner()
+    {
+        return $this->esner;
+    }
+
+    /**
+     * @param boolean $esner
+     */
+    public function setEsner($esner)
+    {
+        $this->esner = $esner;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isInternationalStudent()
+    {
+        return !$this->esner;
+    }
+
+    /**
+     * @param boolean $value
+     */
+    public function setInternationalStudent($value)
+    {
+        $this->esner = !$value;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getInscription()
+    {
+        return $this->inscription;
+    }
+
+    /**
+     * @param \DateTime $inscription
+     */
+    public function setInscription($inscription)
+    {
+        $this->inscription = $inscription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUniversity()
+    {
+        return $this->university;
+    }
+
+    /**
+     * @param mixed $university
+     */
+    public function setUniversity($university)
+    {
+        $this->university = $university;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStudy()
+    {
+        return $this->study;
+    }
+
+    /**
+     * @param string $study
+     */
+    public function setStudy($study)
+    {
+        $this->study = $study;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNationality()
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * @param mixed $nationality
+     */
+    public function setNationality($nationality)
+    {
+        $this->nationality = $nationality;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebook_id;
+    }
+
+    /**
+     * @param string $facebook_id
+     */
+    public function setFacebookId($facebook_id)
+    {
+        $this->facebook_id = $facebook_id;
     }
 }

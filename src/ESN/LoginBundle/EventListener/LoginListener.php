@@ -34,7 +34,7 @@ class LoginListener {
     public function onKernelRequest(GetResponseEvent $event){
         $request = $event->getRequest();
 
-        $user = $this->securityContext->getToken()->getUser();
+        $user = ($this->securityContext->getToken()) ? $this->securityContext->getToken()->getUser() : null;
 
         if (!$user instanceof User){
             if($request->get('_route') != null

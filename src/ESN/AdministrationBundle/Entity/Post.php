@@ -11,12 +11,14 @@ namespace ESN\AdministrationBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use ESN\MembersBundle\Entity\Esner;
+use ESN\UserBundle\Entity\User;
 
 /**
  * Rule
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\PostRepository")
  */
 class Post {
     /**
@@ -36,14 +38,25 @@ class Post {
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Esner", mappedBy="post")
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ESN\UserBundle\Entity\User", mappedBy="post")
      */
     private $esners;
 
-
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->esners = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(){
+        return $this->name;
     }
 
     /**
@@ -70,24 +83,30 @@ class Post {
         $this->name = $name;
     }
 
-    public function addEsner(Esner $esner)
+    /**
+     * @param User $esner
+     * @return $this
+     */
+    public function addEsner(User $esner)
     {
-        $this->esners[] = $esner;
+        $this->esners->add($esner);
         $esner->setPost($this);
         return $this;
     }
 
-    public function removeEsner(Esner $esner)
+    /**
+     * @param User $esner
+     */
+    public function removeEsner(User $esner)
     {
         $this->esners->removeElement($esner);
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getEsners()
     {
         return $this->esners;
-    }
-
-    public function __toString(){
-        return $this->name;
     }
 }

@@ -19,10 +19,10 @@ esn_members_erasmus_edit:
             id:  \d+
 
 esn_members_esner_edit:
-    path:     /members/esners/{id}/edit
+    path:     /members/esners/{user_id}/edit
     defaults: {  _controller: ESNMembersBundle:Members:editEsner }
     requirements:
-        id:  \d+
+        user_id:  \d+
         
 esn_members_erasmus_create:
     path: /members/erasmus/create

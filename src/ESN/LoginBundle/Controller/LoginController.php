@@ -51,6 +51,7 @@ class LoginController extends Controller
 
             if (!$user_db) {
                 $user->setEnabled(true);
+                $user->setEsner(true);
                 $user->setUsername($user_cas->getEmail());
                 $user->setUsernameCanonical($user_cas->getEmail());
                 $user->setEmail($user_cas->getEmail());

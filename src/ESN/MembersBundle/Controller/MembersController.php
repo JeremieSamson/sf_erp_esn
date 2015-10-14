@@ -2,18 +2,14 @@
 
 namespace ESN\MembersBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use ESN\HRBundle\Form\Handler\EsnerHandler;
 use ESN\MembersBundle\Form\ErasmusType;
 use ESN\MembersBundle\Form\ErasmusUpdateType;
-use ESN\MembersBundle\Form\EsnerUpdateType;
-use ESN\MembersBundle\Form\Handler\ErasmusHandler;
-use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
-use ESN\MembersBundle\Form\Handler\EsnerUpdateHandler;
 use ESN\MembersBundle\Form\Handler\SearchHandler;
 use ESN\MembersBundle\Form\SearchType;
+use ESN\MembersBundle\Form\Type\EsnerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use ESN\MembersBundle\Entity\Member;
-use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
@@ -66,37 +62,13 @@ class MembersController extends Controller
      */
     public function listEsnerAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
-        $form = $this->get('form.factory')->create(new SearchType($em));
-        $formHandler = new SearchHandler($em, $form, $request);
-        $form->handleRequest($request);
-        $where = array();
-        //$process = $formHandler->process();
 
-        if ('POST' == $request->getMethod()) {
-            $where["pole"] = $form->get('pole')->getData();
-            $where["university"] = $form->get('university')->getData();
-            $where["country"] = $form->get('country')->getData();
-            $where["active"] = $form->get('active')->getData();
-        }else{
-            $where["pole"] = null;
-            $where["university"] = null;
-            $where["country"] = null;
-            $where["active"] = null;
-        }
-
-        $list_membres = $this->getAllMembers("esners", null, $where);
-
-        /*if ($process){
-            $list_membres = "";
-        }else{
-
-        }*/
+        $esners = $em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 1));
 
         return $this->render('ESNMembersBundle:Esners:list.html.twig',  array(
-            'liste_membres' => $list_membres,
-            "form" => $form->createView()
+            'esners' => $esners
         ));
     }//listAction
     
@@ -167,21 +139,25 @@ class MembersController extends Controller
     /**
      * Action à l'affichage de la page d'édition d'un membre en fonction
      * du type du membre et de son ID.
-     * @param type $id
+     *
+     * @param integer $id
      */
-    public function editEsnerAction(Request $request, $id)
+    public function editEsnerAction(Request $request, $user_id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $esner= $em->getRepository('ESNMembersBundle:Esner')->find($id);
 
-        if (!$esner){
+        $user = $em->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$user){
             throw new NotFoundResourceException("No ESNer with this ID");
         }
 
-        $trips= $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByMember($esner->getMember());
+        $trips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findBy(array("user" => $user));
 
-        $form = $this->get('form.factory')->create(new EsnerUpdateType($em, $esner));
-        $formHandler = new EsnerUpdateHandler($em, $form, $request);
+        $form = $this->get('form.factory')->create(new EsnerType($em), $user);
+
+        $formHandler = new \ESN\MembersBundle\Form\Handler\EsnerHandler($em, $form, $request);
         $form->handleRequest($request);
 
         $process = $formHandler->process();
@@ -190,12 +166,12 @@ class MembersController extends Controller
             return $this->redirect($this->generateUrl('esn_members_detail', array(
                 'type' => 'esners',
                 'trips'=> $trips,
-                'id'=>$id
+                'user_id'=>$user_id
             )));
         }
 
         return $this->render("ESNMembersBundle:Esners:edit.html.twig", array(
-                "member" => $this->getAllMembers("esners", $id),
+                "user" => $user,
                 "form" => $form->createView()
             )
         );
@@ -276,7 +252,7 @@ class MembersController extends Controller
             }
         }
         return $list_member;
-    }//getElementMember
+    }
     
     public function createErasmusAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
