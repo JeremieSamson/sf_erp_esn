@@ -110,12 +110,7 @@ class EsnerType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'choices' => array(
-                'm' => 'Male',
-                'f' => 'Female',
-            )
-        ));
+
     }
 
     public function getName()

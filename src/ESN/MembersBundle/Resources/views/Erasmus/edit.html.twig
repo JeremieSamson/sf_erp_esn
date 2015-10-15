@@ -17,8 +17,8 @@
                 {{ form_start(form) }}
 
                 <hr/>
-                {{ form_widget(form.email, {'value': member[0].identity.email}) }}
-                {{ form_widget(form.phone, {'value': member[0].identity.phone}) }}
+                {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                {{ form_widget(form.mobile, { 'attr': {'placeholder': 'Téléphone'} }) }}
                 <br/>
 
             </div><!-- /widget-content -->
@@ -28,8 +28,8 @@
         <div class="widget">
             <div class="widget-content">
 
-                Firstname  {{ form_widget(form.name, {'value': member[0].identity.name}) }}
-                Surname  {{ form_widget(form.surname, {'value': member[0].identity.surname}) }}
+                Firstname  {{ form_widget(form.firstname, { 'attr': {'placeholder': 'Prénom'} }) }}
+                Surname  {{ form_widget(form.lastname, { 'attr': {'placeholder': 'Nom'} }) }}
 
             </div><!-- /widget-content -->
         </div><!-- /widget -->
@@ -49,14 +49,14 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            {{ form_widget(form.birthday, {'value': member[0].identity.birthday|date('Y-m-d')}) }}
+                            {{ form_widget(form.birthdate) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            {{ form_widget(form.country) }}
+                            {{ form_widget(form.nationality) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
@@ -65,21 +65,21 @@
                     <div class="control-group">
                         <label class="control-label" for="card">ESN Card</label>
                         <div class="controls">
-                            {{ form_widget(form.esncard, {'value': member[0].erasmus.esncard}) }}
+                            {{ form_widget(form.esncard) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                            {{ form_widget(form.arrivalDate, {'value': member[0].erasmus.arrivalDate|date('Y-m-d')}) }}
+                            {{ form_widget(form.arrivalDate) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            {{ form_widget(form.leavingDate, {'value': member[0].erasmus.leavingDate|date('Y-m-d')}) }}
+                            {{ form_widget(form.leavingDate) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
                     <hr/>
@@ -87,14 +87,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            {{ form_widget(form.study, {'value': member[0].identity.study}) }}
+                            {{ form_widget(form.study) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            {{ form_widget(form.university, {'data': member[0].identity.university}) }}
+                            {{ form_widget(form.university) }}
                         </div> <!-- /controls -->
                     </div> <!-- /control-group -->
 

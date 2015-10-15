@@ -33,9 +33,11 @@
                 {{ form_widget(form.post) }}
                 {{ form_widget(form.pole) }}
 
-                <a href="{{ path('esn_members_detail', {'user_id': user.id}) }}" style="float:right;">
-                    <i class="fa-eye icon-large" style="color: blue;"></i>
-                </a>
+                {% if user is defined %}
+                    <a href="{{ path('esn_members_esner_detail', {'user_id': user.id}) }}" style="float:right;">
+                        <i class="fa-eye icon-large" style="color: blue;"></i>
+                    </a>
+                {% endif %}
             </div><!-- /widget-content -->
         </div><!-- /widget -->
     </div>
@@ -60,7 +62,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            {{ form_widget(form.birthdate, {'value': user.birthdate|date('Y-m-d')}) }}
+                            {{ form_widget(form.birthdate) }}
                         </div>
                     </div>
 
@@ -83,7 +85,7 @@
                     <h3>ESN Information</h3>
 
                     <div class="control-group">
-                        <label class="control-label" for="hasCare">Mentor</label>
+                        <label class="control-label" for="m">Mentor</label>
                         <div class="controls">
                             {{ form_widget(form.mentor) }}
                         </div>
@@ -153,7 +155,7 @@
                     </div>
 
                     <div class="form-actions">
-                        <input type="submit" class="btn btn-primary" value="Save">
+                        <input type="submit" class="btn btn-primary" value="{% if user is defined %}Modify{% else %}Save{% endif %}">
                         <button class="btn">Cancel</button>
                     </div>
 

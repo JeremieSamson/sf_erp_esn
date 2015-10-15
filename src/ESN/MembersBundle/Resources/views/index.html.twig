@@ -5,19 +5,27 @@
 {% endblock %}
 
 {% block body %}
-    {% if action == "lister" %}
-        {{ render(controller("ESNMembersBundle:Members:list" , {'type': type})) }} 
-    {% endif %}
-    
-    {% if action == "detailler" %}
-        {{ render(controller("ESNMembersBundle:Members:detail" , {'type': type,'id':id})) }}   
-    {% endif %}
-    
-    {% if action == "editer" %}
-        {{ render(controller("ESNMembersBundle:Members:edit" , {'type': type,'id':id})) }}   
-    {% endif %}
-    
-    {% if action == "create" %}
-        {{ render(controller("ESNMembersBundle:Members:createErasmus")) }}  
-    {% endif %}
+    <div class="span12">
+        <p>
+            {% for message in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </p>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.datatable').dataTable( {
+                "bPaginate": false,
+                "oLanguage": { "sSearch": "" },
+                "bInfo": false,
+            } );
+        } );
+    </script>
 {% endblock %}

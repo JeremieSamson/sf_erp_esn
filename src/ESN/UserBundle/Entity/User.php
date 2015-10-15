@@ -128,7 +128,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="hascare", type="boolean", nullable=true)
      */
-    private $hasCare = 0;
+    private $hasCare = false;
 
     /**
      * @var boolean
@@ -175,7 +175,7 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="esncard", type="string", length=50)
+     * @ORM\Column(name="esncard", type="string", length=50, nullable=true)
      */
     private $esncard;
 

@@ -10,6 +10,7 @@ namespace ESN\MembersBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManager;
 use ESN\MembersBundle\Entity\Erasmus;
+use ESN\UserBundle\Entity\User;
 use Symfony\Component\Form\Form;
 use ESN\MembersBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +39,18 @@ class EsnerHandler
     {
         if ($this->form->isValid()) {
             if ('POST' == $this->request->getMethod()) {
+
+                /** @var User $user */
+                $user = $this->form->getData();
+
+                if (!$user->getId()){
+                    $user->setUsername($user->getEmail());
+                    $user->setRandomPassword();
+                    $user->setEsner(true);
+                    $user->setEnabled(true);
+
+                    $this->em->persist($user);
+                }
 
                 $this->em->flush();
 

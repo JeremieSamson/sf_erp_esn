@@ -1,12 +1,20 @@
-{% extends '::base.html.twig' %}
-
-{% block subnavbar %}
-    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
-{% endblock %}
+{% extends 'ESNMembersBundle::index.html.twig' %}
 
 {% block body %}
+
+    {{ parent() }}
+
 <div class="row">
-    <table id="esners" class="display" cellspacing="0" width="100%">
+
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-content">
+                <a href="{{ path('esn_members_esner_create') }}" class="btn btn-info">Add new ESNer</a> &nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <table id="esners" class="datatable" cellspacing="0" width="100%">
         <thead>
         <tr>
             <th>Prénom</th>
@@ -43,14 +51,4 @@
         {% endfor %}
     </table>
 </div><!-- /row -->
-
-<script>
-    $(document).ready(function() {
-        $('#esners').dataTable( {
-            "bPaginate": false,
-            "oLanguage": { "sSearch": "" },
-            "bInfo": false,
-        } );
-    } );
-</script>
 {% endblock %}

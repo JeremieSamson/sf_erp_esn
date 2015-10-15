@@ -28,13 +28,16 @@
     <![endif]-->
 
     <script src="//code.jquery.com/jquery.min.js"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/base.js') }}"></script>
-    <script src="{{ asset('js/faq.js') }}"></script>
-    <script src="{{ asset('js/jpicker-1.1.6.min.js') }}"></script>
-    <script src="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.js"></script>
+
+    {% block javascript %}
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/base.js') }}"></script>
+        <script src="{{ asset('js/faq.js') }}"></script>
+        <script src="{{ asset('js/jpicker-1.1.6.min.js') }}"></script>
+        <script src="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.js"></script>
+    {% endblock %}
 </head>
 <body>
 <header></header>
