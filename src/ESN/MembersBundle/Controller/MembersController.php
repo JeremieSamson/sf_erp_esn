@@ -2,6 +2,7 @@
 
 namespace ESN\MembersBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use ESN\HRBundle\Form\Handler\EsnerHandler;
 use ESN\MembersBundle\Form\ErasmusType;
@@ -9,6 +10,8 @@ use ESN\MembersBundle\Form\ErasmusUpdateType;
 use ESN\MembersBundle\Form\Handler\SearchHandler;
 use ESN\MembersBundle\Form\SearchType;
 use ESN\MembersBundle\Form\Type\EsnerType;
+use ESN\PermanenceBundle\Entity\ParticipateTrip;
+use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
@@ -21,20 +24,39 @@ class MembersController extends Controller
      *  - titre de la page
      *  - action : lister,detailler,editer
      *  - id : id du membre s'il s'agit d'une action detailler ou editer
-     * @param type $type
-     * @param type $action
-     * @param type $id
+     *
+     * @param type $user_id
+     *
      * @return type
      */
-    public function indexAction($action,$type=null,$id=null)
+    public function detailEsnerAction($user_id)
     {
-        $data = array(
-            'title' => "Members", 
-            'type' => $type, 
-            'action' => $action, 
-            'id' => $id);
-        return $this->render('ESNMembersBundle::index.html.twig', $data);
-    }//indexAction
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $em->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$user){
+            throw new NotFoundResourceException("No ESNer with this ID");
+        }
+
+        /** @var ArrayCollection $participatetrips */
+        $participatetrips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findBy(array("user" => $user));
+        $trips = new ArrayCollection();
+
+        /** @var ParticipateTrip $participatetrip */
+        foreach($participatetrips as $participatetrip){
+            if (!$trips->contains($participatetrip->getTrip()))
+                $trips->add($participatetrip->getTrip());
+        }
+
+        return $this->render('ESNMembersBundle:Esners:detail.html.twig', array(
+                'trips'=> $trips,
+                'user' => $user
+            )
+        );
+    }
 
     /**
      * Action à l'affichage de la liste des membres en fonction du type.
@@ -160,11 +182,8 @@ class MembersController extends Controller
         $formHandler = new \ESN\MembersBundle\Form\Handler\EsnerHandler($em, $form, $request);
         $form->handleRequest($request);
 
-        $process = $formHandler->process();
-
-        if ($process){
+        if ($formHandler->process()){
             return $this->redirect($this->generateUrl('esn_members_detail', array(
-                'type' => 'esners',
                 'trips'=> $trips,
                 'user_id'=>$user_id
             )));

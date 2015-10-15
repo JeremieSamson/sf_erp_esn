@@ -7,10 +7,10 @@ esn_members_homepage:
     defaults: { _controller: ESNMembersBundle:Members:index, action:"lister" }
     
 esn_members_detail:
-    path:     /members/{type}/{id}
-    defaults: {  _controller: ESNMembersBundle:Members:index, action:"detailler" }
+    path:     /members/esner/{user_id}
+    defaults: {  _controller: ESNMembersBundle:Members:detailEsner }
     requirements:
-        id:  \d+
+        user_id:  \d+
 
 esn_members_erasmus_edit:
     path: /members/erasmus/{id}/edit

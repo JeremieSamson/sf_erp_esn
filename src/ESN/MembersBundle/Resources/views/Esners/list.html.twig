@@ -31,7 +31,7 @@
                     <th>{% if esner.mobile %} {{ esner.mobile }} {% else %} ~ {% endif %}</th>
                     <th>{% if esner.university %} {{ esner.university }} {% else %} ~ {% endif %}</th>
                     <th>
-                        <a href="{{ path('esn_members_esner_edit', {'id': esner.id}) }}">
+                        <a href="{{ path('esn_members_esner_edit', {'user_id': esner.id}) }}">
                             <i class="icon-edit icon-large" style="color: green;"></i>
                         </a>
                         <a href="">

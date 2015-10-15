@@ -63,6 +63,7 @@ class EsnerType extends AbstractType
             ->add('birthdate', 'date', array('widget' => 'single_text'))
             ->add('hasCare', 'checkbox', array("required" => false))
             ->add('erasmusProgramme', 'entity' , array(
+                    'required' => false,
                     'class' => 'ESNAdministrationBundle:Country',
                     'empty_value'  => '',
                     'query_builder' => function(CountryRepository $er) {
@@ -89,6 +90,7 @@ class EsnerType extends AbstractType
             ->add('mentor', 'entity' , array(
                     'class'       => 'ESNUserBundle:User',
                     'empty_value'  => '',
+                    'required' => false,
                     'query_builder' => function(UserRepository $er) {
                         return $er->createQueryBuilder('u')
                             ->orderBy("u.firstname", "ASC");
