@@ -106,6 +106,12 @@ class EsnerType extends AbstractType
                     }
                 )
             )
+            ->add('trial', 'date', array(
+                    'mapped' => false,
+                    'required' => false,
+                    'widget' => 'single_text'
+                )
+            )
             ->add('sendmail', 'checkbox', array(
                     'mapped' => false,
                     'required' => false

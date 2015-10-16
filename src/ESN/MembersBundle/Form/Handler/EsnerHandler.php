@@ -9,6 +9,7 @@
 namespace ESN\MembersBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManager;
+use ESN\HRBundle\Entity\EsnerFollow;
 use ESN\MembersBundle\Entity\Erasmus;
 use ESN\UserBundle\Entity\User;
 use FOS\UserBundle\Mailer\Mailer;
@@ -71,6 +72,15 @@ class EsnerHandler
 
                 if ($this->form->get('sendmail')->getData()){
                     $this->sendEmail($user);
+                }
+
+                if ($this->form->get('trial')->getData()){
+                    $follow = new EsnerFollow();
+                    $follow->setTrialstarted($this->form->get('trial')->getData());
+
+                    $this->em->persist($follow);
+
+                    $user->setFollow($follow);
                 }
 
                 $this->onSuccess($user);

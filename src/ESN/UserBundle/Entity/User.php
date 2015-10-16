@@ -233,6 +233,11 @@ class User extends BaseUser
     private $facebook_id;
 
     /**
+     * @ORM\OneToOne(targetEntity="ESN\HRBundle\Entity\EsnerFollow", cascade={"persist"})
+     */
+    private $follow;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -251,6 +256,12 @@ class User extends BaseUser
         return $this->getFirstname() . " " . $this->getLastname();
     }
 
+    /**
+     * @return string
+     */
+    public function getFullname(){
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
     /**
      * @return mixed
      */
@@ -829,5 +840,21 @@ class User extends BaseUser
     public function setFacebookId($facebook_id)
     {
         $this->facebook_id = $facebook_id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFollow()
+    {
+        return $this->follow;
+    }
+
+    /**
+     * @param mixed $follow
+     */
+    public function setFollow($follow)
+    {
+        $this->follow = $follow;
     }
 }
