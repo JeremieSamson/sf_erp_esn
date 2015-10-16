@@ -3,6 +3,8 @@
 namespace ESN\PermanenceBundle\Controller;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use ESN\PermanenceBundle\Form\EnrollUserToTripType;
 use ESN\PermanenceBundle\Form\Handler\EnrollUserToTripHandler;
 
@@ -64,28 +66,37 @@ class PermanenceController extends Controller
      */
     public function enrollUserToTripAction(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $form = $this->get('form.factory')->create(new EnrollUserToTripType());
+
+        $participateTrip = new ParticipateTrip();
+
+        $form = $this->get('form.factory')->create(new EnrollUserToTripType(), $participateTrip);
         $formHandler = new EnrollUserToTripHandler($em, $form, $request);
         $form->handleRequest($request);
 
-        $process = $formHandler->process();
+        if ($formHandler->process()){
+            $participateTrips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($participateTrip->getTrip());
 
-        if ($process){
-            $trip = $em->getRepository('ESNAdministrationBundle:Trip')->find($form->get('trips')->getData());
-            $participants = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
+            $users = new ArrayCollection();
+            /** @var ParticipateTrip $participateTrip */
+            foreach($participateTrips as $participateTrip){
+                if (!$users->contains($participateTrip->getUser()))
+                    $users->add($participateTrip->getUser());
+            }
+
             $request->getSession()->getFlashBag()->add('notice', 'participant bien enregistré.');
+
             return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig',
-                array('participants' => $participants,
-                      'title' => "Permanence",
-                      'trip' => $trip));
+                array('participants' => $users,
+                      'trip' => $participateTrip->getTrip()));
         }
 
         return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',
             array('form' => $form->createView(),
                   'title' => "Permanence")
         );
-    }//enrollUserToTripAction
+    }
     
     /**
      * Récupère un voyage en fonction de son ID

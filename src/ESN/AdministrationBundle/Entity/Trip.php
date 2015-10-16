@@ -3,13 +3,13 @@
 namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ESN\MembersBundle\Entity\Member;
 
 /**
  * Trip
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\TripRepository")
  */
 class Trip
 {

@@ -19,6 +19,7 @@ class Version20151014212555 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE User CHANGE university_id university_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE User CHANGE esncard esncard VARCHAR(50) DEFAULT NULL');
         $this->addSql('ALTER TABLE User ADD CONSTRAINT FK_2DA17977419C3385 FOREIGN KEY (pole_id) REFERENCES Pole (id)');
         $this->addSql('ALTER TABLE User ADD CONSTRAINT FK_2DA179774B89032C FOREIGN KEY (post_id) REFERENCES Post (id)');
         $this->addSql('ALTER TABLE User ADD CONSTRAINT FK_2DA1797797C22770 FOREIGN KEY (erasmusProgramme_id) REFERENCES Country (id)');
@@ -42,5 +43,6 @@ class Version20151014212555 extends AbstractMigration
         $this->addSql('ALTER TABLE User DROP FOREIGN KEY FK_2DA17977309D1878');
         $this->addSql('ALTER TABLE User DROP FOREIGN KEY FK_2DA179771C9DA55');
         $this->addSql('ALTER TABLE User CHANGE university_id university_id INT NOT NULL');
+        $this->addSql('ALTER TABLE User CHANGE esncard esncard VARCHAR(50) NOT NULL COLLATE utf8_unicode_ci');
     }
 }

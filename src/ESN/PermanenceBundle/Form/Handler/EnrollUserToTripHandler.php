@@ -43,20 +43,18 @@ class EnrollUserToTripHandler
         if ('POST' == $this->request->getMethod()) {
 
             if ($this->form->isValid()) {
-                $participateTrip = new ParticipateTrip();
-
-                $member = $this->em->getRepository('ESNMembersBundle:Member')->find($this->form->get('members')->getData());
-                $participateTrip->setMembers($member);
-                $trip = $this->em->getRepository('ESNAdministrationBundle:Trip')->find($this->form->get('trips')->getData());
-                $participateTrip->setTrips($trip);
+                /** @var ParticipateTrip $participateTrip */
+                $participateTrip = $this->form->getData();
+                $participateTrip->setDateInscription(new \DateTime());
 
                 $operation = new Operation();
                 $operation->setDate(new \DateTime());
-                $operation->setDescription("New payment for the trip : " . $trip->getName());
+                $operation->setDescription("New payment for the trip : " . $participateTrip->getTrip()->getName());
                 $operation->setLibelle("Payment for a trip");
-                $operation->setMontant($trip->getPrice());
+                $operation->setMontant($participateTrip->getTrip()->getPrice());
 
                 $montant = $this->em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
+
                 $caisse = new Caisse();
                 $caisse->setMontant($montant + $operation->getMontant());
 

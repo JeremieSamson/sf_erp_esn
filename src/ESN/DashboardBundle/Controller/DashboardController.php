@@ -52,7 +52,7 @@ class DashboardController extends Controller
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), null, 5, null);;
 
         //Events
-        $events = $this->getEvents();
+        $events = null;//$this->getEvents();
 
         $dashboard = array( "facebook"  => array("likes" => 0, "group_members" => 0),
                             "members"   => array("esners" => $esners, "erasmus" => $erasmus),

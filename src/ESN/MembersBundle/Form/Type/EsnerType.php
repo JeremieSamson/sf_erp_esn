@@ -100,7 +100,7 @@ class EsnerType extends AbstractType
             ->add('nationality', 'entity', array(
                     'class' => 'ESNAdministrationBundle:Country',
                     'empty_value'  => '',
-                    'choices' => function(CountryRepository $er) {
+                    'query_builder' => function(CountryRepository $er) {
                         return $er->createQueryBuilder('c')
                             ->orderBy("c.name", "ASC");
                     }
