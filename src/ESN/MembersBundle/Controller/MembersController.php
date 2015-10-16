@@ -238,7 +238,7 @@ class MembersController extends Controller
 
         $form = $this->get('form.factory')->create(new EsnerType($em), $user);
 
-        $formHandler = new EsnerHandler($em, $form, $request);
+        $formHandler = new EsnerHandler($em, $form, $request, $this->get('templating'), $this->get('mailer'));
         $form->handleRequest($request);
 
         if ($formHandler->process()){
@@ -341,7 +341,7 @@ class MembersController extends Controller
         $user = new User();
 
         $form = $this->get('form.factory')->create(new EsnerType($em), $user);
-        $formHandler = new EsnerHandler($em, $form, $request);
+        $formHandler = new EsnerHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
         $form->handleRequest($request);
 
         if ($formHandler->process())

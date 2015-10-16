@@ -105,6 +105,11 @@ class EsnerType extends AbstractType
                             ->orderBy("c.name", "ASC");
                     }
                 )
+            )
+            ->add('sendmail', 'checkbox', array(
+                    'mapped' => false,
+                    'required' => false
+                )
             );
     }
 

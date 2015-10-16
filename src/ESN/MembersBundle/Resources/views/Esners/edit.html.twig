@@ -154,6 +154,15 @@
                         </div>
                     </div>
 
+                    {% if not user is defined %}
+                        <div class="control-group">
+                            <label class="control-label" for="university">Envoie Email de bienvenue</label>
+                            <div class="controls">
+                                {{ form_widget(form.sendmail) }}
+                            </div>
+                        </div>
+                    {% endif %}
+
                     <div class="form-actions">
                         <input type="submit" class="btn btn-primary" value="{% if user is defined %}Modify{% else %}Save{% endif %}">
                         <button class="btn">Cancel</button>

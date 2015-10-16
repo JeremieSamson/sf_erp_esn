@@ -11,6 +11,10 @@ namespace ESN\MembersBundle\Form\Handler;
 use Doctrine\ORM\EntityManager;
 use ESN\MembersBundle\Entity\Erasmus;
 use ESN\UserBundle\Entity\User;
+use FOS\UserBundle\Mailer\Mailer;
+use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
 use ESN\MembersBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,8 +22,27 @@ use Symfony\Component\HttpFoundation\Request;
 class EsnerHandler
 {
     protected $em;
-    protected $request;
     protected $form;
+    protected $request;
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * Twig
+     *
+     * @var TwigEngine
+     */
+    protected $templating;
+
+    /**
+     * Mailer
+     *
+     * @var \Swift_Mailer
+     */
+    protected $mailer;
 
     /**
      * Initialize the handler with the form and the request.
@@ -28,11 +51,14 @@ class EsnerHandler
      * @param Request $request
      * @param $mailer
      */
-    public function __construct(EntityManager $em, Form $form, Request $request)
+    public function __construct(EntityManager $em, Form $form, Request $request, ContainerInterface $container, TwigEngine $templating, \Swift_Mailer $mailer)
     {
         $this->em = $em;
         $this->form = $form;
         $this->request = $request;
+        $this->container = $container;
+        $this->templating = $templating;
+        $this->mailer = $mailer;
     }
 
     public function process()
@@ -43,16 +69,11 @@ class EsnerHandler
                 /** @var User $user */
                 $user = $this->form->getData();
 
-                if (!$user->getId()){
-                    $user->setUsername($user->getEmail());
-                    $user->setRandomPassword();
-                    $user->setEsner(true);
-                    $user->setEnabled(true);
-
-                    $this->em->persist($user);
+                if ($this->form->get('sendmail')->getData()){
+                    $this->sendEmail($user);
                 }
 
-                $this->em->flush();
+                $this->onSuccess($user);
 
                 return true;
             }
@@ -60,6 +81,41 @@ class EsnerHandler
         return false;
     }
 
-    protected function onSuccess(){
+    /**
+     * @param User $user
+     */
+    protected function onSuccess(User $user){
+
+        if (!$user->getId()){
+            $user->setUsername($user->getEmail());
+            $user->setRandomPassword();
+            $user->setEsner(true);
+            $user->setEnabled(true);
+
+            $this->em->persist($user);
+        }
+
+        $this->em->flush();
+    }
+
+    /**
+     * Send email to user
+     *
+     * @param User $user
+     */
+    private function sendEmail(User $user){
+        $message = \Swift_Message::newInstance()
+            ->setSubject('[ESN Lille] Bienvenue dans l\'association')
+            ->setFrom($this->container->getParameter('mailer_from'))
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->templating->render(
+                    'ESNHRBundle:Emails:registration.html.twig',
+                    array('user' => $user)
+                ),
+                'text/html'
+            )
+        ;
+        $this->mailer->send($message);
     }
 }
