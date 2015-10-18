@@ -115,7 +115,7 @@ class Apply {
      * @param $firstname
      * @return $this
      */
-    public function setName($firstname)
+    public function setFirstname($firstname)
     {
         $this->firstname = $firstname;
 

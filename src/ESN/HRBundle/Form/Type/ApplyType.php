@@ -54,6 +54,7 @@ class ApplyType extends AbstractType
             ->add('motivation', 'textarea', array("required" => false))
             ->add('skill', 'textarea', array("required" => false))
             ->add('olderasmus', 'checkbox', array("required" => false))
+            ->add('knowesn', 'checkbox', array("required" => false))
         ;
     }
 

@@ -77,13 +77,29 @@ class ApplyHandler
     {
         if ($this->form->isValid()) {
             if ('POST' == $this->request->getMethod()) {
-                $this->onSuccess($this->form->getData());
-                return true;
+                /** @var Apply $apply */
+                $apply = $this->form->getData();
+
+                $apply_email = $this->em->getRepository('ESNHRBundle:Apply')->findOneByEmail($apply->getEmail());
+                $apply_name  = $this->em->getRepository('ESNHRBundle:Apply')->findBy(array("firstname" => $apply->getFirstname(), "lastname" => $apply->getLastname()));
+
+                if (!$apply_email && !$apply_name){
+                    $this->onSuccess($apply);
+                    return true;
+                }else{
+                    $this->container->get('session')->getFlashBag()->add(
+                        'error',
+                        'Vous êtes déjà enregistré dans notre base de données, il est inutile de postuler plusieurs fois.'
+                    );
+                }
             }
         }
         return false;
     }
 
+    /**
+     * @param Apply $apply
+     */
     protected function onSuccess(Apply $apply){
         $this->em->persist($apply);
         $this->em->flush();
@@ -97,6 +113,7 @@ class ApplyHandler
      * @param Apply $apply
      */
     private function sendEmail(Apply $apply){
+        /** @var \Swift_Message $message */
         $message = \Swift_Message::newInstance()
             ->setSubject('[ESN Lille] Candidature prise en compte')
             ->setFrom($this->container->getParameter('mailer_from'))
