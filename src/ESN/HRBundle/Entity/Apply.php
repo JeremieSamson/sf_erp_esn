@@ -3,6 +3,7 @@
 namespace ESN\HRBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use ESN\AdministrationBundle\Entity\Country;
 
 /**
  * Apply
@@ -24,82 +25,134 @@ class Apply {
     /**
      * @var string
      *
-     * @ORM\Column(name="name",nullable=true, type="string", length=255)
+     * @ORM\Column(name="firstname", type="string", length=255)
      */
-    private $name;
+    private $firstname;
     
      /**
      * @var string
      *
-     * @ORM\Column(name="surname",nullable=true, type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255)
      */    
-    private $surname;
-    
+    private $lastname;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="birthdate", type="date", nullable=true)
+     */
+    private $birthdate;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="applies", cascade="persist")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $nationality;
+
     /**
      * @var string
      *
-     * @ORM\Column(name="email",nullable=true, type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255)
      */
     private $email;
-    
+
     /**
-     *
-     * @var Date 
-     * 
-     * @ORM\Column(name="date", nullable=true, type="date")
+     * @var string
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
      */
-    private $date;
-    
+    private $facebook_id;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="student", type="boolean")
+     */
+    private $student = false;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="olderasmus", type="boolean")
+     */
+    private $olderasmus = false;
+
     /**
      * @var string
      *
-     * @ORM\Column(name="motivation",nullable=true, type="string", length=255)
+     * @ORM\Column(name="motivation",nullable=true, type="text")
      */
     private $motivation;
     
     /**
      * @var string
      *
-     * @ORM\Column(name="skill",nullable=true, type="string", length=255)
+     * @ORM\Column(name="skill",nullable=true, type="text")
      */
     private $skill;
     
     /**
-     * @var string
+     * @var boolean
      *
-     * @ORM\Column(name="knowEsn",nullable=true, type="string", length=255)
+     * @ORM\Column(name="knowEsn", type="boolean")
      */
     private $knowEsn;
-    
+
+    /**
+     * Return fullname
+     *
+     * @return string
+     */
+    private function toString(){
+        return $this->getFirstname() . " " . $this->getLastname();
+    }
+
     public function getId()
     {
         return $this->id;
     }
-    
-    
-    public function setName($name)
-    {
-        $this->name = $name;
 
-        return $this;
-    }
-    public function getName()
+    /**
+     * @param $firstname
+     * @return $this
+     */
+    public function setName($firstname)
     {
-        return $this->name;
-    }
-    
-     public function setSurname($surname)
-    {
-        $this->surname = $surname;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function getSurname()
+    /**
+     * @return string
+     */
+    public function getFirstname()
     {
-        return $this->surname;
-    }  
-    
+        return $this->firstname;
+    }
+
+    /**
+     * @param $lastname
+     * @return $this
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * @param $email
+     * @return $this
+     */
     public function setEmail($email)
     {
         $this->email = $email;
@@ -107,23 +160,38 @@ class Apply {
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
-    }  
-    
-    public function setDate($date)
+    }
+
+    /**
+     * @param \DateTime $date
+     *
+     * @return $this
+     */
+    public function setBirthdate(\DateTime $date)
     {
-        $this->date = $date;
+        $this->birthdate = $date;
 
         return $this;
     }
 
-    public function getDate()
+    /**
+     * @return \DateTime
+     */
+    public function getBirthDate()
     {
-        return $this->date;
-    }  
-    
+        return $this->birthdate;
+    }
+
+    /**
+     * @param $motivation
+     * @return $this
+     */
     public function setMotivation($motivation)
     {
         $this->motivation = $motivation;
@@ -131,33 +199,114 @@ class Apply {
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getMotivation()
     {
         return $this->motivation;
-    }  
-    
-         public function setSkill($skill)
+    }
+
+    /**
+     * @param $skill
+     * @return $this
+     */
+    public function setSkill($skill)
     {
         $this->skill = $skill;
 
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getSkill()
     {
         return $this->skill;
-    }  
-    
-         public function setKnowEsn($knowEsn)
+    }
+
+    /**
+     * @param $knowEsn
+     *
+     * @return $this
+     */
+    public function setKnowEsn($knowEsn)
     {
         $this->knowEsn = $knowEsn;
 
         return $this;
     }
 
-    public function getKnowEsn()
+    /**
+     * @return bool
+     */
+    public function knowEsn()
     {
         return $this->knowEsn;
-    }  
-    
+    }
+
+    /**
+     * @return Country
+     */
+    public function getNationality()
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * @param Country $nationality
+     */
+    public function setNationality(Country $nationality)
+    {
+        $this->nationality = $nationality;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFacebookId()
+    {
+        return $this->facebook_id;
+    }
+
+    /**
+     * @param string $facebook_id
+     */
+    public function setFacebookId($facebook_id)
+    {
+        $this->facebook_id = $facebook_id;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isStudent()
+    {
+        return $this->student;
+    }
+
+    /**
+     * @param boolean $student
+     */
+    public function setStudent($student)
+    {
+        $this->student = $student;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isOlderasmus()
+    {
+        return $this->olderasmus;
+    }
+
+    /**
+     * @param boolean $olderasmus
+     */
+    public function setOlderasmus($olderasmus)
+    {
+        $this->olderasmus = $olderasmus;
+    }
 }

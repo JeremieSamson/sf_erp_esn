@@ -4,6 +4,7 @@ namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use ESN\HRBundle\Entity\Apply;
 use ESN\UserBundle\Entity\User;
 
 /**
@@ -51,6 +52,13 @@ class Country
     private $users;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ESN\HRBundle\Entity\Apply", mappedBy="nationality")
+     */
+    private $applies;
+
+    /**
      * @ORM\OneToMany(targetEntity="ESN\UserBundle\Entity\User", mappedBy="erasmusProgramme")
      */
     private $erasmusProgramme_esners;
@@ -58,6 +66,7 @@ class Country
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->applies = new ArrayCollection();
         $this->erasmusProgramme_esners = new ArrayCollection();
     }
 
@@ -171,6 +180,10 @@ class Country
         return $this->users;
     }
 
+    /**
+     * @param User $esner
+     * @return $this
+     */
     public function addEsner(User $esner)
     {
         $this->erasmusProgramme_esners[] = $esner;
@@ -178,6 +191,9 @@ class Country
         return $this;
     }
 
+    /**
+     * @param User $esner
+     */
     public function removeEsner(User $esner)
     {
         $this->erasmusProgramme_esners->removeElement($esner);
@@ -186,5 +202,32 @@ class Country
     public function getEsnerErasmusProgramme()
     {
         return $this->erasmusProgramme_esners;
+    }
+
+    /**
+     * @param Apply $apply
+     * @return $this
+     */
+    public function addApply(Apply $apply)
+    {
+        $this->applies->add($apply);
+        $apply->setNationality($this);
+        return $this;
+    }
+
+    /**
+     * @param Apply $apply
+     */
+    public function removeApply(Apply $apply)
+    {
+        $this->applies->removeElement($apply);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getApplys()
+    {
+        return $this->applies;
     }
 }

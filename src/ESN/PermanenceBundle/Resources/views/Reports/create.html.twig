@@ -1,15 +1,13 @@
-{% extends '::base.html.twig' %}
-
-
-{% block subnavbar %}
-    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
-{% endblock %}
+{% extends 'ESNMembersBundle::index.html.twig' %}
 
 {% block body %}
 
+    {{ parent() }}
+
     <script>
         $(document).ready( function() {
-            $('#form_sellCard').keyup(function() {
+            console.log("ici");
+            $('#form_report_sellCard').keyup(function() {
                 var val = $('#available_card_fix').val();
                 var nbcard = $('#form_sellCard').val();
                 var newval = val - nbcard;
@@ -21,6 +19,7 @@
             });
         });
     </script>
+
     <div class="span12">
         <div class="widget">
             <div class="widget-content">
@@ -90,5 +89,4 @@
         </div>
         <!-- /widget -->
     </div><!-- /span8 -->
-
 {% endblock %}

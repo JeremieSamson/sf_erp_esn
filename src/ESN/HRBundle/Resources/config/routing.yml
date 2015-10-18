@@ -14,18 +14,26 @@ esn_hr_association_edit:
     path:   /human-ressources/association/edit/{id}
     defaults: { _controller: ESNHRBundle:Association:editESNer}    
 
-esn_hr_recruitment:
-    path:   /human-ressources/recruitment
-    defaults: { _controller : ESNHRBundle:Recruitment:index}
+################## TREECERATOPS ########################
 
 esn_hr_treeceratops:
     path:   /human-ressources/treeceratops
     defaults: { _controller : ESNHRBundle:HR:treeceratops}
 
+################## RECRUITMENT ########################
+
+esn_hr_recruitment_create:
+    path:   /human-ressources/recruitment/create
+    defaults: { _controller : ESNHRBundle:Recruitment:createApply}
+
 esn_hr_recruitment_view:
     path:   /human-ressources/recruitment/view/{id}
     defaults: { _controller : ESNHRBundle:Recruitment:viewApply}
-    
+
 esn_hr_recruitment_delete:
     path:   /human-ressources/recruitment/delete/{id}
     defaults: { _controller : ESNHRBundle:Recruitment:deleteApply}
+
+esn_hr_recruitment:
+    path:   /human-ressources/recruitment
+    defaults: { _controller : ESNHRBundle:Recruitment:index}

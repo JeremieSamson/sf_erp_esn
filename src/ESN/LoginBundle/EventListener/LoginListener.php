@@ -40,7 +40,8 @@ class LoginListener {
             if($request->get('_route') != null
                 && $request->get('_route') != "esn_login_homepage"
                 && $request->get('_route') != "esn_login_check"
-                && $request->get('_route') != "fos_user_security_login"){
+                && $request->get('_route') != "fos_user_security_login"
+                && $request->get('_route') != "esn_hr_recruitment_create"){
                 $event->setResponse(new RedirectResponse($this->router->generate('esn_login_homepage')));
             }
         }

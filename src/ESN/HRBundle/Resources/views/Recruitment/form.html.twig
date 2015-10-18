@@ -1,0 +1,102 @@
+{% extends 'ESNHRBundle::index.html.twig' %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="row" style="text-align: center;">
+
+        <div class="span12">
+            <div class="widget">
+                <div class="widget-content">
+
+                    <h3>Formulaire de recrutement</h3>
+
+                    <hr/>
+
+                    {{ form_start(form) }}
+                    <fieldset>
+
+                        <div class="control-group">
+                            <label class="control-label" for="firstname">Prénom</label>
+                            <div class="controls">
+                                {{ form_widget(form.firstname, { 'attr': {'placeholder': 'Prénom'} }) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="lastname">Nom</label>
+                            <div class="controls">
+                                {{ form_widget(form.lastname, { 'attr': {'placeholder': 'Nom'} }) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="email">Email</label>
+                            <div class="controls">
+                                {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="birthday">Facebook url</label>
+                            <div class="controls">
+                                {{ form_widget(form.facebook_id) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="birthday">Birthday</label>
+                            <div class="controls">
+                                {{ form_widget(form.birthdate) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="address">Nationality</label>
+                            <div class="controls">
+                                {{ form_widget(form.nationality) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="hasCare">Êtes-vous étudiant ?</label>
+                            <div class="controls">
+                                {{ form_widget(form.student) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="olderasmus">Êtes-vous partie en Erasmus ?</label>
+                            <div class="controls">
+                                {{ form_widget(form.olderasmus) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="motivation">Motivations ?</label>
+                            <div class="controls">
+                                {{ form_widget(form.motivation) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="skill">Compétences ?</label>
+                            <div class="controls">
+                                {{ form_widget(form.skill) }}
+                            </div>
+                        </div>
+
+                        <hr/>
+
+                        <div class="form-actions">
+                            <input type="submit" class="btn btn-primary" value="Postuler">
+                        </div>
+
+                    </fieldset>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

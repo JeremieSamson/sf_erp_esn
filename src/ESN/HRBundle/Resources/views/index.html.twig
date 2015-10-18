@@ -2,16 +2,18 @@
 
 
 {% block subnavbar %}
-{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
 {% endblock %}
 
 {% block body %}
-    {% if type == "association" %}
-        {{ render(controller("ESNHRBundle:Association:listEsners")) }} 
-    {% endif %}
-    
-    {% if type == "recruitment" %}
-        {{ render(controller("ESNHRBundle:Recruitment:listApply")) }}   
-    {% endif %}
-  
+    <div class="span12">
+        <p>
+            {% for message in app.session.flashbag.get('notice') %}
+                <div class="alert alert-success">
+                    <a href="#" class="close" data-dismiss="alert">&times;</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </p>
+    </div>
 {% endblock %}

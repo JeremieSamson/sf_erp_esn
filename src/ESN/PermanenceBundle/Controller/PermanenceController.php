@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManager;
 use ESN\PermanenceBundle\Form\EnrollUserToTripType;
 use ESN\PermanenceBundle\Form\Handler\EnrollUserToTripHandler;
 
+use ESN\PermanenceBundle\Form\Handler\ReportHandler;
+use ESN\PermanenceBundle\Form\Type\ReportType;
 use ESN\TreasuryBundle\Entity\Operation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,10 +22,20 @@ use ESN\TreasuryBundle\Entity\CaisseRepository;
 
 class PermanenceController extends Controller
 {
-    public function indexAction($type)
+    /**
+     * List all reports
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction()
     {
-        $data = array('title' => "Permanence", 'type' => $type);
-        return $this->render('ESNPermanenceBundle::index.html.twig', $data);
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+        $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array('date' => 'DESC'));
+
+        return $this->render('ESNPermanenceBundle:Reports:list.html.twig', array(
+            'reports' => $reports
+        ));
     }
     
     /**
@@ -137,72 +149,39 @@ class PermanenceController extends Controller
     
     /**
      * Crée le formulaire de rapport et sauvegarde un nouveau rapport en base.
-     * @param type $type
+     *
      * @param Request $request
-     * @return type
+     *
+     * @return mixed
      */
-    public function createReportAction($type,Request $request)
+    public function createAction(Request $request)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        /** @var integer $caisse */
         $caisse = $em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
+
+        /** @var integer $nbCard */
         $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
 
         $report = new PermanenceReport();
-        $form = $this->createFormBuilder($report)
-        ->add('amountBefore', 'integer', array('attr' => array('value' => $caisse)))
-        ->add('amountAfter', 'integer', array('attr' => array('value' => $caisse)))
-        ->add('sellCard', 'integer')
-        ->add('availableCard', 'integer', array('attr' => array('value' => $nbCard)))
-        ->add('comments', 'textarea')
-        ->getForm();
-        
+        $report->setAmountBefore($caisse);
+        $report->setAmountAfter($caisse);
+        $report->setAvailableCard($nbCard);
+
+        $form = $this->get('form.factory')->create(new ReportType($em), $report);
+        $formHandler = new ReportHandler($em, $form, $request);
         $form->handleRequest($request);
-        
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
 
-            //Remove numbers of card
-            $sellcard = $report->getSellCard();
-            $nbCard = $em->getRepository('ESNAdministrationBundle:Card')->getNumberOfCards();
-            $availableCard = $nbCard - $sellcard;
-
-            $report->setAmountBefore($caisse);
-            $report->setAmountSell($report->getSellCard()*5);
-            $report->setAmountAfter($caisse + $report->getAmountSell());
-
-            $Card = new Card();
-            $Card->setNumber($availableCard);
-            $em->persist($Card);
-
-            $operation = new Operation();
-            $operation->setMontant($report->getAmountSell());
-            $operation->setDate(new \DateTime());
-            $operation->setLibelle("Vente carte ESN pendant la perm");
-            $operation->setDescription("Vente de " . $report->getSellCard() . " cartes ESN");
-            $em->persist($operation);
-
-            // CAISSE
-            $montant = $em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
-
-            $caisse = new Caisse();
-            $caisse->setMontant($montant + $operation->getMontant());
-            $em->persist($caisse);
-
-            $report->setAvailableCard($availableCard);
-            $em->persist($report);
-            $em->flush();
-
+        if ($formHandler->process())
+        {
             $request->getSession()->getFlashBag()->add('notice', 'Rapport bien enregistrée.');
-            return $this->redirect($this->generateUrl('esn_permanence_reports', array(
-                'type'=>'reports'
-            )));
+
+            return $this->redirect($this->generateUrl('esn_permanence_reports'));
         }
-
-
         
-        return $this->render('ESNPermanenceBundle:Reports:createReport.html.twig', array(
-            'title' => "Treasury",
-            'type'  => $type,
+        return $this->render('ESNPermanenceBundle:Reports:create.html.twig', array(
             'form'  => $form->createView(),
             'cards' => $nbCard,
             'money' => $caisse

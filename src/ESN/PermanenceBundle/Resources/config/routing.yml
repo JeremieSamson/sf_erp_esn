@@ -12,15 +12,15 @@ esn_permanence_enrollUserToTrip:
 
 esn_permanence_reports:
     path:     /permanence/reports
-    defaults: { _controller: ESNPermanenceBundle:Permanence:index, type:"reports"}
+    defaults: { _controller: ESNPermanenceBundle:Permanence:list}
     
 esn_permanence_seeReport:
     path:     /permanence/seeReport/{id}
-    defaults: { _controller: ESNPermanenceBundle:Permanence:seeReport, type:"reports"}
+    defaults: { _controller: ESNPermanenceBundle:Permanence:seeReport}
 
 esn_permanence_createReports:
     path:     /permanence/createReports
-    defaults: { _controller: ESNPermanenceBundle:Permanence:createReport, type:"reports"}
+    defaults: { _controller: ESNPermanenceBundle:Permanence:create}
     
 esn_permanence_informations:
     path:     /permanence/informations

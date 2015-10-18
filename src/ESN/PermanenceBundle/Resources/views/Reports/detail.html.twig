@@ -1,11 +1,8 @@
-{% extends '::base.html.twig' %}
-
-
-{% block subnavbar %}
-{{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
-{% endblock %}
+{% extends 'ESNMembersBundle::index.html.twig' %}
 
 {% block body %}
+
+    {{ parent() }}
 <div class="span12">
         <div class="widget">
             <div class="widget-content">
