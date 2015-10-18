@@ -16,6 +16,8 @@ class RecruitmentController extends Controller {
     /**
      * List all current application
      *
+     * @throws createAccessDeniedException
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction()
@@ -37,8 +39,12 @@ class RecruitmentController extends Controller {
     
     /**
      * Voir les applies
+     *
      * @param integer $apply_id
-     * @return mied
+     *
+     * @throws createAccessDeniedException
+     *
+     * @return mixed
      */
     public function viewApplyAction($apply_id) {
         if (!$this->getUser()->hasPermissionFor('human-ressources')){
@@ -63,7 +69,7 @@ class RecruitmentController extends Controller {
     /**
      * Supprimer un apply dont l'id est passé en parametre
      *
-     * @param type $id
+     * @param integer $id
      *
      * @return mixed
      *
@@ -101,13 +107,10 @@ class RecruitmentController extends Controller {
      * Create Apply Action
      *
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createApplyAction(Request $request) {
-        if (!$this->getUser()->hasPermissionFor('human-ressources')){
-            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
-        }
-
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 

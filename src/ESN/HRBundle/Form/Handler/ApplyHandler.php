@@ -127,5 +127,19 @@ class ApplyHandler
             )
         ;
         $this->mailer->send($message);
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('[ESN Lille] Candidature prise en compte')
+            ->setFrom($this->container->getParameter('mailer_from'))
+            ->setTo($apply->getEmail())
+            ->setBody(
+                $this->templating->render(
+                    'ESNHRBundle:Emails:new_application.html.twig',
+                    array('apply' => $apply)
+                ),
+                'text/html'
+            )
+        ;
+        $this->mailer->send($message);
     }
 }
