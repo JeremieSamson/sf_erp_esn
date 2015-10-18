@@ -6,13 +6,15 @@
 
 <div class="row">
 
-    <div class="span12">
-        <div class="widget">
-            <div class="widget-content">
-                <a href="{{ path('esn_members_esner_create') }}" class="btn btn-info">Add new ESNer</a> &nbsp;&nbsp;
+    {% if app.user.hasPermissionFor('human-ressources') %}
+        <div class="span12">
+            <div class="widget">
+                <div class="widget-content">
+                    <a href="{{ path('esn_members_esner_create') }}" class="btn btn-info">Add new ESNer</a> &nbsp;&nbsp;
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
     <table id="esners" class="datatable" cellspacing="0" width="100%">
         <thead>

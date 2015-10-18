@@ -2,69 +2,95 @@
 
 namespace ESN\HRBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use ESN\HRBundle\Entity\Apply;
 use ESN\HRBundle\Form\Handler\ApplyHandler;
 use ESN\HRBundle\Form\Type\ApplyType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
 class RecruitmentController extends Controller {
 
     /**
+     * List all current application
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function listAction()
     {
-        $data = array('title' => "HR", 'type' => 'recruitment');
-        return $this->render('ESNHRBundle::index.html.twig', $data); 
-    } 
-    
-    /**
-     * Lister les applies
-     * @param Request $request
-     * @return type
-     */
-    public function listApplyAction(Request $request)
-    {
-        $repository = $this->getDoctrine()->getManager()->getRepository('ESNHRBundle:Apply');
-        $applies = array( "applies" => $repository->findAll() );
-                
-        return $this->render('ESNHRBundle:Recruitment:list.html.twig', $applies);
-        
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var ArrayCollection $applies */
+        $applies = $em->getRepository('ESNHRBundle:Apply')->findAll();
+
+        return $this->render('ESNHRBundle:Recruitment:list.html.twig', array(
+            'applies' => $applies
+        ));
     }
     
     /**
      * Voir les applies
-     * @param type $id
-     * @return type
+     * @param integer $apply_id
+     * @return mied
      */
-    public function viewApplyAction($id) {
-        
-        $repository = $this->getDoctrine()->getManager()->getRepository('ESNHRBundle:Apply');
-        $apply = array( "apply" => $repository->find($id));
-        
-        return $this->render('ESNHRBundle:Recruitment:detail.html.twig', $apply);
-        
+    public function viewApplyAction($apply_id) {
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var ArrayCollection $applies */
+        $apply = $em->getRepository('ESNHRBundle:Apply')->find($apply_id);
+
+        if (!$apply){
+            throw $this->createNotFoundException('Cette application n\'existe pas');
+        }
+
+        return $this->render('ESNHRBundle:Recruitment:detail.html.twig', array(
+            'apply' => $apply
+        ));
     }
     
     /**
      * Supprimer un apply dont l'id est passé en parametre
+     *
      * @param type $id
-     * @return type
-     * @throws type
+     *
+     * @return mixed
+     *
+     * @throws createAccessDeniedException
      */
-    public function deleteApplyAction($id) {
-        
+    public function deleteApplyAction($apply_id) {
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $apply = $em->getRepository('ESNHRBundle:Apply')->find($id);
-                
-        if (!$apply) {
+
+        /** @var ArrayCollection $applies */
+        $apply = $em->getRepository('ESNHRBundle:Apply')->find($apply_id);
+
+        if (!$apply){
             throw $this->createNotFoundException(
-                'Aucun produit trouvé pour cet id : '.$id
+                'Aucun produit trouvé pour cet id : '.$apply_id
             );
-        }       
-        
+        }
+
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            "L'application de " .$apply. " a bien été supprimé"
+        );
+
         $em->remove($apply);
         $em->flush();
 
@@ -78,6 +104,10 @@ class RecruitmentController extends Controller {
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createApplyAction(Request $request) {
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 

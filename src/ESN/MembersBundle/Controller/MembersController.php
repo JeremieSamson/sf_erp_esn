@@ -15,6 +15,7 @@ use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class MembersController extends Controller
@@ -334,6 +335,11 @@ class MembersController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createEsnerAction(Request $request) {
+
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 

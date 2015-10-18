@@ -27,13 +27,17 @@ esn_hr_recruitment_create:
     defaults: { _controller : ESNHRBundle:Recruitment:createApply}
 
 esn_hr_recruitment_view:
-    path:   /human-ressources/recruitment/view/{id}
+    path:   /human-ressources/recruitment/view/{apply_id}
     defaults: { _controller : ESNHRBundle:Recruitment:viewApply}
+    requirements:
+        apply_id:  \d+
 
 esn_hr_recruitment_delete:
-    path:   /human-ressources/recruitment/delete/{id}
+    path:   /human-ressources/recruitment/delete/{apply_id}
     defaults: { _controller : ESNHRBundle:Recruitment:deleteApply}
+    requirements:
+        apply_id:  \d+
 
 esn_hr_recruitment:
     path:   /human-ressources/recruitment
-    defaults: { _controller : ESNHRBundle:Recruitment:index}
+    defaults: { _controller : ESNHRBundle:Recruitment:list}

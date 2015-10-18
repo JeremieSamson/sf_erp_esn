@@ -1,40 +1,62 @@
+{% extends 'ESNHRBundle::index.html.twig' %}
+
+{% block body %}
+
+{{ parent() }}
+
 <div class="row">
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-content">
 
-                        
+                <div class="panel panel-default">
 
-                    <div class="span12">
-                        <div class="widget">
-                            <div class="widget-content">
-                                              
-                                <div class="panel panel-default">
+                    <table id="esners" class="datatable" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Prénom</th>
+                            <th>Nom</th>
+                            <th>Âge</th>
+                            <th>Nationalité</th>
+                            <th></th>
+                        </tr>
+                        </thead>
 
-                                    <!-- Table -->
-                                    <table class="table">
-                                      <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Surname</th>
-                                            <th>Apply Date</th>
-                                            <th>Action</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        {% for apply in applies %}
-                                                <tr>
-                                                    <td>{{apply.name}}</td>
-                                                    <td>{{apply.surname}}</td>
-                                                    <td>{{apply.date|date('Y-m-d')}}</td>
-                                                    <td>
-                                                        <a href="{{ path('esn_hr_recruitment_view', {'id' : apply.id}) }}">View</a> &nbsp;
-                                                        <a href="{{ path('esn_hr_recruitment_delete', {'id' : apply.id}) }}">Delete</a>
-                                                    </td>
-                                                </tr>
-                                          {% endfor %} 
-                                      </tbody>
-                                    </table>
-                                </div>
-                            </div><!-- widget-content -->
-                        </div><!-- /widget -->
-                    </div><!-- /span12 -->   
-        
-                    </div>
+                        {% for apply in applies %}
+                            <tbody>
+                            <tr>
+                                <th>{{ apply.firstname }}</th>
+                                <th>{{ apply.lastname }}</th>
+                                <th>{% if apply.getAge() > 0 %} {{ apply.getAge() }} {% else %} ~ {% endif %}</th>
+                                <th>{{ apply.nationality }}</th>
+                                <th>
+                                    <a href="{{ path('esn_hr_recruitment_view', {'apply_id' : apply.id}) }}">
+                                        <i class="icon-edit icon-large" style="color: green;"></i>
+                                    </a>
+                                    <a href="{{ path('esn_hr_recruitment_delete', {'apply_id' : apply.id}) }}">
+                                        <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div><!-- widget-content -->
+        </div><!-- /widget -->
+    </div><!-- /span12 -->
+</div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.datatable').dataTable( {
+                "bPaginate": false,
+                "oLanguage": { "sSearch": "" },
+                "bInfo": false,
+            } );
+        } );
+    </script>
+{% endblock %}

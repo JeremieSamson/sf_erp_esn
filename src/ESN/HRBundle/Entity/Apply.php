@@ -124,7 +124,7 @@ class Apply {
      *
      * @return string
      */
-    public function toString(){
+    public function __toString(){
         return $this->getFirstname() . " " . $this->getLastname();
     }
 
@@ -390,5 +390,17 @@ class Apply {
     public function setLanguages($languages)
     {
         $this->languages = $languages;
+    }
+
+    /**
+     * Calculate Age
+     *
+     * @return string
+     */
+    public function getAge(){
+        $date = new \DateTime($this->getBirthdate()->format('Y-m-d'));
+        $now = new \DateTime();
+        $interval = $now->diff($date);
+        return $interval->y;
     }
 }
