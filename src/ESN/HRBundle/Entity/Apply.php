@@ -2,6 +2,7 @@
 
 namespace ESN\HRBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use ESN\AdministrationBundle\Entity\Country;
 
@@ -86,23 +87,44 @@ class Apply {
     /**
      * @var string
      *
-     * @ORM\Column(name="skill",nullable=true, type="text")
+     * @ORM\Column(name="skill", nullable=true, type="text")
      */
     private $skill;
     
     /**
-     * @var boolean
+     * @var string
      *
-     * @ORM\Column(name="knowEsn", type="boolean")
+     * @ORM\Column(name="knowEsn", nullable=true, type="text")
      */
     private $knowEsn;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="availabletime", type="integer")
+     */
+    private $availabletime;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="ESN\AdministrationBundle\Entity\Country", cascade={"persist"})
+     */
+    private $languages;
+
+    /**
+     * Constructor
+     */
+    public function __constructor(){
+        $this->languages = new ArrayCollection();
+    }
 
     /**
      * Return fullname
      *
      * @return string
      */
-    private function toString(){
+    public function toString(){
         return $this->getFirstname() . " " . $this->getLastname();
     }
 
@@ -239,7 +261,7 @@ class Apply {
     }
 
     /**
-     * @return bool
+     * @return string
      */
     public function knowEsn()
     {
@@ -308,5 +330,65 @@ class Apply {
     public function setOlderasmus($olderasmus)
     {
         $this->olderasmus = $olderasmus;
+    }
+
+    /**
+     * @param Country $language
+     *
+     * @return $this
+     */
+    public function addLanguage(Country $language)
+    {
+        $this->languages->add($language);
+
+        return $this;
+    }
+
+    /**
+     * @param Country $language
+     */
+    public function removelanguage(Country $language)
+    {
+        $this->languages->removeElement($language);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getLanguagess()
+    {
+        return $this->languages;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAvailabletime()
+    {
+        return $this->availabletime;
+    }
+
+    /**
+     * @param int $availabletime
+     */
+    public function setAvailabletime($availabletime)
+    {
+        $this->availabletime = $availabletime;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getLanguages()
+    {
+        return $this->languages;
+    }
+
+    /**
+     * @param ArrayCollection $languages
+     */
+    public function setLanguages($languages)
+    {
+        $this->languages = $languages;
     }
 }

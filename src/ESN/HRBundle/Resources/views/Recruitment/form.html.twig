@@ -1,16 +1,39 @@
 {% extends 'ESNHRBundle::index.html.twig' %}
 
 {% block body %}
-
-    {{ parent() }}
-
     <div class="row" style="text-align: center;">
 
         <div class="span12">
             <div class="widget">
                 <div class="widget-content">
 
-                    <h3>Formulaire de recrutement</h3>
+                    <h2>Formulaire de recrutement</h2>
+
+                    <div style="text-align: center;">
+                        <img src="{{ asset('img/recrutement_nouveau.jpg') }}" width="50%">
+                    </div>
+
+                    <div style="margin: 10px auto 10px auto;" class="alert alert-info">
+                        <p>
+                        Pour nous envoyer votre candidature, merci de remplir ce formulaire avec un maximum d'information. <br>Nous vous enverrons une réponse par mail au plus vite.
+                        </p>
+                    </div>
+
+                    <p>
+                        {% for message in app.session.flashbag.get('notice') %}
+                            <div class="alert alert-success">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+
+                        {% for message in app.session.flashbag.get('error') %}
+                            <div class="alert alert-error">
+                                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </p>
 
                     <hr/>
 
@@ -74,9 +97,16 @@
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" for="knowesn">Y avez vous connu ESN ?</label>
+                            <label class="control-label" for="availabletyme">Temps disponible ?</label>
                             <div class="controls">
-                                {{ form_widget(form.knowesn) }}
+                                {{ form_widget(form.availabletime) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="languages">Première langue</label>
+                            <div class="controls">
+                                {{ form_widget(form.languages) }}
                             </div>
                         </div>
 
@@ -91,6 +121,13 @@
                             <label class="control-label" for="skill">Compétences ?</label>
                             <div class="controls">
                                 {{ form_widget(form.skill) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="knowesn">Comment avez-vous connu ESN ?</label>
+                            <div class="controls">
+                                {{ form_widget(form.knowesn) }}
                             </div>
                         </div>
 

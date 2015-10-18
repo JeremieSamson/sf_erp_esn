@@ -67,6 +67,7 @@ class Country
     {
         $this->users = new ArrayCollection();
         $this->applies = new ArrayCollection();
+        $this->applies_language = new ArrayCollection();
         $this->erasmusProgramme_esners = new ArrayCollection();
     }
 

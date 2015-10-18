@@ -51,10 +51,34 @@ class ApplyType extends AbstractType
             ->add('facebook_id', 'text', array("required" => false))
             ->add('student', 'checkbox', array("required" => false))
             ->add('olderasmus', 'checkbox', array("required" => false))
+            ->add('availabletime', 'choice', array(
+                'required' => true,
+                'choices' => array(
+                    '2' => 'Moins de 4 heures',
+                    '4' => '4 heures',
+                    '6' => '6 heures',
+                    '8' => '8 heures',
+                    '10' => '10 heures',
+                    '12' => '12 heures',
+                    '15' => 'Plus de 12 heures'
+                ),
+                'expanded' => true,
+                'multiple' => false
+            ))
+            ->add('languages', 'entity', array(
+                    'class' => 'ESNAdministrationBundle:Country',
+                    'empty_value'  => '',
+                    'multiple' => true,
+                    'query_builder' => function(CountryRepository $er) {
+                        return $er->createQueryBuilder('c')
+                            ->orderBy("c.name", "ASC");
+                    },
+                )
+            )
             ->add('motivation', 'textarea', array("required" => false))
             ->add('skill', 'textarea', array("required" => false))
             ->add('olderasmus', 'checkbox', array("required" => false))
-            ->add('knowesn', 'checkbox', array("required" => false))
+            ->add('knowesn', 'text', array("required" => false))
         ;
     }
 
