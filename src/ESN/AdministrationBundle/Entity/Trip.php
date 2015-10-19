@@ -3,13 +3,13 @@
 namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ESN\MembersBundle\Entity\Member;
 
 /**
  * Trip
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\TripRepository")
  */
 class Trip
 {
@@ -55,20 +55,6 @@ class Trip
     * @ORM\Column(type="decimal", scale=2)
     */
     private $price;
-    
-    /**
-     *
-     * @ORM\OneToMany(targetEntity="ESN\PermanenceBundle\Entity\ParticipateTrip", mappedBy="member", cascade="persist")
-     */
-    public $members;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->members = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
      * Get id
@@ -193,39 +179,6 @@ class Trip
     public function getPrice()
     {
         return $this->price;
-    }
-
-    /**
-     * Add members
-     *
-     * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $members
-     * @return Trip
-     */
-    public function addMember(Member $member)
-    {
-        $this->members[] = $member;
-
-        return $this;
-    }
-
-    /**
-     * Remove members
-     *
-     * @param \ESN\PermanenceBundle\Entity\ParticipateTrip $members
-     */
-    public function removeMember(Member $member)
-    {
-        $this->members->removeElement($member);
-    }
-
-    /**
-     * Get members
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getMembers()
-    {
-        return $this->members;
     }
 
     public function __toString(){

@@ -1,12 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block subnavbar %}
+    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+{% block body %}
+
 <div class="row">
     
     <div class="span3">
         <div class="widget">
             <div class="widget-content">
-                
-                <a class="btn btn-warning" href="{{ path('esn_members_erasmus_delete', {
-                        'id' : member[0].erasmus.id }) }}">Delete</a>
-                <a class="btn btn-info" href="{{ path('esn_members_erasmus_edit', {'id' : member[0].erasmus.id }) }}">Edit</a>
+
+                <a class="btn btn-info" href="{{ path('esn_members_erasmus_edit', {'user_id' : user.id }) }}">Edit</a>
                 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -17,9 +23,11 @@
                 <h3>Contact</h3>
                 
                 <hr/>
-                <p>{{ member[0].identity.email }}</p>
-                <p>{{ member[0].identity.phone }}</p>
-                <p><i class="icon-large icon-facebook-sign"></i> <span>Facebook</span> </p>
+                <p>{{ user.email }}</p>
+                <p>{{ user.mobile }}</p>
+                {% if user.getFacebookId() %}
+                    <p><i class="icon-large icon-facebook-sign"></i> <span>Facebook</span> </p>
+                {% endif %}
 
             </div><!-- /widget-content --> 
         </div><!-- /widget -->    
@@ -30,8 +38,8 @@
             <div class="widget-content">
             
                 <h3>
-                    {{ member[0].identity.name }}
-                    {{ member[0].identity.surname }}
+                    {{ user.firstname }}
+                    {{ user.lastname }}
                 </h3>
                 
             </div><!-- /widget-content --> 
@@ -50,11 +58,11 @@
                 <fieldset>
                     
                     <div class="control-group">
-                        <label class="control-label" for="age">Age</label>
+                        <label class="control-label" for="age">Âge</label>
                         <div class="controls">
                             <span>
-                                {% if member[0].identity.birthday != null %}
-                                   {{ member[0].identity.getAge() }}
+                                {% if user.birthdate is not null %}
+                                   {{ user.getAge() }}
                                 {% endif %}
                                 
                                 </span>
@@ -64,14 +72,14 @@
                     <div class="control-group">
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.birthday|date('Y-m-d') }}</span>
+                            <span>{{ user.birthdate|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.nationality }}</span>
+                            <span>{{ user.nationality }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -80,21 +88,21 @@
                     <div class="control-group">
                         <label class="control-label" for="arrival">ESN Card</label>
                         <div class="controls">
-                            {{ member[0].erasmus.esncard }}
+                            {{user.esncard }}
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="arrival">Arrival Date</label>
                         <div class="controls">
-                            <span>{{ member[0].erasmus.arrivalDate|date('Y-m-d') }}</span>
+                            <span>{{user.arrivalDate|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
  
                     <div class="control-group">
                         <label class="control-label" for="leaving">Leaving Date</label>
                         <div class="controls">
-                            <span>{{ member[0].erasmus.leavingDate|date('Y-m-d') }}</span>
+                            <span>{{user.leavingDate|date('Y-m-d') }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -103,14 +111,14 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.study }}</span>
+                            <span>{{ user.study }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            <span>{{ member[0].identity.university }}</span>
+                            <span>{{ user.university }}</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -119,3 +127,5 @@
     </div>    
     
 </div>
+
+{% endblock %}

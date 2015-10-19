@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e5e847e42a04a90e2d34bc500911a0ac",
+    "hash": "fcca5f7a4f108cd4abec84bfdbead295",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -876,7 +876,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/efb77c10dfb75485998a843154bbc44d8124c4d1",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/f4f5bdf6cc84011513ca6b582f85330a09a5037b",
                 "reference": "efb77c10dfb75485998a843154bbc44d8124c4d1",
                 "shasum": ""
             },
@@ -1002,52 +1002,71 @@
             "time": "2015-04-02 20:40:18"
         },
         {
-            "name": "gorg/cas-bundle",
+            "name": "friendsofsymfony/user-bundle",
             "version": "dev-master",
-            "target-dir": "Gorg/Bundle/CasBundle",
             "source": {
                 "type": "git",
-                "url": "https://github.com/matgou/GorgCasBundle.git",
-                "reference": "eb0e4443adb9c2e8a2785935d3360622eab0fafe"
+                "url": "https://github.com/FriendsOfSymfony/FOSUserBundle.git",
+                "reference": "d5b28c367d393f9d9fbc48c4138b2a74d51c0c83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matgou/GorgCasBundle/zipball/eb0e4443adb9c2e8a2785935d3360622eab0fafe",
-                "reference": "eb0e4443adb9c2e8a2785935d3360622eab0fafe",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/d5b28c367d393f9d9fbc48c4138b2a74d51c0c83",
+                "reference": "d5b28c367d393f9d9fbc48c4138b2a74d51c0c83",
                 "shasum": ""
             },
             "require": {
-                "jasig/phpcas": "~1.3",
-                "php": ">=5.3.2",
-                "symfony/http-foundation": "~2.1",
-                "symfony/routing": "~2.1",
-                "symfony/security": "~2.1"
+                "php": ">=5.3.9",
+                "symfony/form": "~2.3",
+                "symfony/framework-bundle": "~2.3",
+                "symfony/security-bundle": "~2.3",
+                "symfony/twig-bundle": "~2.3"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "~1.3",
+                "swiftmailer/swiftmailer": "~4.3|~5",
+                "symfony/validator": "~2.3",
+                "symfony/yaml": "~2.3",
+                "willdurand/propel-typehintable-behavior": "~1.0"
+            },
+            "suggest": {
+                "willdurand/propel-typehintable-behavior": "Needed when using the propel implementation"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "Gorg\\Bundle\\CasBundle": ""
+                "psr-4": {
+                    "FOS\\UserBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Mathieu GOULIN",
-                    "email": "mathieu.goulin@gadz.org"
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "FriendsOfSymfony Community",
+                    "homepage": "https://github.com/friendsofsymfony/FOSUserBundle/contributors"
+                },
+                {
+                    "name": "Thibault Duplessis",
+                    "email": "thibault.duplessis@gmail.com"
                 }
             ],
-            "description": "Implements CAS Authentication on your website",
-            "homepage": "http://opensource.gadz.org/x/FABO",
+            "description": "Symfony FOSUserBundle",
+            "homepage": "http://friendsofsymfony.github.com",
             "keywords": [
-                "Authentication",
-                "cas",
-                "gorg",
-                "jasig"
+                "User management"
             ],
-            "time": "2014-12-22 21:27:52"
+            "time": "2015-09-15 13:15:07"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1654,12 +1673,12 @@
             "version": "v2.6.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/AsseticBundle.git",
+                "url": "https://github.com/symfony/assetic-bundle.git",
                 "reference": "422b0add2110f0cf9bc7a873a386ea053f4a89f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/AsseticBundle/zipball/422b0add2110f0cf9bc7a873a386ea053f4a89f0",
+                "url": "https://api.github.com/repos/symfony/assetic-bundle/zipball/422b0add2110f0cf9bc7a873a386ea053f4a89f0",
                 "reference": "422b0add2110f0cf9bc7a873a386ea053f4a89f0",
                 "shasum": ""
             },
@@ -1719,12 +1738,12 @@
             "version": "v2.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/MonologBundle.git",
+                "url": "https://github.com/symfony/monolog-bundle.git",
                 "reference": "9320b6863404c70ebe111e9040dab96f251de7ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/MonologBundle/zipball/9320b6863404c70ebe111e9040dab96f251de7ac",
+                "url": "https://api.github.com/repos/symfony/monolog-bundle/zipball/9320b6863404c70ebe111e9040dab96f251de7ac",
                 "reference": "9320b6863404c70ebe111e9040dab96f251de7ac",
                 "shasum": ""
             },
@@ -1778,12 +1797,12 @@
             "version": "v2.3.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/SwiftmailerBundle.git",
+                "url": "https://github.com/symfony/swiftmailer-bundle.git",
                 "reference": "970b13d01871207e81d17b17ddda025e7e21e797"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
                 "reference": "970b13d01871207e81d17b17ddda025e7e21e797",
                 "shasum": ""
             },
@@ -2063,7 +2082,7 @@
     "stability-flags": {
         "doctrine/migrations": 20,
         "doctrine/doctrine-migrations-bundle": 20,
-        "gorg/cas-bundle": 20
+        "friendsofsymfony/user-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

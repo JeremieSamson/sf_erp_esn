@@ -4,13 +4,14 @@ namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ESN\MembersBundle\Entity\Member;
+use ESN\UserBundle\Entity\User;
 
 /**
  * University
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\UniversityRepository")
  */
 class University
 {
@@ -38,13 +39,23 @@ class University
     private $cigle;
 
     /**
-     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Member", mappedBy="university")
+     * @ORM\OneToMany(targetEntity="ESN\UserBundle\Entity\User", mappedBy="university", cascade="persist")
      */
-    private $members;
+    private $users;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->members = new ArrayCollection();
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(){
+        return $this->getName();
     }
 
     /**
@@ -96,24 +107,30 @@ class University
         $this->cigle = $cigle;
     }
 
-    public function __toString(){
-        return (string) $this->getName();
-    }
-
-    public function addMember(Member $member)
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addUser(User $user)
     {
-        $this->members[] = $member;
-        $member->setUniversity($this);
+        $this->users->add($user);
+        $user->setUniversity($this);
         return $this;
     }
 
-    public function removeMember(Member $member)
+    /**
+     * @param User $user
+     */
+    public function removeUser(User $user)
     {
-        $this->members->removeElement($member);
+        $this->users->removeElement($user);
     }
 
-    public function getMembers()
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers()
     {
-        return $this->members;
+        return $this->users;
     }
 }

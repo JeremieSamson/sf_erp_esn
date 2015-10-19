@@ -5,6 +5,7 @@ namespace ESN\PermanenceBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ESN\AdministrationBundle\Entity\Trip;
 use ESN\MembersBundle\Entity\Member;
+use ESN\UserBundle\Entity\User;
 
 /**
  * ParticipateTrip
@@ -22,28 +23,39 @@ use ESN\MembersBundle\Entity\Member;
     private $id;
    
      /**
-   * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Trip", inversedBy="trips")
+   * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Trip")
    * @ORM\JoinColumn(name="trip", referencedColumnName="id")
    */
     public $trip; 
     
     /**
-    * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Trip", inversedBy="members")
-    * @ORM\JoinColumn(name="member", referencedColumnName="id")
+    * @ORM\ManyToOne(targetEntity="ESN\UserBundle\Entity\User")
+    * @ORM\JoinColumn(name="user", referencedColumnName="id")
     */
-    public $member; 
+    public $user;
      
     /**
      * @ORM\Column(name="dateInscription", type="datetime")
      */
     private $dateInscription;
-    
-    
+
+     /**
+      * Constructor
+      */
     public function __construct()
     {
         $this->dateInscription = new \DateTime();
     }
 
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set dateInscription
@@ -68,26 +80,13 @@ use ESN\MembersBundle\Entity\Member;
         return $this->dateInscription;
     }
 
-
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
     /**
      * Set trip
      *
      * @param \ESN\AdministrationBundle\Entity\Trip $trip
      * @return ParticipateTrip
      */
-    public function setTrips(Trip $trip = null)
+    public function setTrip(Trip $trip)
     {
         $this->trip = $trip;
 
@@ -99,34 +98,31 @@ use ESN\MembersBundle\Entity\Member;
      *
      * @return \ESN\AdministrationBundle\Entity\Trip 
      */
-    public function getTrips()
+    public function getTrip()
     {
         return $this->trip;
     }
 
     /**
-     * Set member
+     * Set user
      *
-     * @param \ESN\MembersBundle\Entity\Member $member
+     * @param \ESN\UserBundle\Entity\User $user
      * @return ParticipateTrip
      */
-    public function setMembers(Member $member = null)
+    public function setUser(User $user)
     {
-        $this->member = $member;
+        $this->user = $user;
+
         return $this;
     }
 
     /**
-     * Get member
+     * Get user
      *
-     * @return \ESN\MembersBundle\Entity\Member 
+     * @return \ESN\UserBundle\Entity\User
      */
-    public function getMembers()
+    public function getUser()
     {
-        return $this->member;
+        return $this->user;
     }
-
-     public function __toString(){
-         return  $this->getTrips()->getName();
-     }
 }

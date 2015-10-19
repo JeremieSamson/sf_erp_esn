@@ -24,7 +24,9 @@ class AppKernel extends Kernel
             new ESN\PermanenceBundle\ESNPermanenceBundle(),
             new ESN\HRBundle\ESNHRBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle()
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new ESN\UserBundle\ESNUserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -4,13 +4,14 @@ namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ESN\MembersBundle\Entity\Esner;
+use ESN\UserBundle\Entity\User;
 
 /**
  * Pole
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\PoleRepository")
  */
 class Pole
 {
@@ -38,7 +39,7 @@ class Pole
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Esner", mappedBy="pole")
+     * @ORM\OneToMany(targetEntity="ESN\UserBundle\Entity\User", mappedBy="pole")
      */
     private $esners;
 
@@ -49,9 +50,19 @@ class Pole
      */
     private $color;
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->esners = new ArrayCollection();
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(){
+        return $this->getName();
     }
 
     /**
@@ -111,29 +122,6 @@ class Pole
     }
 
     /**
-     * Set nbEsners
-     *
-     * @param integer $nbEsners
-     * @return Pole
-     */
-    public function setNbEsners($nbEsners)
-    {
-        $this->nbEsners = $nbEsners;
-
-        return $this;
-    }
-
-    /**
-     * Get nbEsners
-     *
-     * @return integer 
-     */
-    public function getNbEsners()
-    {
-        return $this->nbEsners;
-    }
-
-    /**
      * @return string
      */
     public function getColor()
@@ -149,28 +137,30 @@ class Pole
         $this->color = $color;
     }
 
-    public function addEsner(Esner $esner)
+    /**
+     * @param User $esner
+     * @return $this
+     */
+    public function addEsner(User $esner)
     {
-        $this->esners[] = $esner;
+        $this->esners->add($esner);
         $esner->setPole($this);
         return $this;
     }
 
-    public function removeEsner(Esner $esner)
+    /**
+     * @param User $esner
+     */
+    public function removeEsner(User $esner)
     {
         $this->esners->removeElement($esner);
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getEsners()
     {
         return $this->esners;
-    }
-
-    public function nbMembers(){
-        return $this->esners->count();
-    }
-
-    public function __toString(){
-        return $this->getName();
     }
 }

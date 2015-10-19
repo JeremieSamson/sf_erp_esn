@@ -10,8 +10,8 @@ namespace ESN\PermanenceBundle\Form;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Repository\RepositoryFactory;
-use ESN\AdministrationBundle\Entity\University;
-use ESN\MembersBundle\Entity\Erasmus;
+use ESN\AdministrationBundle\Entity\TripRepository;
+use ESN\UserBundle\Entity\UserRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -21,10 +21,24 @@ class EnrollUserToTripType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('trips', 'entity', array(
-                'class' => 'ESNAdministrationBundle:Trip'))
-            ->add('members', 'entity', array(
-                'class' => 'ESNMembersBundle:Member'));
+            ->add('trip', 'entity', array(
+                    'class' => 'ESNAdministrationBundle:Trip',
+                    'empty_value'  => '',
+                    'query_builder' => function(TripRepository $er) {
+                        return $er->createQueryBuilder('t')
+                            ->orderBy("t.name", "ASC");
+                    }
+                )
+            )
+            ->add('user', 'entity', array(
+                    'class' => 'ESNUserBundle:User',
+                    'empty_value'  => '',
+                    'query_builder' => function(UserRepository $er) {
+                        return $er->createQueryBuilder('u')
+                            ->orderBy("u.firstname, u.lastname", "ASC");
+                    }
+                )
+            );
     }
 
     public function getName()

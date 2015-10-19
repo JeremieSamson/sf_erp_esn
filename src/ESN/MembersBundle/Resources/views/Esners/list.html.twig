@@ -1,72 +1,54 @@
-{% extends '::base.html.twig' %}
-
-{% block subnavbar %}
-    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
-{% endblock %}
+{% extends 'ESNMembersBundle::index.html.twig' %}
 
 {% block body %}
+
+    {{ parent() }}
+
 <div class="row">
 
-    <script>
-        $(document).ready( function() {
-            $('#search_filter_pole').change(function() {
-                this.form.submit();
-            });
-            $('#search_filter_university').change(function() {
-                this.form.submit();
-            });
-            $('#search_filter_country').change(function() {
-                this.form.submit();
-            });
-            $('#search_filter_active').change(function() {
-                this.form.submit();
-            });
-        });
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-content">
+                <a href="{{ path('esn_members_esner_create') }}" class="btn btn-info">Add new ESNer</a> &nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
 
-        $(document).ready(function() {
-            $('#datatable').DataTable( {
-                "bPaginate": false,
-                "bInfo" : false
-            } );
-        } );
-    </script>
-
-    <table id="datatable" class="display" cellspacing="0" width="80%">
+    <table id="esners" class="datatable" cellspacing="0" width="100%">
         <thead>
-            <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Poste</th>
-                <th>Pôle</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-            </tr>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Âge</th>
+            <th>Pôle</th>
+            <th>Poste</th>
+            <th>Téléphone</th>
+            <th>University</th>
+            <th></th>
+        </tr>
         </thead>
 
-        <tbody>
-            {% for membre in liste_membres %}
+        {% for esner in esners %}
+            <tbody>
                 <tr>
-                    <td>{{ membre.identity.name }}</td>
-                    <td>{{ membre.identity.surname }}</td>
-                    <td>{{ membre.esner.post }}</td>
-                    <td>{{ membre.esner.pole }}</td>
-                    <td>{{ membre.identity.email }}</td>
-                    <td>{{ membre.identity.phone }}</td>
+                    <th>{{ esner.firstname }}</th>
+                    <th>{{ esner.lastname }}</th>
+                    <th>{% if esner.getAge() > 0 %} {{ esner.getAge() }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.pole %} {{ esner.pole }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.post %} {{ esner.post }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.mobile %} {{ esner.mobile }} {% else %} ~ {% endif %}</th>
+                    <th>{% if esner.university %} {{ esner.university }} {% else %} ~ {% endif %}</th>
+                    <th>
+                        <a href="{{ path('esn_members_esner_edit', {'user_id': esner.id}) }}">
+                            <i class="icon-edit icon-large" style="color: green;"></i>
+                        </a>
+                        <a href="">
+                            <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                        </a>
+                    </th>
                 </tr>
-            {% endfor %}
-        </tbody>
-
-        <tfoot>
-            <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Poste</th>
-                <th>Pôle</th>
-                <th>Email</th>
-                <th>Téléphone</th>
-            </tr>
-        </tfoot>
+            </tbody>
+        {% endfor %}
     </table>
-
 </div><!-- /row -->
 {% endblock %}

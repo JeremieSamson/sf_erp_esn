@@ -3,6 +3,7 @@ services:
         class: ESN\LoginBundle\EventListener\LoginListener
         arguments:
                 - "@router"
+                - "@security.context"
         tags:
             -
                   name: kernel.event_listener

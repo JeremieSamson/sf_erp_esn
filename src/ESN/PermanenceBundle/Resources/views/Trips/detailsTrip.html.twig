@@ -69,10 +69,10 @@
                                     {% for participant in participants %}
                                         <tr>
                                             <td>{{ loop.index }}</td>
-                                            <td>{{ participant.member.name }}</td>
-                                            <td>{{ participant.member.surname }}</td>
-                                            <td>{{ participant.member.phone }}</td>
-                                            <td>{{ participant.member.birthday|date('d/m/Y') }}</td>
+                                            <td>{{ participant.firstname }}</td>
+                                            <td>{{ participant.lastname }}</td>
+                                            <td>{{ participant.mobile }}</td>
+                                            <td>{{ participant.birthdate|date('d/m/Y') }}</td>
                                         </tr>
                                     {% endfor %}
 

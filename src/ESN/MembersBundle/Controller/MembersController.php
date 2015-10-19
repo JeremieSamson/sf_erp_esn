@@ -2,18 +2,18 @@
 
 namespace ESN\MembersBundle\Controller;
 
-use ESN\HRBundle\Form\Handler\EsnerHandler;
-use ESN\MembersBundle\Form\ErasmusType;
-use ESN\MembersBundle\Form\ErasmusUpdateType;
-use ESN\MembersBundle\Form\EsnerUpdateType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
 use ESN\MembersBundle\Form\Handler\ErasmusHandler;
-use ESN\MembersBundle\Form\Handler\ErasmusUpdateHandler;
-use ESN\MembersBundle\Form\Handler\EsnerUpdateHandler;
+use ESN\MembersBundle\Form\Type\ErasmusType;
+use ESN\MembersBundle\Form\ErasmusUpdateType;
+use ESN\MembersBundle\Form\Handler\EsnerHandler;
 use ESN\MembersBundle\Form\Handler\SearchHandler;
 use ESN\MembersBundle\Form\SearchType;
+use ESN\MembersBundle\Form\Type\EsnerType;
+use ESN\PermanenceBundle\Entity\ParticipateTrip;
+use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use ESN\MembersBundle\Entity\Member;
-use ESN\MembersBundle\Entity\Erasmus;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
@@ -25,20 +25,79 @@ class MembersController extends Controller
      *  - titre de la page
      *  - action : lister,detailler,editer
      *  - id : id du membre s'il s'agit d'une action detailler ou editer
-     * @param type $type
-     * @param type $action
-     * @param type $id
+     *
+     * @param type $user_id
+     *
      * @return type
      */
-    public function indexAction($action,$type=null,$id=null)
+    public function detailEsnerAction($user_id)
     {
-        $data = array(
-            'title' => "Members", 
-            'type' => $type, 
-            'action' => $action, 
-            'id' => $id);
-        return $this->render('ESNMembersBundle::index.html.twig', $data);
-    }//indexAction
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $em->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$user){
+            throw new NotFoundResourceException("No ESNer with this ID");
+        }
+
+        /** @var ArrayCollection $participatetrips */
+        $participatetrips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findBy(array("user" => $user));
+        $trips = new ArrayCollection();
+
+        /** @var ParticipateTrip $participatetrip */
+        foreach($participatetrips as $participatetrip){
+            if (!$trips->contains($participatetrip->getTrip()))
+                $trips->add($participatetrip->getTrip());
+        }
+
+        return $this->render('ESNMembersBundle:Esners:detail.html.twig', array(
+                'trips'=> $trips,
+                'user' => $user
+            )
+        );
+    }
+
+    /**
+     * Action à l'affichage de la page index.html.twig
+     * Affiche sur la page :
+     *  - titre de la page
+     *  - action : lister,detailler,editer
+     *  - id : id du membre s'il s'agit d'une action detailler ou editer
+     *
+     * @param type $user_id
+     *
+     * @return type
+     */
+    public function detailErasmusAction($user_id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = $em->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$user){
+            throw new NotFoundResourceException("No Erasmus with this ID");
+        }
+
+        /** @var ArrayCollection $participatetrips */
+        $participatetrips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findBy(array("user" => $user));
+        $trips = new ArrayCollection();
+
+        /** @var ParticipateTrip $participatetrip */
+        foreach($participatetrips as $participatetrip){
+            if (!$trips->contains($participatetrip->getTrip()))
+                $trips->add($participatetrip->getTrip());
+        }
+
+        return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', array(
+                'trips'=> $trips,
+                'user' => $user
+            )
+        );
+    }
 
     /**
      * Action à l'affichage de la liste des membres en fonction du type.
@@ -60,46 +119,39 @@ class MembersController extends Controller
 
 
     /**
-     * Action à l'affichage de la liste des membres en fonction du type.
-     * @param type $type
+     * List Esner
+     *
      * @return type
      */
     public function listEsnerAction()
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $request = $this->get('request');
-        $form = $this->get('form.factory')->create(new SearchType($em));
-        $formHandler = new SearchHandler($em, $form, $request);
-        $form->handleRequest($request);
-        $where = array();
-        //$process = $formHandler->process();
 
-        if ('POST' == $request->getMethod()) {
-            $where["pole"] = $form->get('pole')->getData();
-            $where["university"] = $form->get('university')->getData();
-            $where["country"] = $form->get('country')->getData();
-            $where["active"] = $form->get('active')->getData();
-        }else{
-            $where["pole"] = null;
-            $where["university"] = null;
-            $where["country"] = null;
-            $where["active"] = null;
-        }
-
-        $list_membres = $this->getAllMembers("esners", null, $where);
-
-        /*if ($process){
-            $list_membres = "";
-        }else{
-
-        }*/
+        $esners = $em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 1));
 
         return $this->render('ESNMembersBundle:Esners:list.html.twig',  array(
-            'liste_membres' => $list_membres,
-            "form" => $form->createView()
+            'esners' => $esners
         ));
     }//listAction
-    
+
+    /**
+     * List Erasmus
+     *
+     * @return type
+     */
+    public function listErasmusAction()
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 0));
+
+        return $this->render('ESNMembersBundle:Erasmus:list.html.twig',  array(
+            'users' => $users
+        ));
+    }
+
     /**
      * Action à l'affichage d'une card d'un esner.
      * @param type $member
@@ -167,35 +219,37 @@ class MembersController extends Controller
     /**
      * Action à l'affichage de la page d'édition d'un membre en fonction
      * du type du membre et de son ID.
-     * @param type $id
+     *
+     * @param integer $id
      */
-    public function editEsnerAction(Request $request, $id)
+    public function editEsnerAction(Request $request, $user_id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $esner= $em->getRepository('ESNMembersBundle:Esner')->find($id);
 
-        if (!$esner){
+        /** @var User $user */
+        $user = $em->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$user){
             throw new NotFoundResourceException("No ESNer with this ID");
         }
 
-        $trips= $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByMember($esner->getMember());
+        $trips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findBy(array("user" => $user));
 
-        $form = $this->get('form.factory')->create(new EsnerUpdateType($em, $esner));
-        $formHandler = new EsnerUpdateHandler($em, $form, $request);
+        $form = $this->get('form.factory')->create(new EsnerType($em), $user);
+
+        $formHandler = new EsnerHandler($em, $form, $request, $this->get('templating'), $this->get('mailer'));
         $form->handleRequest($request);
 
-        $process = $formHandler->process();
-
-        if ($process){
+        if ($formHandler->process()){
             return $this->redirect($this->generateUrl('esn_members_detail', array(
-                'type' => 'esners',
                 'trips'=> $trips,
-                'id'=>$id
+                'user_id'=>$user_id
             )));
         }
 
         return $this->render("ESNMembersBundle:Esners:edit.html.twig", array(
-                "member" => $this->getAllMembers("esners", $id),
+                "user" => $user,
                 "form" => $form->createView()
             )
         );
@@ -204,99 +258,106 @@ class MembersController extends Controller
     /**
      * Action à l'affichage de la page d'édition d'un membre en fonction
      * du type du membre et de son ID.
-     * @param type $id
+     *
+     * @param integer $user_id
      */
-    public function editErasmusAction(Request $request, $id)
+    public function editErasmusAction(Request $request, $user_id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $erasmus= $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus')->find($id);
-        $form = $this->get('form.factory')->create(new ErasmusUpdateType($em, $erasmus));
-        $formHandler = new ErasmusUpdateHandler($em, $form, $request);
+
+        /** @var User $user */
+        $user = $this->getDoctrine()->getManager()->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$user){
+            throw new NotFoundResourceException("No Erasmus with this ID");
+        }
+
+        $form = $this->get('form.factory')->create(new ErasmusType($em), $user);
+        $formHandler = new ErasmusHandler($em, $form, $request);
         $form->handleRequest($request);
 
-        $process = $formHandler->process();
-
-        if ($process){
-            return $this->redirect($this->generateUrl('esn_members_detail', array(
-                'type' => 'Erasmus',
-                'id'=>$id
+        if ($formHandler->process()){
+            return $this->redirect($this->generateUrl('esn_members_erasmus_detail', array(
+                'user_id' => $user_id
             )));
         }
 
         return $this->render("ESNMembersBundle:Erasmus:edit.html.twig", array(
-                "member" => $this->getAllMembers("Erasmus", $id),
                 "form" => $form->createView()
             )
         );
 
     }//editAction
-    /**
-     * Si ID est fourni, retourne le membre, sinon retourne tout les membres
-     * Retourne 
-     * @param type $type
-     * @param type $id
-     * @return array
-     */
-    private function getAllMembers($type,$id=null,$where=null) {
-        $repositoryEsner      = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Esner');
-        $repositoryErasmus    = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Erasmus');
-        $repositoryMember     = $this->getDoctrine()->getManager()->getRepository('ESNMembersBundle:Member');
-        $repositoryUniversity = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:University');
-        $repositoryCountry    = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Country');
-        $repositoryParticipateTrips = $this->getDoctrine()->getManager()->getRepository('ESNPermanenceBundle:ParticipateTrip');
 
-        $list_member = array();
-        if (!$id) {
-            // Retourne un array avec 'esner':Object Esner, 'identity':Object Member
-            if ($type == "esners") {
-                $list_esner = $repositoryEsner->findWithSearch($where);
-                foreach ($list_esner as $esner) {
-                    $member = $repositoryMember->find($esner->getMember()->getId());
-                    array_push($list_member,array('esner'=>$esner,'identity'=>$member));
-                }
-            } else {
-            $list_erasmus = $repositoryErasmus->findAll();
-                foreach ($list_erasmus as $erasmus) {
-                    $member = $repositoryMember->find($erasmus->getMember()->getId());
-                    array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$member));
-                }
-            } 
-        } else {
-            if ($type == "esners") {
-                $esner = $repositoryEsner->find($id); 
-                $esner_identity = $esner->getMember();
-                $esner_trips= $repositoryParticipateTrips->findByMember($esner->getMember());
-                array_push($list_member,array('esner'=>$esner,'identity'=>$esner_identity,'trips'=>$esner_trips));
-            } else {
-                $erasmus = $repositoryErasmus->find($id);
-                $erasmus_identity = $repositoryMember->find($erasmus->getMember()->getId());
-                $erasmus_identity->setUniversity($repositoryUniversity->find($erasmus_identity->getUniversity()));
-                $erasmus_identity->setNationality($repositoryCountry->find($erasmus_identity->getNationality()));
-                array_push($list_member,array('erasmus'=>$erasmus,'identity'=>$erasmus_identity));  
-            }
-        }
-        return $list_member;
-    }//getElementMember
-    
+    /**
+     * Create Erasmus
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function createErasmusAction(Request $request) {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $form = $this->get('form.factory')->create(new ErasmusType($em));
+
+        /** @var User $user */
+        $user = new User();
+
+        $form = $this->get('form.factory')->create(new ErasmusType($em), $user);
         $formHandler = new ErasmusHandler($em, $form, $request);
+
         $form->handleRequest($request);
 
-        $process = $formHandler->process();
-
-        if ($process)
+        if ($formHandler->process())
         {
-            return $this->redirect($this->generateUrl('esn_members_homepage', array(
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'l\'Erasmus ' . $user . ' a bien été créé'
+            );
+
+            return $this->redirect($this->generateUrl('esn_members_erasmus', array(
                 'type'=>'erasmus'
             )));
         }
 
-        return $this->render('ESNMembersBundle:Erasmus:form_create.html.twig',
+        return $this->render('ESNMembersBundle:Erasmus:edit.html.twig',
             array(
                 'form' => $form->createView(),
                 'hasError' => $request->getMethod() == 'POST' && !$form->isValid()
             ));
-    }//createErasmusAction
+    }
+
+    /**
+     * Create ESNer Action
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function createEsnerAction(Request $request) {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $user */
+        $user = new User();
+
+        $form = $this->get('form.factory')->create(new EsnerType($em), $user);
+        $formHandler = new EsnerHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
+        $form->handleRequest($request);
+
+        if ($formHandler->process())
+        {
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'l\'ESNer ' . $user . ' a bien été créé'
+            );
+            return $this->redirect($this->generateUrl('esn_members_esner'));
+        }
+
+        return $this->render('ESNMembersBundle:Esners:edit.html.twig',
+            array(
+                'form' => $form->createView(),
+                'hasError' => $request->getMethod() == 'POST' && !$form->isValid()
+            )
+        );
+    }
 }

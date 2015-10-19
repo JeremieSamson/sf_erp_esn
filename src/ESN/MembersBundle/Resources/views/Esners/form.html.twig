@@ -1,20 +1,15 @@
+{% extends '::base.html.twig' %}
+
+{% block subnavbar %}
+    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
+{% endblock %}
+
+{% block body %}
+
 <div class="row">
     
     <div class="span3">
-        
-        <div class="widget ">
-            <div class="widget-content">
-                
-                <img style="width: 100%;" src="{{ asset('img/user.png') }}">
-                <hr/>
-                <p>
-                    <a href="">Change profil picture</a><br/>
-                    <a href="">Delete profil picture</a>
-                </p>
-                    
-            </div><!-- /widget-content --> 
-        </div><!-- /widget -->
-        
+
         <div class="widget">
             <div class="widget-content">
                 
@@ -22,8 +17,8 @@
                 
                 <hr/>
                 
-                Mail  <input type="text" value="{{data.member[0].identity.email}}"/> <br/>
-                Phone  <input type="text" value="{{data.member[0].identity.phone}}"/>
+                Mail  <input type="text" value="{{user.email}}"/> <br/>
+                Phone  <input type="text" value="{{user.phone}}"/>
                                
             </div><!-- /widget-content --> 
         </div><!-- /widget -->
@@ -34,8 +29,8 @@
         
         <div class="widget ">
             <div class="widget-content">
-                Firstname  &nbsp; <input type="text" value="{{data.member[0].identity.name}}"/> &nbsp; &nbsp; &nbsp;
-                Surname  &nbsp; <input type="text" value="{{data.member[0].identity.surname}}"/>
+                Firstname  &nbsp; <input type="text" value="{{user.name}}"/> &nbsp; &nbsp; &nbsp;
+                Surname  &nbsp; <input type="text" value="{{user.surname}}"/>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         
@@ -60,7 +55,7 @@
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            <input type="date" class="span6" id="birthday" value="{{ data.member[0].identity.birthday|date('Y-m-d') }}" >
+                            <input type="date" class="span6" id="birthday" value="{{ user.birthday|date('Y-m-d') }}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -80,21 +75,21 @@
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="address" value="{{ data.member[0].esner.address}}" >
+                            <input type="text" class="span6" id="address" value="{{ user.address}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">City</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="city" value="{{ data.member[0].esner.city}}" >
+                            <input type="text" class="span6" id="city" value="{{ user.city}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
                     <div class="control-group">
                         <label class="control-label" for="city">Zip Code</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value="{{ data.member[0].esner.zipcode}}" >
+                            <input type="text" class="span6" id="zip" value="{{ user.zipcode}}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -103,7 +98,7 @@
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            <input type="text" class="span6" id="zip" value="{{ data.member[0].identity.study }}" >
+                            <input type="text" class="span6" id="zip" value="{{ user.study }}" >
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
                     
@@ -168,3 +163,5 @@
     </div><!-- /span9 -->
     
 </div><!-- /row -->
+
+{% endblock %}

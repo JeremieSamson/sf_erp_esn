@@ -40,21 +40,21 @@ class DashboardController extends Controller
 
     private function getDashboard(){
         //Facebook
-        $likes         = ($this->getFacebookPageLikes() >= 0) ? $this->getFacebookPageLikes() : 0;
-        $group_members = ($this->getFacebookGroupMembers() >= 0) ? $this->getFacebookGroupMembers() : 0;
+        //$likes         = ($this->getFacebookPageLikes() >= 0) ? $this->getFacebookPageLikes() : 0;
+        //$group_members = ($this->getFacebookGroupMembers() >= 0) ? $this->getFacebookGroupMembers() : 0;
 
         //Members
         $em      = $this->getDoctrine()->getManager();
-        $esners  = count($em->getRepository('ESNMembersBundle:Member')->findAll());
-        $erasmus = count($em->getRepository('ESNMembersBundle:Erasmus')->findAll());
+        $esners  = count($em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 1)));
+        $erasmus = count($em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 0)));
 
         //Reports
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), null, 5, null);;
 
         //Events
-        $events = $this->getEvents();
+        $events = null;//$this->getEvents();
 
-        $dashboard = array( "facebook"  => array("likes" => $likes, "group_members" => $group_members),
+        $dashboard = array( "facebook"  => array("likes" => 0, "group_members" => 0),
                             "members"   => array("esners" => $esners, "erasmus" => $erasmus),
                             "reports"   => $reports,
                             "events"    => $events

@@ -45,7 +45,7 @@ class AssociationController extends Controller{
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->get('form.factory')->create(new ESNerType($em));
-        $formHandler = new ESNerHandler($em, $form, $request);
+        $formHandler = new ESNerHandler($em, $form, $request, $this->container);
         $form->handleRequest($request);
 
         $process = $formHandler->process();

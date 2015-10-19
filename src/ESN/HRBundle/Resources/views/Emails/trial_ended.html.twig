@@ -1,0 +1,20 @@
+<h1>Fin de période d'essaie pour {{ user }}</h1>
+
+<p>
+    La période d'essaie pour notre ami {{ user }} se termine aujourd'hui. <br><br>
+    Merci de faire le nécessaire dans l'ERP pour lui permettre de poursuivre l'aventure ou de lui signaler que ça s'arrête là.<br><br>
+
+    <a href="http://erp.esnlille.fr{{ path('esn_members_esner_detail', {'user_id': user.id}) }}">http://erp.esnlille.fr{{ path('esn_members_esner_detail', {'user_id': user.id}) }}</a>
+</p>
+<br>
+<p>
+    Sa période d'essaie a commencé le {{ user.follow.trialstarted|date('d/m/Y') }}
+</p>
+
+{% if user.follow.comment %}
+<p>
+    Voici les commentaires qui ont été fait à son sujet : <br><br>
+
+    {{ user.follow.comment }}
+</p>
+{% endif %}

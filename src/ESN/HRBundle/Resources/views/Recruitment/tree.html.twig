@@ -1,6 +1,6 @@
 {% for mentee in mentees %}
     <li>
-        <a href="#">{{ mentee }}</a>
+        <a href="#">{{ mentee.member.fullname }}</a>
         {% if mentee.mentees|length > 0 %}
             <ul>
                 {% include "@ESNHR/Recruitment/tree.html.twig" with {'mentees': mentee.mentees} %}

@@ -1,40 +1,51 @@
-esn_members_homepage_esners:
+#ESNER ROUTING
+esn_members_esner:
     path:     /members/esners
     defaults: { _controller: ESNMembersBundle:Members:listEsner }
 
-esn_members_homepage:
-    path:     /members/{type}
-    defaults: { _controller: ESNMembersBundle:Members:index, action:"lister" }
-    
-esn_members_detail:
-    path:     /members/{type}/{id}
-    defaults: {  _controller: ESNMembersBundle:Members:index, action:"detailler" }
-    requirements:
-        id:  \d+
-
-esn_members_erasmus_edit:
-    path: /members/erasmus/{id}/edit
-    defaults: { _controller: ESNMembersBundle:Members:editErasmus }
-    requirements:
-            id:  \d+
+esn_members_esner_create:
+    path: /members/esner/create
+    defaults: { _controller: ESNMembersBundle:Members:createEsner }
 
 esn_members_esner_edit:
-    path:     /members/esners/{id}/edit
+    path:     /members/esners/{user_id}/edit
     defaults: {  _controller: ESNMembersBundle:Members:editEsner }
     requirements:
-        id:  \d+
-        
+        user_id:  \d+
+
+esn_members_esner_detail:
+    path:     /members/esner/{user_id}
+    defaults: {  _controller: ESNMembersBundle:Members:detailEsner }
+    requirements:
+        user_id:  \d+
+
+#ERASMUS ROUTING
+
+esn_members_erasmus:
+    path:     /members/erasmus
+    defaults: { _controller: ESNMembersBundle:Members:listErasmus }
+
 esn_members_erasmus_create:
     path: /members/erasmus/create
     defaults: { _controller: ESNMembersBundle:Members:createErasmus }
 
+esn_members_erasmus_edit:
+    path: /members/erasmus/{user_id}/edit
+    defaults: { _controller: ESNMembersBundle:Members:editErasmus }
+    requirements:
+        user_id:  \d+
 
+esn_members_erasmus_detail:
+    path: /members/erasmus/{user_id}
+    defaults: {  _controller: ESNMembersBundle:Members:detailErasmus }
+    requirements:
+        user_id:  \d+
 
 esn_members_erasmus_delete:
-    path: /members/erasmus/{id}/delete
+    path: /members/erasmus/{user_id}/delete
     defaults: { _controller: ESNMembersBundle:Members:delete }
     requirements:
-        id: \d+
+        user_id: \d+
 
 
         

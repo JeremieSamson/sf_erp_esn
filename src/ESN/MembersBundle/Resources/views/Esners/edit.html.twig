@@ -17,8 +17,8 @@
                 {{ form_start(form) }}
 
                 <hr/>
-                {{ form_widget(form.email, {'value': member[0].identity.email}) }}
-                {{ form_widget(form.phone, {'value': member[0].identity.phone}) }}
+                {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                {{ form_widget(form.mobile, { 'attr': {'placeholder': 'Téléphone'} } ) }}
                 <br/>
 
             </div><!-- /widget-content -->
@@ -28,11 +28,16 @@
         <div class="widget">
             <div class="widget-content">
 
-                {{ form_widget(form.name, {'value': member[0].identity.name}) }}
-                {{ form_widget(form.surname, {'value': member[0].identity.surname}) }}
-                {{ form_widget(form.post, {'data': member[0].esner.post}) }}
-                {{ form_widget(form.pole, {'data': member[0].esner.pole}) }}
+                {{ form_widget(form.firstname, { 'attr': {'placeholder': 'Prénom'} }) }}
+                {{ form_widget(form.lastname, { 'attr': {'placeholder': 'Nom'} }) }}
+                {{ form_widget(form.post) }}
+                {{ form_widget(form.pole) }}
 
+                {% if user is defined %}
+                    <a href="{{ path('esn_members_esner_detail', {'user_id': user.id}) }}" style="float:right;">
+                        <i class="fa-eye icon-large" style="color: blue;"></i>
+                    </a>
+                {% endif %}
             </div><!-- /widget-content -->
         </div><!-- /widget -->
     </div>
@@ -51,40 +56,40 @@
                         <label class="control-label" for="birthday">Facebook url</label>
                         <div class="controls">
                             {{ form_widget(form.facebook_id) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="birthday">Birthday</label>
                         <div class="controls">
-                            {{ form_widget(form.birthday, {'value': member[0].identity.birthday|date('Y-m-d')}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.birthdate) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="address">Nationality</label>
                         <div class="controls">
-                            {{ form_widget(form.country) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.nationality) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="hasCare">Voiture</label>
                         <div class="controls">
                             {{ form_widget(form.hasCare) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                        </div>
+                    </div>
 
                     <hr/>
 
                     <h3>ESN Information</h3>
 
                     <div class="control-group">
-                        <label class="control-label" for="hasCare">Mentor</label>
+                        <label class="control-label" for="m">Mentor</label>
                         <div class="controls">
                             {{ form_widget(form.mentor) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                        </div>
+                    </div>
 
                     <hr/>
 
@@ -93,73 +98,100 @@
                     <div class="control-group">
                         <label class="control-label" for="erasmus">Erasmus</label>
                         <div class="controls">
-                            {{ form_widget(form.erasmus) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.erasmusProgramme) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="erasmusyearstart">Début</label>
                         <div class="controls">
-                            {{ form_widget(form.erasmusyearstart, {'value': member[0].esner.erasmusyearstart|date('Y-m-d')}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.erasmusyearstart) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="erasmusyearend">Fin</label>
                         <div class="controls">
-                            {{ form_widget(form.erasmusyearend, {'value': member[0].esner.erasmusyearend|date('Y-m-d')}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.erasmusyearend) }}
+                        </div>
+                    </div>
 
                     <hr/>
 
                     <div class="control-group">
                         <label class="control-label" for="address">Address</label>
                         <div class="controls">
-                            {{ form_widget(form.address, {'value': member[0].esner.address}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.address) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="zipcode">Zipcode</label>
                         <div class="controls">
-                            {{ form_widget(form.zipcode, {'value': member[0].esner.zipcode}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.zipcode) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="ville">Ville</label>
                         <div class="controls">
-                            {{ form_widget(form.city, {'value': member[0].esner.city}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.city) }}
+                        </div>
+                    </div>
 
                     <hr/>
                     <div class="control-group">
                         <label class="control-label" for="study">Study</label>
                         <div class="controls">
-                            {{ form_widget(form.study, {'value': member[0].identity.study}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.study) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
-                            {{ form_widget(form.university, {'data': member[0].identity.university}) }}
-                        </div> <!-- /controls -->
-                    </div> <!-- /control-group -->
+                            {{ form_widget(form.university) }}
+                        </div>
+                    </div>
+
+                    {% if not user is defined %}
+                        <h3>Newbies</h3>
+
+                        <div class="control-group">
+                            <label class="control-label" for="university">Début de période d'essaie</label>
+                            <div class="controls">
+                                {{ form_widget(form.trial, {'attr': {'class':'datetime'}}) }}
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="university">Envoie Email de bienvenue</label>
+                            <div class="controls">
+                                {{ form_widget(form.sendmail) }}
+                            </div>
+                        </div>
+                    {% endif %}
 
                     <div class="form-actions">
-                        <input type="submit" class="btn btn-primary" value="Save">
+                        <input type="submit" class="btn btn-primary" value="{% if user is defined %}Modify{% else %}Save{% endif %}">
                         <button class="btn">Cancel</button>
-                    </div> <!-- /form-actions -->
+                    </div>
 
                 </fieldset>
                 {{ form_end(form) }}
-
-            </div><!-- /widget-content -->
-        </div><!-- /widget -->
+            </div>
+        </div>
     </div>
-
 </div>
+
+    <script>
+        $(document).ready(function() {
+            var now = new Date();
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            console.log(today);
+            $('#esner_form_trial').val(today);
+        } );
+    </script>
+
 {% endblock %}

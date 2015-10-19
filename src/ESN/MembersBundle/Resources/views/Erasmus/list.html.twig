@@ -1,44 +1,53 @@
-<div class="row">
+{% extends 'ESNMembersBundle::index.html.twig' %}
 
-    <div class="span12">
-        <p>
-            {% for message in app.session.flashbag.get('notice') %}
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    <strong> Success!</strong> {{ message }}
-                </div>
-            {% endfor %}
-        </p>
-    </div>
+{% block body %}
+
+    {{ parent() }}
+
+<div class="row">
 
     <div class="span12">
         <div class="widget">
             <div class="widget-content">
-
                 <a href="{{ path('esn_members_erasmus_create') }}" class="btn btn-info">Add new Erasmus</a> &nbsp;&nbsp;
-                <button class="btn">Delete selected Erasmus</button>
-
-                <br/>
-                <br/>
-
-                <input type="text" placeholder="Search by Name">&nbsp;&nbsp;
-                <input type="text" placeholder="Search by Nationality">&nbsp;&nbsp;
-                <select>
-                    <option>Search by University</option>
-                    <option>University Lille 1</option>
-                    <option>University Lille 2</option>
-                    <option>University Lille 3</option>
-                </select>
-
             </div>
-            <!-- /widget-content -->
         </div>
-        <!-- /widget -->
     </div>
 
-    <!-- injection test -->
-    {% for membre in liste_membres %}
-        {{ render(controller("ESNMembersBundle:Members:cardErasmus" , {'member': membre})) }}
-    {% endfor %}
+    <table id="erasmus" class="datatable" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Âge</th>
+            <th>Téléphone</th>
+            <th>University</th>
+            <th>Nationalité</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        {% for user in users %}
+            <tbody>
+            <tr>
+                <th>{{ user.firstname }}</th>
+                <th>{{ user.lastname }}</th>
+                <th>{% if user.getAge() > 0 %} {{ user.getAge() }} {% else %} ~ {% endif %}</th>
+                <th>{% if user.mobile %} {{ user.mobile }} {% else %} ~ {% endif %}</th>
+                <th>{% if user.university %} {{ user.university }} {% else %} ~ {% endif %}</th>
+                <th>{% if user.nationality %} {{ user.nationality }} {% else %} ~ {% endif %}</th>
+                <th>
+                    <a href="{{ path('esn_members_erasmus_edit', {'user_id': user.id}) }}">
+                        <i class="icon-edit icon-large" style="color: green;"></i>
+                    </a>
+                    <a href="">
+                        <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                    </a>
+                </th>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
 
 </div>
+{% endblock %}

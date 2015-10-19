@@ -4,14 +4,14 @@ namespace ESN\AdministrationBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use ESN\MembersBundle\Entity\Esner;
-use ESN\MembersBundle\Entity\Member;
+use ESN\UserBundle\Entity\User;
 
 /**
  * Country
  *
  * @ORM\Table()
  * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\CountryRepository")
  */
 class Country
 {
@@ -46,18 +46,18 @@ class Country
     private $language;
 
     /**
-     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Member", mappedBy="nationality")
+     * @ORM\OneToMany(targetEntity="ESN\UserBundle\Entity\User", mappedBy="nationality")
      */
-    private $members;
+    private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="ESN\MembersBundle\Entity\Esner", mappedBy="erasmusProgramme")
+     * @ORM\OneToMany(targetEntity="ESN\UserBundle\Entity\User", mappedBy="erasmusProgramme")
      */
     private $erasmusProgramme_esners;
 
     public function __construct()
     {
-        $this->members = new ArrayCollection();
+        $this->users = new ArrayCollection();
         $this->erasmusProgramme_esners = new ArrayCollection();
     }
 
@@ -144,31 +144,41 @@ class Country
         return $this->name;
     }
 
-    public function addMember(Member $member)
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function addUser(User $user)
     {
-        $this->members[] = $member;
-        $member->setNationality($this);
+        $this->users->add($user);
+        $user->setNationality($this);
         return $this;
     }
 
-    public function removeMember(Member $member)
+    /**
+     * @param User $user
+     */
+    public function removeUser(User $user)
     {
-        $this->members->removeElement($member);
+        $this->users->removeElement($user);
     }
 
-    public function getMembers()
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers()
     {
-        return $this->members;
+        return $this->users;
     }
 
-    public function addEsner(Esner $esner)
+    public function addEsner(User $esner)
     {
         $this->erasmusProgramme_esners[] = $esner;
         $esner->setErasmusProgramme($this);
         return $this;
     }
 
-    public function removeEsner(Esner $esner)
+    public function removeEsner(User $esner)
     {
         $this->erasmusProgramme_esners->removeElement($esner);
     }
