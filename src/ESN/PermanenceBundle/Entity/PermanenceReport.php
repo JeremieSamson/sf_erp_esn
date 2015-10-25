@@ -1,7 +1,9 @@
 <?php
 
 namespace ESN\PermanenceBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
+use ESN\UserBundle\Entity\User;
 
 /**
  * PermanenceReport
@@ -62,6 +64,12 @@ use Doctrine\ORM\Mapping as ORM;
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
+
+     /**
+      * @ORM\ManyToOne(targetEntity="ESN\UserBundle\Entity\User", inversedBy="reports")
+      * @ORM\JoinColumn(nullable=false)
+      */
+     private $owner;
     
     public function __construct()
     {
@@ -263,4 +271,20 @@ use Doctrine\ORM\Mapping as ORM;
     {
         return $this->amountAfter;
     }
+
+     /**
+      * @return mixed
+      */
+     public function getOwner()
+     {
+         return $this->owner;
+     }
+
+     /**
+      * @param User $owner
+      */
+     public function setOwner(User $owner)
+     {
+         $this->owner = $owner;
+     }
 }

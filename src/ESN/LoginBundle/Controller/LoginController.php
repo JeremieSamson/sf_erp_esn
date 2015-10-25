@@ -32,7 +32,7 @@ class LoginController extends Controller
 
         if ($user_cas != null){
 
-            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
+            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("email" => $user_cas->getEmail()));
 
             $user = (!$user_db) ? new \ESN\UserBundle\Entity\User() : $user_db;
 
@@ -69,9 +69,6 @@ class LoginController extends Controller
             $request = $this->get("request");
             $event = new InteractiveLoginEvent($request, $token);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-
-            //$session = $this->container->get('session');
-            //$session->set('user', $user);
 
             return $this->redirect($this->generateUrl('esn_dashboard_homepage'));
         }

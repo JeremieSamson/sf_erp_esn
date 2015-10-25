@@ -6,7 +6,7 @@
  * Time: 21:04
  */
 
-namespace ESN\PermanenceBundle\Form;
+namespace ESN\PermanenceBundle\Form\Type;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Repository\RepositoryFactory;

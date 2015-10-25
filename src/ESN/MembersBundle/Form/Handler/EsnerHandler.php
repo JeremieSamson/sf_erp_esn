@@ -10,14 +10,12 @@ namespace ESN\MembersBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManager;
 use ESN\HRBundle\Entity\EsnerFollow;
-use ESN\MembersBundle\Entity\Erasmus;
 use ESN\UserBundle\Entity\User;
 use FOS\UserBundle\Mailer\Mailer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
-use ESN\MembersBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\Request;
 
 class EsnerHandler

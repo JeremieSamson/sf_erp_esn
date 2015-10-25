@@ -10,6 +10,7 @@ namespace ESN\UserBundle\Entity;
  */
 
 use Doctrine\Common\Collections\ArrayCollection;
+use ESN\PermanenceBundle\Entity\PermanenceReport;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -222,7 +223,6 @@ class User extends BaseUser
     /**
      * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="users", cascade="persist")
      * @ORM\JoinColumn(nullable=false)
-     *
      */
     private $nationality;
 
@@ -238,12 +238,18 @@ class User extends BaseUser
     private $follow;
 
     /**
+     * @ORM\OneToMany(targetEntity="ESN\PermanenceBundle\Entity\PermanenceReport", mappedBy="owner")
+     */
+    private $reports;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
         $this->mentees = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     /**
@@ -380,10 +386,14 @@ class User extends BaseUser
      * @return string
      */
     public function getAge(){
-        $date = new \DateTime($this->getBirthdate()->format('Y-m-d'));
-        $now = new \DateTime();
-        $interval = $now->diff($date);
-        return $interval->y;
+        if ($this->getBirthdate()){
+            $date = new \DateTime($this->getBirthdate()->format('Y-m-d'));
+            $now = new \DateTime();
+            $interval = $now->diff($date);
+            return $interval->y;
+        }
+
+        return null;
     }
 
     /**
@@ -856,5 +866,35 @@ class User extends BaseUser
     public function setFollow($follow)
     {
         $this->follow = $follow;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getReports()
+    {
+        return $this->reports;
+    }
+
+    /**
+     * @param \ESN\PermanenceBundle\Entity\PermanenceReport $report
+     *
+     * @return $this
+     */
+    public function addReport(PermanenceReport $report)
+    {
+        $this->reports->add($report);
+
+        $report->setOwner($this);
+
+        return $this;
+    }
+
+    /**
+     * @param \ESN\PermanenceBundle\Entity\PermanenceReport $report
+     */
+    public function removeReport(PermanenceReport $report)
+    {
+        $this->reports->removeElement($report);
     }
 }

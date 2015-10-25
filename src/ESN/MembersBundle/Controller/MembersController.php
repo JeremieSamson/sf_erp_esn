@@ -15,6 +15,7 @@ use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class MembersController extends Controller
@@ -26,7 +27,7 @@ class MembersController extends Controller
      *  - action : lister,detailler,editer
      *  - id : id du membre s'il s'agit d'une action detailler ou editer
      *
-     * @param type $user_id
+     * @param integer $user_id
      *
      * @return type
      */
@@ -100,25 +101,6 @@ class MembersController extends Controller
     }
 
     /**
-     * Action à l'affichage de la liste des membres en fonction du type.
-     * @param type $type
-     * @return type
-     */
-    public function listAction($type)
-    {
-        $liste_membres = array(
-            'liste_membres' => $this->getAllMembers($type)
-        );
-
-        if ($type == 'esners') {
-            return $this->render('ESNMembersBundle:Esners:list.html.twig',  $liste_membres);
-        } else {
-            return $this->render('ESNMembersBundle:Erasmus:list.html.twig', $liste_membres);
-        }
-    }//listAction
-
-
-    /**
      * List Esner
      *
      * @return type
@@ -153,48 +135,6 @@ class MembersController extends Controller
     }
 
     /**
-     * Action à l'affichage d'une card d'un esner.
-     * @param type $member
-     * @return type
-     */
-    public function cardEsnerAction($member) {
-        return $this->render('ESNMembersBundle:Esners:card.html.twig', array(
-            'member' => $member
-        )); 
-    }//cardEsnerAction
-    
-    /**
-     * Action à l'affichage d'une card d'un Erasmus
-     * @param type $member
-     * @return type
-     */
-    public function cardErasmusAction($member) {
-        return $this->render('ESNMembersBundle:Erasmus:card.html.twig', array(
-            'member' => $member
-        )); 
-    }//cardErasmusAction
-    
-    /**
-     * Action à l'affichage des détails du profil d'un membre en fonction
-     * du type du membre et de son ID.
-     * @param type $type
-     * @param type $id
-     * @return type
-     */
-    public function detailAction($type,$id)
-    {
-        $member = array(
-           'member' => $this->getAllMembers($type, $id)
-        );
-
-        if ($type == 'esners') {
-            return $this->render('ESNMembersBundle:Esners:detail.html.twig', $member);
-        } else {
-            return $this->render('ESNMembersBundle:Erasmus:detail.html.twig', $member);
-        }
-    }//detailAction
-
-    /**
      * @param type $id
      */
     public function deleteAction($id)
@@ -220,10 +160,17 @@ class MembersController extends Controller
      * Action à l'affichage de la page d'édition d'un membre en fonction
      * du type du membre et de son ID.
      *
-     * @param integer $id
+     * @param Request $request
+     * @param integer $user_id
+     *
+     * @throws createAccessDeniedException
      */
     public function editEsnerAction(Request $request, $user_id)
     {
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
@@ -331,9 +278,17 @@ class MembersController extends Controller
      * Create ESNer Action
      *
      * @param Request $request
+     *
+     * @throws createAccessDeniedException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function createEsnerAction(Request $request) {
+
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
