@@ -28,15 +28,14 @@ class LoginController extends Controller
 
         $up = new UserProvider();
 
-       // $user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
-    $user_cas = "tolo";
+        $user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
+
         if ($user_cas != null){
 
-//            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
-            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => "jeremie.samson@ix.esnlille.fr"));
+            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("email" => $user_cas->getEmail()));
 
             $user = (!$user_db) ? new \ESN\UserBundle\Entity\User() : $user_db;
-/*
+
             $user->setUsername($user_cas->getEmail());
             $user->setUsernameCanonical($user_cas->getEmail());
             $user->setEmail($user_cas->getEmail());
@@ -49,7 +48,7 @@ class LoginController extends Controller
             $user->setCodeSection($user_cas->getSc());
             $user->setGalaxyPicture($user_cas->getPicture());
             $user->setMobile($user_cas->getTelephone());
-*/
+
             if (!$user_db) {
                 $user->setEnabled(true);
                 $user->setEsner(true);
@@ -70,9 +69,6 @@ class LoginController extends Controller
             $request = $this->get("request");
             $event = new InteractiveLoginEvent($request, $token);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-
-            //$session = $this->container->get('session');
-            //$session->set('user', $user);
 
             return $this->redirect($this->generateUrl('esn_dashboard_homepage'));
         }

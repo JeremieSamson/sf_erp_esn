@@ -386,10 +386,14 @@ class User extends BaseUser
      * @return string
      */
     public function getAge(){
-        $date = new \DateTime($this->getBirthdate()->format('Y-m-d'));
-        $now = new \DateTime();
-        $interval = $now->diff($date);
-        return $interval->y;
+        if ($this->getBirthdate()){
+            $date = new \DateTime($this->getBirthdate()->format('Y-m-d'));
+            $now = new \DateTime();
+            $interval = $now->diff($date);
+            return $interval->y;
+        }
+
+        return null;
     }
 
     /**
