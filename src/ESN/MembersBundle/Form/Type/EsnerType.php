@@ -95,6 +95,7 @@ class EsnerType extends AbstractType
                     'required' => false,
                     'query_builder' => function(UserRepository $er) {
                         return $er->createQueryBuilder('u')
+                            ->where('u.esner = 1')
                             ->orderBy("u.firstname", "ASC");
                     }
                 )

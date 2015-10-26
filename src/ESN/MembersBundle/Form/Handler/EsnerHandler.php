@@ -68,11 +68,11 @@ class EsnerHandler
                 /** @var User $user */
                 $user = $this->form->getData();
 
-                if ($this->form->get('sendmail')->getData()){
+                if ($this->form->has('sendmail') && $this->form->get('sendmail')->getData()){
                     $this->sendEmail($user);
                 }
 
-                if ($this->form->get('trial')->getData()){
+                if ($this->form->has('trial') && $this->form->get('trial')->getData()){
                     $follow = new EsnerFollow();
                     $follow->setTrialstarted($this->form->get('trial')->getData());
 

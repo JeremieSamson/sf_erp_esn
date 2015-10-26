@@ -202,7 +202,7 @@ class MembersController extends Controller
         $form->handleRequest($request);
 
         if ($formHandler->process()){
-            return $this->redirect($this->generateUrl('esn_members_detail', array(
+            return $this->redirect($this->generateUrl('esn_members_esner_detail', array(
                 'trips'=> $trips,
                 'user_id'=>$user_id
             )));
