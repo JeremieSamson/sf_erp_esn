@@ -447,6 +447,8 @@ class User extends BaseUser
         $this->setPlainPassword(implode($pass)); //turn the array into a string
     }
 
+    /******************************************************************************************************************/
+
     /**
      * Check permission according to galaxy roles
      *
@@ -466,25 +468,77 @@ class User extends BaseUser
 
         switch($block){
             case 'dashboard' :
-                return in_array('Local.activeMember', explode(',', $this->getGalaxyRoles()));
+                return $this->isActiveMember();
             break;
             case 'treasury' :
-                return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles()));
+                return $this->IsTreasurer();
             break;
             case 'human-ressources':
-                return in_array('Local.vicePresident', explode(',', $this->getGalaxyRoles()));
+                return $this->isVP();
             break;
             case 'administration':
-                return in_array('Local.webmaster', explode(',', $this->getGalaxyRoles()));
+                return $this->isWebmaster();
             break;
         }
 
         return false;
     }
 
+    /**
+     * Check if user is super admin
+     *
+     * @return bool
+     */
     public function isSuperAdmin(){
         return in_array("ROLE_SUPER_ADMIN", $this->getRoles());
     }
+
+    /**
+     * Check if user is VP
+     *
+     * @return bool
+     */
+    public function isVP(){
+        return in_array('Local.vicePresident', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is Treasurer
+     *
+     * @return bool
+     */
+    public function IsTreasurer(){
+        return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is Webmaster
+     *
+     * @return bool
+     */
+    public function IsWebmaster(){
+        return in_array('Local.webmaster', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is President
+     *
+     * @return bool
+     */
+    public function IsPresident(){
+        return in_array('Local.president', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is Active Member
+     *
+     * @return bool
+     */
+    public function IsActiveMember(){
+        return in_array('Local.activeMember', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /******************************************************************************************************************/
 
     /**
      * @return string
