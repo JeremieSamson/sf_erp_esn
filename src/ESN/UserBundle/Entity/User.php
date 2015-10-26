@@ -222,7 +222,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="users", cascade="persist")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $nationality;
 
@@ -469,10 +469,10 @@ class User extends BaseUser
                 return in_array('Local.activeMember', explode(',', $this->getGalaxyRoles()));
             break;
             case 'treasury' :
-                return in_array('localTreasurer', explode(',', $this->getGalaxyRoles()));
+                return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles()));
             break;
             case 'human-ressources':
-                return in_array('localVicePresident', explode(',', $this->getGalaxyRoles()));
+                return in_array('Local.vicePresident', explode(',', $this->getGalaxyRoles()));
             break;
             case 'administration':
                 return in_array('Local.webmaster', explode(',', $this->getGalaxyRoles()));

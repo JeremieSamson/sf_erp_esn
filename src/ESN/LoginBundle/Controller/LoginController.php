@@ -30,9 +30,12 @@ class LoginController extends Controller
 
         $user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
 
-        if ($user_cas != null){
-
+        if ($user_cas != null && $user_cas->getSc() == "FR-LILL-ESL"){
             $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("email" => $user_cas->getEmail()));
+
+            //Check sur le prénom & le nom
+            if (!$user_db)
+                $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("firstname" => $user_cas->getFirstname(), "lastname" => $user_cas->getLastname()));
 
             $user = (!$user_db) ? new \ESN\UserBundle\Entity\User() : $user_db;
 
@@ -73,7 +76,7 @@ class LoginController extends Controller
             return $this->redirect($this->generateUrl('esn_dashboard_homepage'));
         }
 
-        $this->redirect($this->generateUrl('esn_login_homepage'));
+        return $this->redirect($this->generateUrl('esn_login_homepage'));
     }
 
     public function logoutAction(){
