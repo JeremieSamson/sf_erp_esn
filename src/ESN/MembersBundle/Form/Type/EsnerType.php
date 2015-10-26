@@ -24,10 +24,12 @@ class EsnerType extends AbstractType
      * @var EntityManager
      */
     private $em;
+    private $type;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $type)
     {
         $this->em = $em;
+        $this->type = $type;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -77,7 +79,7 @@ class EsnerType extends AbstractType
             ->add('study', 'text', array("required" => false))
             ->add('address', 'text', array("required" => false))
             ->add('city', 'text', array("required" => false))
-            ->add('zipcode', 'number', array("required" => false))
+            ->add('zipcode', 'text', array("required" => false))
             ->add('university', 'entity' , array(
                     'class' => 'ESNAdministrationBundle:University',
                     'empty_value'  => '',
@@ -105,18 +107,23 @@ class EsnerType extends AbstractType
                             ->orderBy("c.name", "ASC");
                     }
                 )
-            )
-            ->add('trial', 'date', array(
-                    'mapped' => false,
-                    'required' => false,
-                    'widget' => 'single_text'
-                )
-            )
-            ->add('sendmail', 'checkbox', array(
-                    'mapped' => false,
-                    'required' => false
-                )
             );
+
+        if ($this->type == "create"){
+            $builder
+                ->add('trial', 'date', array(
+                        'mapped' => false,
+                        'required' => false,
+                        'widget' => 'single_text'
+                    )
+                )
+                ->add('sendmail', 'checkbox', array(
+                        'mapped' => false,
+                        'required' => false
+                    )
+                )
+            ;
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver)

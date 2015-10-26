@@ -16,41 +16,83 @@
         </div>
     {% endif %}
 
-    <table id="esners" class="datatable" cellspacing="0" width="100%">
-        <thead>
-        <tr>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Âge</th>
-            <th>Pôle</th>
-            <th>Poste</th>
-            <th>Téléphone</th>
-            <th>University</th>
-            <th></th>
-        </tr>
-        </thead>
-
-        {% for esner in esners %}
-            <tbody>
+    <div class="span12">
+        <table id="esners" class="datatable span12" cellspacing="0">
+            <thead>
                 <tr>
-                    <th>{{ esner.firstname }}</th>
-                    <th>{{ esner.lastname }}</th>
-                    <th>{% if esner.getAge() > 0 %} {{ esner.getAge() }} {% else %} ~ {% endif %}</th>
-                    <th>{% if esner.pole %} {{ esner.pole }} {% else %} ~ {% endif %}</th>
-                    <th>{% if esner.post %} {{ esner.post }} {% else %} ~ {% endif %}</th>
-                    <th>{% if esner.mobile %} {{ esner.mobile }} {% else %} ~ {% endif %}</th>
-                    <th>{% if esner.university %} {{ esner.university }} {% else %} ~ {% endif %}</th>
-                    <th>
-                        <a href="{{ path('esn_members_esner_edit', {'user_id': esner.id}) }}">
-                            <i class="icon-edit icon-large" style="color: green;"></i>
-                        </a>
-                        <a href="">
-                            <i class="icon-remove-sign icon-large" style="color: red;"></i>
-                        </a>
-                    </th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Âge</th>
+                    <th>Pôle</th>
+                    <th>Poste</th>
+                    <th>Téléphone</th>
+                    <th>University</th>
+                    <th></th>
                 </tr>
+            </thead>
+
+            <tbody>
+                {% for esner in esners %}
+                    <tr>
+                        <th>{{ esner.firstname }}</th>
+                        <th>{{ esner.lastname }}</th>
+                        <th>{{ esner.email }}</th>
+                        <th>{% if esner.getAge() > 0 %} {{ esner.getAge() }} {% else %} ~ {% endif %}</th>
+                        <th>{% if esner.pole %} {{ esner.pole }} {% else %} ~ {% endif %}</th>
+                        <th>{% if esner.post %} {{ esner.post }} {% else %} ~ {% endif %}</th>
+                        <th>{% if esner.mobile %} {{ esner.mobile }} {% else %} ~ {% endif %}</th>
+                        <th>{% if esner.university %} {{ esner.university }} {% else %} ~ {% endif %}</th>
+                        <th>
+                            <a href="{{ path('esn_members_esner_detail', {'user_id': esner.id}) }}">
+                                <i class="icon-eye-open icon-large" style="color: green;"></i>
+                            </a><br>
+
+                            {% if app.user.hasPermissionFor('human-ressources') %}
+                                <a href="{{ path('esn_members_esner_edit', {'user_id': esner.id}) }}">
+                                    <i class="icon-edit icon-large" style="color: green;"></i>
+                                </a><br>
+                                <a href="{{ path('esn_members_delete', {'user_id': esner.id}) }}">
+                                    <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                                </a>
+                            {% endif %}
+                        </th>
+                    </tr>
+                {% endfor %}
             </tbody>
-        {% endfor %}
-    </table>
+        </table>
+    </div>
 </div><!-- /row -->
+{% endblock %}
+
+
+{% block javascript %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+            $('.datatable').dataTable( {
+                "bPaginate": false,
+                "oLanguage": { "sSearch": "" },
+                "bInfo": false,
+                "order": [
+                    [ 0, 'asc' ],
+                    [ 1, 'asc' ]
+                ],
+                aoColumnDefs: [
+                    { "aTargets": [ 0 ], "bSortable": true },
+                    { "aTargets": [ 1 ], "bSortable": true },
+                    { "aTargets": [ 2 ], "bSortable": true },
+                    { "aTargets": [ 3 ], "bSortable": true },
+                    { "aTargets": [ 4 ], "bSortable": true },
+                    { "aTargets": [ 5 ], "bSortable": true },
+                    { "aTargets": [ 6 ], "bSortable": false },
+                    { "aTargets": [ 6 ], "bSortable": true }
+                ],
+                language: {
+                    searchPlaceholder: "Search ..."
+                }
+            } );
+        } );
+    </script>
 {% endblock %}

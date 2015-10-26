@@ -110,7 +110,11 @@ class MembersController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $esners = $em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 1));
+        $where = array("esner" => 1);
+        if (!$this->getUser()->hasPermissionFor('human-ressources'))
+            $where["active"] = 1;
+
+        $esners = $em->getRepository('ESNUserBundle:User')->findBy($where, array("firstname" => "ASC", "lastname" => "ASC"));
 
         return $this->render('ESNMembersBundle:Esners:list.html.twig',  array(
             'esners' => $esners
@@ -127,7 +131,9 @@ class MembersController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 0));
+        $where = array("esner" => 0);
+
+        $users = $em->getRepository('ESNUserBundle:User')->findBy($where, array("firstname" => "ASC", "lastname" => "ASC"));
 
         return $this->render('ESNMembersBundle:Erasmus:list.html.twig',  array(
             'users' => $users
@@ -135,25 +141,32 @@ class MembersController extends Controller
     }
 
     /**
-     * @param type $id
+     * Delete a user
+     *
+     * @param integer $user_id
      */
-    public function deleteAction($id)
+    public function deleteAction($user_id)
     {
-        if (!$id) {
-            throw $this->createNotFoundException('No Erasmus found');
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
         }
 
-        $this->get('request')->getSession()->getFlashBag()->add('notice', 'Erasmus deleted');
-
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $erasmus = $em->getRepository('ESNMembersBundle:Erasmus')->find($id);
 
-        $em->remove($erasmus);
+        /** @var User $user */
+        $user = $em->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('No User found');
+        }
+
+        $em->remove($user);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('esn_members_homepage', array(
-            'type'=>'erasmus'
-        )));
+        $this->get('request')->getSession()->getFlashBag()->add('notice', 'User supprimé');
+
+        return $this->redirect($this->generateUrl('esn_members_esner'));
     }//deleteAction
     
     /**
@@ -183,9 +196,9 @@ class MembersController extends Controller
 
         $trips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findBy(array("user" => $user));
 
-        $form = $this->get('form.factory')->create(new EsnerType($em), $user);
+        $form = $this->get('form.factory')->create(new EsnerType($em, "update"), $user);
 
-        $formHandler = new EsnerHandler($em, $form, $request, $this->get('templating'), $this->get('mailer'));
+        $formHandler = new EsnerHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
         $form->handleRequest($request);
 
         if ($formHandler->process()){
@@ -295,7 +308,7 @@ class MembersController extends Controller
         /** @var User $user */
         $user = new User();
 
-        $form = $this->get('form.factory')->create(new EsnerType($em), $user);
+        $form = $this->get('form.factory')->create(new EsnerType($em, "create"), $user);
         $formHandler = new EsnerHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
         $form->handleRequest($request);
 
