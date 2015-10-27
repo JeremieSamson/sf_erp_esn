@@ -5,12 +5,14 @@ namespace ESN\PermanenceBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
-use ESN\PermanenceBundle\Form\EnrollUserToTripType;
+use ESN\AdministrationBundle\Entity\Trip;
 use ESN\PermanenceBundle\Form\Handler\EnrollUserToTripHandler;
 
 use ESN\PermanenceBundle\Form\Handler\ReportHandler;
+use ESN\PermanenceBundle\Form\Type\EnrollUserToTripType;
 use ESN\PermanenceBundle\Form\Type\ReportType;
 use ESN\TreasuryBundle\Entity\Operation;
+use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
@@ -29,7 +31,7 @@ class PermanenceController extends Controller
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listReportsAction()
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -62,15 +64,18 @@ class PermanenceController extends Controller
     
     /**
      * Retourne la liste des voyages
-     * @return type
      */
-    public function tripsListAction()
+    public function listTripsAction()
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository('ESNAdministrationBundle:Trip');
-       
-        $trips = array("trips" => $repository->findAll());
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var ArrayCollection $trips */
+        $trips = $em->getRepository('ESNAdministrationBundle:Trip')->findAll();
         
-        return $this->render('ESNPermanenceBundle:Trips:listTrips.html.twig',$trips);
+        return $this->render('ESNPermanenceBundle:Trips:list.html.twig',array(
+            "trips" => $trips
+        ));
     }
     
     /**
@@ -99,11 +104,13 @@ class PermanenceController extends Controller
                     $users->add($participateTrip->getUser());
             }
 
-            $request->getSession()->getFlashBag()->add('notice', 'participant bien enregistré.');
+            $this->addFlash('notice', 'participant bien enregistré.');
 
             return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig',
-                array('participants' => $users,
-                      'trip' => $participateTrip->getTrip()));
+                array('users' => $users,
+                      'trip' => $participateTrip->getTrip()
+                )
+            );
         }
 
         return $this->render('ESNPermanenceBundle:Trips:enrollUserToTrip.html.twig',
@@ -128,10 +135,16 @@ class PermanenceController extends Controller
             throw $this->createNotFoundException("Le voyage d'id ".$id." n'existe pas.");
         }
 
-        $participants = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
+        $users = new ArrayCollection();
+        $participateTrips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
+        /** @var ParticipateTrip $pt */
+        foreach($participateTrips as $pt){
+            if (!$users->contains($pt->getUser()))
+                $users->add($pt->getUser());
+        }
 
         return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig',
-            array('participants' => $participants,
+            array('users' => $users,
                   'title' => "Permanence",
                   'trip' => $trip));
     }//detailTripsAction
@@ -201,8 +214,12 @@ class PermanenceController extends Controller
      */
     public function seeReportAction($type,Request $request,$id)
     {
+        /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
+        /** @var PermanenceRerport $report */
         $report = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->find($id);
+
         if (!$report) {
             throw $this->createNotFoundException(
                 'Aucun rapport trouvé pour cet id : '.$id
@@ -212,4 +229,55 @@ class PermanenceController extends Controller
         return $this->render('ESNPermanenceBundle:Reports:seeReport.html.twig', array(
              'title' => "Permanence",'report' => $report));
     }//seeReportAction
+
+    /**
+     * Remove a user from a trip
+     *
+     * @param $trip_id
+     * @param $user_id
+     */
+    public function removeUserToTripAction($trip_id, $user_id){
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Trip $trip */
+        $trip = $em->getRepository('ESNAdministrationBundle:Trip')->find($trip_id);
+
+        /** @var User $user */
+        $user = $em->getRepository('ESNUserBundle:User')->find($user_id);
+
+        if (!$trip || !$user){
+            throw $this->createNotFoundException('No trip or User found');
+        }
+
+        /** @var ParticipateTrip $participateTrip */
+        $participateTrip = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findOneBy(array("trip" => $trip, "user" => $user));
+
+        if ($participateTrip){
+            $em->remove($participateTrip);
+            $em->flush();
+
+            $this->get('session')->getFlashBag()->add('notice', $user->getFullname() . ' bien retiré de ' . $trip->getName());
+
+            $users = new ArrayCollection();
+            $participateTrips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
+            /** @var ParticipateTrip $pt */
+            foreach($participateTrips as $pt){
+                if (!$users->contains($pt->getUser()))
+                    $users->add($pt->getUser());
+            }
+
+            return $this->render('ESNPermanenceBundle:Trips:detailsTrip.html.twig',
+                array('users' => $users,
+                    'trip' => $trip
+                )
+            );
+        }else{
+            throw new \ErrorException('No Participate trip found');
+        }
+    }
 }

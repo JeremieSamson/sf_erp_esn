@@ -1,11 +1,8 @@
-{% extends '::base.html.twig' %}
-
-
-{% block subnavbar %}
-    {{ render(controller("ESNDashboardBundle:Dashboard:subnavbar")) }}
-{% endblock %}
+{% extends 'ESNMembersBundle::index.html.twig' %}
 
 {% block body %}
+
+    {{ parent() }}
 
     <div class="span12">
         <p>
@@ -13,7 +10,7 @@
             {% for message in app.session.flashbag.get('notice') %}
                 <div class="alert alert-success">
                     <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    <strong> Success!</strong> {{ message }}
+                    {{ message }}
                 </div>
             {% endfor %}
         </p>
@@ -46,7 +43,7 @@
 
                                 <p> Price : {{ trip.price }} € </p>
 
-                                <p> Number of participants : {{ participants|length }} / {{ trip.nbPlace }}</p>
+                                <p> Number of participants : {{ users|length }} / {{ trip.nbPlace }}</p>
                             </div>
                         </div>
                         <div class="tab-pane" id="participants">
@@ -63,16 +60,24 @@
                                         <th>Surname</th>
                                         <th>Phone Number</th>
                                         <th>Birthdate</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for participant in participants %}
+                                    {% for user in users %}
                                         <tr>
                                             <td>{{ loop.index }}</td>
-                                            <td>{{ participant.firstname }}</td>
-                                            <td>{{ participant.lastname }}</td>
-                                            <td>{{ participant.mobile }}</td>
-                                            <td>{{ participant.birthdate|date('d/m/Y') }}</td>
+                                            <td>{{ user.firstname }}</td>
+                                            <td>{{ user.lastname }}</td>
+                                            <td>{{ user.mobile }}</td>
+                                            <td>{{ user.birthdate|date('d/m/Y') }}</td>
+                                            <td>
+                                                {% if app.user.hasPermissionFor('human-ressources') %}
+                                                    <a href="{{ path('esn_permanence_removeTripUser', {'trip_id': trip.id, 'user_id': user.id}) }}">
+                                                        <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                                                    </a>
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
 
