@@ -17,10 +17,31 @@ class ReportType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('amountBefore', 'integer')
-            ->add('amountAfter', 'integer')
-            ->add('sellCard', 'integer')
-            ->add('availableCard', 'integer')
+            ->add('amountBefore', 'integer', array(
+                'attr' => array(
+                    'readonly' => true,
+                    'class' => 'span3'
+                )
+            ))
+            ->add('amountAfter', 'integer', array(
+                'attr' => array(
+                    'readonly' => true,
+                    'class' => 'span3'
+                )
+            ))
+            ->add('sellCard', 'integer', array(
+                'attr' => array(
+                    'class' => 'span3',
+                    'min' => 1
+                )
+            ))
+            ->add('availableCard', 'integer', array(
+                'attr' => array(
+                    'readonly' => true,
+                    'class' => 'span3',
+                    'min' => 1
+                )
+            ))
             ->add('comments', 'textarea')
             ;
     }

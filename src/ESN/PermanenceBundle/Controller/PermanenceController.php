@@ -12,6 +12,8 @@ use ESN\PermanenceBundle\Form\Handler\ReportHandler;
 use ESN\PermanenceBundle\Form\Type\ReportType;
 use ESN\TreasuryBundle\Entity\Operation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\PermanenceBundle\Entity\PermanenceReport;
@@ -123,7 +125,7 @@ class PermanenceController extends Controller
         $trip = $em->getRepository('ESNAdministrationBundle:Trip')->find($id);
 
         if (null === $trip) {
-            throw new NotFoundHttpException("Le voyage d'id ".$id." n'existe pas.");
+            throw $this->createNotFoundException("Le voyage d'id ".$id." n'existe pas.");
         }
 
         $participants = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($trip);
@@ -170,8 +172,9 @@ class PermanenceController extends Controller
         $report->setAmountAfter($caisse);
         $report->setAvailableCard($nbCard);
 
+        /** @var Form $form */
         $form = $this->get('form.factory')->create(new ReportType($em), $report);
-        $formHandler = new ReportHandler($em, $form, $request);
+        $formHandler = new ReportHandler($em, $form, $request, $this->getUser());
         $form->handleRequest($request);
 
         if ($formHandler->process())
