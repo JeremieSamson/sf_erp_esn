@@ -20,20 +20,17 @@
                                 <li><a href="{{ path('esn_members_erasmus') }}">Erasmus Student</a></li>
                             </ul>
                         </li>
-                        {% if app.user.hasPermissionFor('treasury') %}
-                            <li class="dropdown {% if '/permanence' in (app.request.server.get('PHP_SELF')) %}active{% endif %}">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-home"></i>
-                                    <span>Permanence</span>
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="{{ path('esn_permanence_trips') }}">Trips</a></li>
-                                    <li><a href="{{ path('esn_permanence_reports') }}">Reports</a></li>
-                                    <li><a href="{{ path('esn_permanence_informations') }}">Informations</a></li>
-                                </ul>
-                            </li>
-                        {% endif %}
+                        <li class="dropdown {% if '/permanence' in (app.request.server.get('PHP_SELF')) %}active{% endif %}">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-home"></i>
+                                <span>Permanence</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('esn_permanence_trips') }}">Trips</a></li>
+                                <li><a href="{{ path('esn_permanence_reports') }}">Reports</a></li>
+                            </ul>
+                        </li>
                         {% if app.user.hasPermissionFor('treasury') %}
                             <li class="dropdown {% if '/treasury' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -47,7 +44,7 @@
                                 </ul>
                             </li>
                         {% endif %}
-                        {% if app.user.hasPermissionFor('human-ressources') %}
+
                             <li class="dropdown {% if '/human-ressources' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
 
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
@@ -56,12 +53,14 @@
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ path('esn_hr_association') }}">Association</a></li>
-                                    <li><a href="{{ path('esn_hr_recruitment') }}">Recruitement</a></li>
+                                    {% if app.user.hasPermissionFor('human-ressources') %}
+                                        <li><a href="{{ path('esn_hr_association') }}">Association</a></li>
+                                        <li><a href="{{ path('esn_hr_recruitment') }}">Recruitement</a></li>
+                                    {% endif %}
                                     <li><a href="{{ path('esn_hr_treeceratops')  }}">Treeceratops</a></li>
                                 </ul>
                             </li>
-                        {% endif %}
+
                         {% if app.user.hasPermissionFor('administration') %}
                             <li class="dropdown
                                 {% if '/administration' in (app.request.server.get('PHP_SELF')) %}
