@@ -15,6 +15,7 @@ use FOS\UserBundle\Mailer\Mailer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -112,6 +113,8 @@ class EsnerHandler
      * @param User $user
      */
     private function sendEmail(User $user){
+        $attach = __DIR__ . "/../../../HRBundle/Resources/views/Emails/guide.pptx";
+
         $message = \Swift_Message::newInstance()
             ->setSubject('[ESN Lille] Bienvenue dans l\'association')
             ->setFrom($this->container->getParameter('mailer_from'))
@@ -123,6 +126,7 @@ class EsnerHandler
                 ),
                 'text/html'
             )
+            ->attach(\Swift_Attachment::fromPath($attach))
         ;
         $this->mailer->send($message);
     }
