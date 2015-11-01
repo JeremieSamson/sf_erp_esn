@@ -111,6 +111,7 @@ class MembersController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $where = array("esner" => 1);
+
         if (!$this->getUser()->hasPermissionFor('human-ressources'))
             $where["active"] = 1;
 
@@ -119,7 +120,7 @@ class MembersController extends Controller
         return $this->render('ESNMembersBundle:Esners:list.html.twig',  array(
             'esners' => $esners
         ));
-    }//listAction
+    }
 
     /**
      * List Erasmus

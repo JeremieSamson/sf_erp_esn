@@ -101,6 +101,8 @@ class EsnerHandler
             $user->setEsner(true);
             $user->setEnabled(true);
 
+            $user->setActive(($user->getPost() == "Ancien membre") ? false : true);
+
             $this->em->persist($user);
         }
 

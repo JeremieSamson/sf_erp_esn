@@ -49,6 +49,7 @@ class EsnerType extends AbstractType
             ->add('pole', 'entity' ,
                 array('class' => 'ESNAdministrationBundle:Pole',
                     'empty_value'  => '',
+                    "required" => false,
                     'query_builder' => function(PoleRepository $er) {
                         return $er->createQueryBuilder('p')
                             ->orderBy("p.name", "ASC");
@@ -64,6 +65,7 @@ class EsnerType extends AbstractType
             ->add('mobile','text', array("required" => false))
             ->add('birthdate', 'date', array('widget' => 'single_text'))
             ->add('hasCare', 'checkbox', array("required" => false))
+            ->add('active', 'checkbox', array("required" => false))
             ->add('erasmusProgramme', 'entity' , array(
                     'required' => false,
                     'class' => 'ESNAdministrationBundle:Country',

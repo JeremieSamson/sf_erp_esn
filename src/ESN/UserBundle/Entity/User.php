@@ -136,7 +136,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="active", type="boolean", nullable=true)
      */
-    private $active = 1;
+    private $active = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="erasmusProgramme_esners", cascade="persist")
