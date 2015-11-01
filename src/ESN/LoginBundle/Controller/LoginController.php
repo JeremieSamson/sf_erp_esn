@@ -51,6 +51,7 @@ class LoginController extends Controller
             $user->setCodeSection($user_cas->getSc());
             $user->setGalaxyPicture($user_cas->getPicture());
             $user->setMobile($user_cas->getTelephone());
+            $user->setActive(true);
 
             if (!$user_db) {
                 $user->setEnabled(true);
