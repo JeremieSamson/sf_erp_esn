@@ -32,7 +32,7 @@
                 {{ form_widget(form.post) }}
                 {{ form_widget(form.pole) }}
 
-                {% if user is defined %}
+                {% if app.user.hasPermissionFor('human-ressources') and user is defined %}
                     <a href="{{ path('esn_members_esner_detail', {'user_id': user.id}) }}" style="float:right;">
                         <i class="fa-eye icon-large" style="color: blue;"></i>
                     </a>
