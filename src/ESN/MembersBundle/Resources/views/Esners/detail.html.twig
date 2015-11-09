@@ -54,10 +54,11 @@
                         {{ user.pole }}
                     {% endif %}
 
-                    <a href="{{ path('esn_members_esner_edit', {'user_id': user.id}) }}" style="float:right;">
-                        <i class="icon-edit icon-large" style="color: green;"></i>
-                    </a>
-
+                    {% if app.user.hasPermissionFor('human-ressources') or user.id == app.user.id %}
+                        <a href="{{ path('esn_members_esner_edit', {'user_id': user.id}) }}" style="float:right;">
+                            <i class="icon-edit icon-large" style="color: green;"></i>
+                        </a>
+                    {% endif %}
                 </h3>
             </div><!-- /widget-content -->
         </div><!-- /widget -->
@@ -87,8 +88,8 @@
                         <label class="control-label" for="age">Birthday</label>
                         <div class="controls">
                             <span>
-                                {% if user.getAge() %}
-                                    {{ user.getAge()|date('d/m/Y') }}
+                                {% if user.birthdate %}
+                                    {{ user.birthdate()|date('d/m/Y') }}
                                 {% else %}
                                     ~
                                 {% endif %}
@@ -156,7 +157,7 @@
                         <label class="control-label" for="hasCare">Mentor</label>
                         <div class="controls">
                             {% if user.mentor %}
-                                {{ user.mentor }}
+                                <a href="{{ path('esn_members_esner_detail', { 'user_id': user.mentor.id }) }}">{{ user.mentor }}</a>
                             {% else %}
                                 ~
                             {% endif %}
@@ -168,7 +169,7 @@
                         <div class="controls">
                             {% if user.mentees|length > 0 %}
                                 {% for mentee in user.mentees %}
-                                    {{ mentee }}{% if not loop.last %}, {% endif %}
+                                    <a href="{{ path('esn_members_esner_detail', { 'user_id': mentee.id }) }}">{{ mentee }}</a>{% if not loop.last %}, {% endif %}
                                 {% endfor %}
                             {% endif %}
                         </div> <!-- /controls -->
@@ -193,29 +194,6 @@
                         <label class="control-label" for="university">University</label>
                         <div class="controls">
                             <span>{{ user.university }}</span>
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <hr/>
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="language1">Language 1</label>
-                        <div class="controls">
-                            <span>not implemented</span>
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="language2">Language 2</label>
-                        <div class="controls">
-                             <span>not implemented</span>
-                        </div> <!-- /controls -->			
-                    </div> <!-- /control-group -->
-                    
-                    <div class="control-group">
-                        <label class="control-label" for="language3">Language 3</label>
-                        <div class="controls">
-                             <span>not implemented</span>
                         </div> <!-- /controls -->			
                     </div> <!-- /control-group -->
 

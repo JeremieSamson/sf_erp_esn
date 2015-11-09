@@ -65,6 +65,7 @@
                     <ul class="dropdown-menu">
                         {% if app.user %}
                             <li><a href="{{ path('esn_logout') }}">Logout</a></li>
+                            <li><a href="{{ path('esn_members_esner_edit', {'user_id': app.user.id}) }}">Mon Compte</a></li>
                         {% else %}
                             <li><a href="{{ path('esn_login_homepage') }}">Login</a></li>
                         {% endif %}

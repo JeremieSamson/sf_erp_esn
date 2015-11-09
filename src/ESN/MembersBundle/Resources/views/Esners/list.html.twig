@@ -46,11 +46,11 @@
                         <th>{% if esner.post %} {{ esner.post }} {% else %} ~ {% endif %}</th>
                         <th>{% if esner.mobile %} {{ esner.mobile }} {% else %} ~ {% endif %}</th>
                         <th>{% if esner.university %} {{ esner.university }} {% else %} ~ {% endif %}</th>
-                        <th>
-                            {% if app.user.hasPermissionFor('human-ressources') %}
-                                    <i class="icon-user icon-large" style="{% if esner.active %}color: green;{% else %}color: red;{% endif %}"></i>
-                            {% endif %}
-                        </th>
+                        {% if app.user.hasPermissionFor('human-ressources') %}
+                            <th>
+                                <i class="icon-user icon-large" style="{% if esner.active %}color: green;{% else %}color: red;{% endif %}"></i>
+                            </th>
+                        {% endif %}
                         <th>
                             <a href="{{ path('esn_members_esner_detail', {'user_id': esner.id}) }}">
                                 <i class="icon-eye-open icon-large" style="color: green;"></i>

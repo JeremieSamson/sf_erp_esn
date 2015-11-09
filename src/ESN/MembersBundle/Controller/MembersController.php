@@ -182,7 +182,9 @@ class MembersController extends Controller
     public function editEsnerAction(Request $request, $user_id)
     {
         if (!$this->getUser()->hasPermissionFor('human-ressources')){
-            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+            if ($this->getUser()->getId() != $user_id){
+                throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+            }
         }
 
         /** @var EntityManager $em */
