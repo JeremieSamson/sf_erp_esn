@@ -272,6 +272,16 @@ class User extends BaseUser
     }
 
     /**
+     * return full object as string
+     *
+     * @return string
+     */
+    public function toLongString()
+    {
+        return;
+    }
+
+    /**
      * @return string
      */
     public function getFullname(){

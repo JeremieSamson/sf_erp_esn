@@ -4,6 +4,7 @@ namespace ESN\MembersBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use ESN\AdministrationBundle\Manager\ActivityManager;
 use ESN\MembersBundle\Form\Handler\ErasmusHandler;
 use ESN\MembersBundle\Form\Type\ErasmusType;
 use ESN\MembersBundle\Form\ErasmusUpdateType;
@@ -139,17 +140,24 @@ class MembersController extends Controller
      */
     public function deleteAction($id)
     {
-        if (!$id) {
-            throw $this->createNotFoundException('No Erasmus found');
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var User $erasmus */
+        $erasmus = $em->getRepository('ESNMembersBundle:Erasmus')->find($id);
+
+        if (!$erasmus) {
+            throw $this->createNotFoundException(sprintf('No Erasmus found with ID : %d', $id));
         }
 
-        $this->get('request')->getSession()->getFlashBag()->add('notice', 'Erasmus deleted');
-
-        $em = $this->getDoctrine()->getManager();
-        $erasmus = $em->getRepository('ESNMembersBundle:Erasmus')->find($id);
+        /** @var ActivityManager $activityManager */
+        $activityManager = $this->container->get('activity.manager');
+        $activityManager->delete($erasmus);
 
         $em->remove($erasmus);
         $em->flush();
+
+        $this->get('request')->getSession()->getFlashBag()->add('notice', 'Erasmus deleted');
 
         return $this->redirect($this->generateUrl('esn_members_homepage', array(
             'type'=>'erasmus'

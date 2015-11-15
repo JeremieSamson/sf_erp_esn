@@ -13,6 +13,8 @@ use ESN\UserBundle\Entity\User;
  */
 class Activity
 {
+    const ACTIONS = array("d" => "deleted", "c" => "created", "u" => "updated", "li" => "login", "lo" => "logout");
+
     /**
      * @var integer
      *
@@ -21,13 +23,6 @@ class Activity
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="login", type="integer")
-     */
-    private $login;
 
     /**
      * @var \DateTime
@@ -39,14 +34,14 @@ class Activity
     /**
      * @var string
      *
-     * @ORM\Column(name="old", type="string", length=255)
+     * @ORM\Column(name="old", type="string", length=255, nullable=true)
      */
     private $old;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="new", type="string", length=255)
+     * @ORM\Column(name="new", type="string", length=255, nullable=true)
      */
     private $new;
 
@@ -57,6 +52,20 @@ class Activity
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="action", type="string", length=255)
+     */
+    private $action;
+
+    /**
+     * Constructor
+     */
+    public function __construct(){
+        $this->setCreatedAt(new \DateTime('now'));
+    }
 
     /**
      * Get id
@@ -157,19 +166,19 @@ class Activity
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function isLogin()
+    public function getAction()
     {
-        return $this->login;
+        return $this->action;
     }
 
     /**
-     * @param int $login
+     * @param string $action
      */
-    public function setLogin($login)
+    public function setAction($action)
     {
-        $this->login = $login;
+        $this->action = $action;
     }
 }
 

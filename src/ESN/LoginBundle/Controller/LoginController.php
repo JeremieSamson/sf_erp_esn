@@ -2,6 +2,7 @@
 
 namespace ESN\LoginBundle\Controller;
 
+use ESN\AdministrationBundle\Manager\ActivityManager;
 use ESN\LoginBundle\Security\User\UserProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -65,6 +66,10 @@ class LoginController extends Controller
 
             $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
             $this->get("security.context")->setToken($token);
+
+            /** @var ActivityManager $activityManager */
+            $activityManager = $this->container->get('activity.manager');
+            $activityManager->newLogin();
 
             /** @var Request $request */
             $request = $this->get("request");

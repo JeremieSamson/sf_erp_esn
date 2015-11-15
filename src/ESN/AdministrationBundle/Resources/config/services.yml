@@ -1,4 +1,6 @@
 services:
-#    esn_administration.example:
-#        class: ESN\AdministrationBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    activity.manager:
+        class: ESN\AdministrationBundle\Manager\ActivityManager
+        arguments:
+                - "@security.context"
+                - "@doctrine.orm.entity_manager"
