@@ -10,6 +10,7 @@ namespace ESN\UserBundle\Entity;
  */
 
 use Doctrine\Common\Collections\ArrayCollection;
+use ESN\AdministrationBundle\Entity\Activity;
 use ESN\PermanenceBundle\Entity\PermanenceReport;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
@@ -243,6 +244,13 @@ class User extends BaseUser
     private $reports;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ESN\AdministrationBundle\Entity\Activity", mappedBy="user")
+     */
+    private $activities;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -250,6 +258,7 @@ class User extends BaseUser
         parent::__construct();
         $this->mentees = new ArrayCollection();
         $this->reports = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     /**
@@ -896,5 +905,32 @@ class User extends BaseUser
     public function removeReport(PermanenceReport $report)
     {
         $this->reports->removeElement($report);
+    }
+
+    /**
+     * @param Activity $activity
+     *
+     * @return $this
+     */
+    public function addActivity(Activity $activity){
+        $this->activities->add($activity);
+
+        $activity->setUser($this);
+
+        return $this;
+    }
+
+    /**
+     * @param Activity $activity
+     */
+    public function removeActivity(Activity $activity){
+        $this->activities->removeElement($activity);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public  function getActivities(){
+        return $this->activities;
     }
 }

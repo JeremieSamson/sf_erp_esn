@@ -26,16 +26,17 @@ class LoginController extends Controller
         $cas_port = $this->container->getParameter('cas_port');
         $cas_context = $this->container->getParameter('cas_path');
 
-        $up = new UserProvider();
+        //$up = new UserProvider();
 
-        $user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
-
+        //$user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
+        $user_cas = "yolo";
         if ($user_cas != null){
 
-            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("email" => $user_cas->getEmail()));
+            //$user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("email" => $user_cas->getEmail()));
+            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("email" => "jeremie.samson@ix.esnlille.fr"));
 
             $user = (!$user_db) ? new \ESN\UserBundle\Entity\User() : $user_db;
-
+/*
             $user->setUsername($user_cas->getEmail());
             $user->setUsernameCanonical($user_cas->getEmail());
             $user->setEmail($user_cas->getEmail());
@@ -48,7 +49,7 @@ class LoginController extends Controller
             $user->setCodeSection($user_cas->getSc());
             $user->setGalaxyPicture($user_cas->getPicture());
             $user->setMobile($user_cas->getTelephone());
-
+*/
             if (!$user_db) {
                 $user->setEnabled(true);
                 $user->setEsner(true);
