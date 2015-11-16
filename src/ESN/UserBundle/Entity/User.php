@@ -278,7 +278,7 @@ class User extends BaseUser
      */
     public function toLongString()
     {
-        return;
+        return "id:" . $this->getId() . ",firstname:" . $this->getFirstname() . ",lastname:" .$this->getLastname() . ",email:" . $this->getEmail();
     }
 
     /**

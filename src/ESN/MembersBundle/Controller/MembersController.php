@@ -150,9 +150,7 @@ class MembersController extends Controller
             throw $this->createNotFoundException(sprintf('No Erasmus found with ID : %d', $id));
         }
 
-        /** @var ActivityManager $activityManager */
-        $activityManager = $this->container->get('activity.manager');
-        $activityManager->delete($erasmus);
+        $this->get('activity.manager')->delete($erasmus);
 
         $em->remove($erasmus);
         $em->flush();

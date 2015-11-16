@@ -13,7 +13,7 @@ use ESN\UserBundle\Entity\User;
  */
 class Activity
 {
-    const ACTIONS = array("d" => "deleted", "c" => "created", "u" => "updated", "li" => "login", "lo" => "logout");
+    public static $ACTIONS = array("d" => "deleted", "c" => "created", "u" => "updated", "li" => "login", "lo" => "logout");
 
     /**
      * @var integer

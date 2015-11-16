@@ -32,7 +32,7 @@ class ActivityManager
 
     public function login(){
         $activityNewLog = new Activity();
-        $activityNewLog->setAction("li");
+        $activityNewLog->setAction(Activity::$ACTIONS["li"]);
 
         $this->user->addActivity($activityNewLog);
 
@@ -41,7 +41,7 @@ class ActivityManager
 
     public function logout(){
         $activityNewLog = new Activity();
-        $activityNewLog->setAction("lo");
+        $activityNewLog->setAction(Activity::$ACTIONS["lo"]);
 
         $this->user->addActivity($activityNewLog);
 
@@ -62,7 +62,7 @@ class ActivityManager
      */
     public function delete($old){
         $activity = new Activity();
-        $activity->setAction("u");
+        $activity->setAction(Activity::$ACTIONS["u"]);
         $activity->setOld($old->toLongString());
 
         $this->save($activity);
@@ -73,7 +73,7 @@ class ActivityManager
      */
     public function create($new){
         $activity = new Activity();
-        $activity->setAction("c");
+        $activity->setAction(Activity::$ACTIONS["c"]);
         $activity->setOld($new->toLongString());
 
         $this->save($activity);

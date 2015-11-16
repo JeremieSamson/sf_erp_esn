@@ -67,9 +67,7 @@ class LoginController extends Controller
             $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
             $this->get("security.context")->setToken($token);
 
-            /** @var ActivityManager $activityManager */
-            $activityManager = $this->container->get('activity.manager');
-            $activityManager->newLogin();
+            $this->get('activity.manager')->login();
 
             /** @var Request $request */
             $request = $this->get("request");
@@ -85,6 +83,8 @@ class LoginController extends Controller
     public function logoutAction(){
         $this->get('security.context')->setToken(null);
         $this->get('request')->getSession()->invalidate();
+
+        $this->get('activity.manager')->logout();
 
         return $this->redirect($this->generateUrl('esn_login_homepage'));
     }
