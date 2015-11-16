@@ -89,7 +89,10 @@ esn_administration_universities_edit:
     path:     /administration/universities/edit/{id}
     defaults: { _controller: ESNAdministrationBundle:Universities:editUniversity }    
     
-   
+#  Activities
+esn_administration_security:
+    path:     /security
+    defaults: { _controller: ESNAdministrationBundle:Security:activities }
     
  #  CARDS
 esn_administration_cards:
