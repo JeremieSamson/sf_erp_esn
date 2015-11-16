@@ -480,7 +480,7 @@ class User extends BaseUser
      * @return bool
      */
     public function hasPermissionFor($block){
-        if ($this->isSuperAdmin())
+        if ($this->isSuperAdmin() || in_array('Local.president', explode(',', $this->getGalaxyRoles())))
             return true;
 
         switch($block){

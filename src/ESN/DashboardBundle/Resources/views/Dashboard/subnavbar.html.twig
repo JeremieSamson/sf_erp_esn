@@ -37,7 +37,7 @@
                         {% if app.user.hasPermissionFor('treasury') %}
                             <li class="dropdown {% if '/treasury' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-group"></i>
+                                    <i class="fa fa-eur"></i>
                                     <span>Treasury</span>
                                     <b class="caret"></b>
                                 </a>
@@ -68,7 +68,7 @@
                                     active
                                 {% endif %} ">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-group"></i>
+                                    <i class="fa fa-wrench"></i>
                                     <span>Administration</span>
                                     <b class="caret"></b>
                                 </a>
@@ -79,6 +79,19 @@
                                     <li><a href="{{ path('esn_administration_poles') }}">Poles</a></li>
                                     <li><a href="{{ path('esn_administration_countries') }}">Countries</a></li>
                                     <li><a href="{{ path('esn_administration_universities') }}">Universities</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown
+                                {% if '/security' in (app.request.server.get('PHP_SELF')) %}
+                                    active
+                                {% endif %} ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-lock"></i>
+                                    <span>Security</span>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('esn_administration_trips') }}">Activities</a></li>
                                 </ul>
                             </li>
                         {% endif %}
