@@ -88,6 +88,8 @@ class PermanenceController extends Controller
         $form->handleRequest($request);
 
         if ($formHandler->process()){
+            $this->get('activity.manager')->create($participateTrip);
+
             $participateTrips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($participateTrip->getTrip());
 
             $users = new ArrayCollection();
@@ -176,6 +178,8 @@ class PermanenceController extends Controller
 
         if ($formHandler->process())
         {
+            $this->get('activity.manager')->create($report);
+
             $request->getSession()->getFlashBag()->add('notice', 'Rapport bien enregistrée.');
 
             return $this->redirect($this->generateUrl('esn_permanence_reports'));

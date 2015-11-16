@@ -195,6 +195,8 @@ class MembersController extends Controller
         $form->handleRequest($request);
 
         if ($formHandler->process()){
+            $this->get('activity.manager')->update("Esner", $user);
+
             return $this->redirect($this->generateUrl('esn_members_detail', array(
                 'trips'=> $trips,
                 'user_id'=>$user_id
@@ -231,6 +233,8 @@ class MembersController extends Controller
         $form->handleRequest($request);
 
         if ($formHandler->process()){
+            $this->get('activity.manager')->update("Erasmus", $user);
+
             return $this->redirect($this->generateUrl('esn_members_erasmus_detail', array(
                 'user_id' => $user_id
             )));
@@ -263,6 +267,8 @@ class MembersController extends Controller
 
         if ($formHandler->process())
         {
+            $this->get('activity.manager')->create($user);
+
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 'l\'Erasmus ' . $user . ' a bien été créé'
@@ -307,6 +313,8 @@ class MembersController extends Controller
 
         if ($formHandler->process())
         {
+            $this->get('activity.manager')->create($user);
+
             $this->get('session')->getFlashBag()->add(
                 'notice',
                 'l\'ESNer ' . $user . ' a bien été créé'

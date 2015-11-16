@@ -87,7 +87,8 @@ class TreasuryController extends Controller
         $form->handleRequest($request);
         
         if ($form->isValid()) {
-            
+            $this->get('activity.manager')->create($operation);
+
             // fait quelque chose comme sauvegarder la tâche dans la bdd
             $em = $this->getDoctrine()->getManager();
             $em->persist($operation);
@@ -115,7 +116,9 @@ class TreasuryController extends Controller
             
             $em->persist($caisse);
             $em->flush();
-            
+
+            $this->get('activity.manager')->create($caisse);
+
             $request->getSession()->getFlashBag()->add('notice', 'Opération bien enregistrée.');
             
             return $this->redirect($this->generateUrl('esn_treasury_list'));

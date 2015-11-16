@@ -34,16 +34,12 @@ class ActivityManager
         $activityNewLog = new Activity();
         $activityNewLog->setAction(Activity::$ACTIONS["li"]);
 
-        $this->user->addActivity($activityNewLog);
-
         $this->save($activityNewLog);
     }
 
     public function logout(){
         $activityNewLog = new Activity();
         $activityNewLog->setAction(Activity::$ACTIONS["lo"]);
-
-        $this->user->addActivity($activityNewLog);
 
         $this->save($activityNewLog);
     }
@@ -58,28 +54,30 @@ class ActivityManager
     }
 
     /**
-     * @param $old
+     * @param $object
      */
-    public function delete($old){
+    public function delete($object){
         $activity = new Activity();
         $activity->setAction(Activity::$ACTIONS["u"]);
-        $activity->setOld($old->toLongString());
+        $activity->setOld(get_class($object));
 
         $this->save($activity);
     }
 
     /**
-     * @param $new
+     * @param $object
      */
-    public function create($new){
+    public function create($object){
         $activity = new Activity();
         $activity->setAction(Activity::$ACTIONS["c"]);
-        $activity->setOld($new->toLongString());
+        $activity->setNew(get_class($object));
 
         $this->save($activity);
     }
 
     public function save(Activity $activity){
+        $this->user->addActivity($activity);
+
         $this->em->persist($activity);
         $this->em->flush();
     }
