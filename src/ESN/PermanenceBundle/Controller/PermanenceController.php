@@ -212,7 +212,7 @@ class PermanenceController extends Controller
      * @return type
      * @throws type
      */
-    public function seeReportAction($type,Request $request,$id)
+    public function seeReportAction(Request $request,$id)
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
@@ -226,7 +226,7 @@ class PermanenceController extends Controller
             );
         }    
                 
-        return $this->render('ESNPermanenceBundle:Reports:seeReport.html.twig', array(
+        return $this->render('ESNPermanenceBundle:Reports:detail.html.twig', array(
              'title' => "Permanence",'report' => $report));
     }//seeReportAction
 
