@@ -7,7 +7,20 @@ use ESN\AdministrationBundle\Entity\Country;
 use Symfony\Component\HttpFoundation\Request;
 
 class AdministrationController extends Controller
-{    
+{
+    /**
+     * ChangelogPage
+     *
+     * @param $type
+     * @param $action
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function changelogAction(Request $request)
+    {
+        return $this->render('ESNAdministrationBundle:Changelog:changelog.html.twig');
+    }
+
     /**
      * Affiche l'ecran d'accueil de l'onglet administration
      * @param type $type

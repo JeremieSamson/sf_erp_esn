@@ -1,25 +1,4 @@
 <div class="row">
-    <div class="span3">
-        <div class="widget widget-nopad">
-            <div class="widget-header"> <i class="icon-list-alt"></i>
-              <h3> Facebook Stats</h3>
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-              <div class="widget big-stats-container">
-                <div class="widget-content">
-                  
-                  <div id="big_stats" class="cf">
-                    <div class="stat"> <i class="icon-thumbs-up-alt"></i> <span class="value">{% if dashboard.facebook.likes is defined %}{{ dashboard.facebook.likes }}{% endif %}</span> </div>
-                    <div class="stat"> <i class="icon-group"></i> <span class="value">{{ dashboard.facebook.group_members }}</span> </div>
-                  </div>
-                </div>
-                <!-- /widget-content --> 
-              </div>
-            </div>
-        </div>    
-    </div>
-
     {% if dashboard.events %}
         <div class="span8">
             <div class="widget widget-nopad">
