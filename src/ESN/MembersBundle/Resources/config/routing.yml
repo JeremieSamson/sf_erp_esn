@@ -1,4 +1,5 @@
 #ESNER ROUTING
+
 esn_members_esner:
     path:     /members/esners
     defaults: { _controller: ESNMembersBundle:Members:listEsner }
@@ -41,8 +42,13 @@ esn_members_erasmus_detail:
     requirements:
         user_id:  \d+
 
-esn_members_erasmus_delete:
-    path: /members/erasmus/{user_id}/delete
+
+
+
+
+
+esn_members_delete:
+    path: /members/{user_id}/delete
     defaults: { _controller: ESNMembersBundle:Members:delete }
     requirements:
         user_id: \d+

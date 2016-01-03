@@ -15,6 +15,7 @@ use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\PermanenceBundle\Entity\PermanenceReport;
 use ESN\TreasuryBundle\Entity\Caisse;
 use ESN\TreasuryBundle\Entity\Operation;
+use ESN\UserBundle\Entity\User;
 use Symfony\Component\Form\Form;
 use ESN\MembersBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,19 +26,20 @@ class ReportHandler
     protected $em;
     protected $request;
     protected $form;
+    protected $user;
 
     /**
-     * Initialize the handler with the form and the request.
-     * @param
-     * @param Form    $form
+     * @param EntityManager $em
+     * @param Form $form
      * @param Request $request
-     * @param $mailer
+     * @param User $user
      */
-    public function __construct(EntityManager $em, Form $form, Request $request)
+    public function __construct(EntityManager $em, Form $form, Request $request, User $user)
     {
         $this->em = $em;
         $this->form = $form;
         $this->request = $request;
+        $this->user = $user;
     }
 
     public function process()
@@ -67,7 +69,7 @@ class ReportHandler
         $availableCard = $nbCard - $sellcard;
 
         $report->setAmountSell($report->getSellCard()*5);
-        $report->setAmountAfter($report->getAmountBefore() + $report->getAmountSell());
+        $report->setOwner($this->user);
 
         $Card = new Card();
         $Card->setNumber($availableCard);
@@ -86,8 +88,6 @@ class ReportHandler
         $caisse = new Caisse();
         $caisse->setMontant($montant + $operation->getMontant());
         $this->em->persist($caisse);
-
-        $report->setAvailableCard($availableCard);
 
         if (!$report->getId()){
             $this->em->persist($report);

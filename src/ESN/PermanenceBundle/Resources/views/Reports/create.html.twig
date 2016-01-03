@@ -6,16 +6,19 @@
 
     <script>
         $(document).ready( function() {
-            console.log("ici");
-            $('#form_report_sellCard').keyup(function() {
-                var val = $('#available_card_fix').val();
-                var nbcard = $('#form_sellCard').val();
-                var newval = val - nbcard;
-                $('#form_availableCard').val(newval);
+            var availableCard = $('#availableCard');
+            var availableCards = availableCard.val();
+            var money_before = $('#amountBefore').val();
 
-                var money_before = $('#form_amountBefore').val();
-                var money_after = parseInt(money_before) + parseInt(nbcard*5);
-                $('#form_amountAfter').val(money_after);
+            $('#sellCard').change(function() {
+                var sellCards = $('#sellCard').val();
+                var new_availableCards = availableCards - sellCards;
+                availableCard.val(new_availableCards);
+
+                var money_after = parseInt(money_before) + parseInt(sellCards * 5);
+                console.log(parseInt(money_before));
+                console.log(parseInt(parseInt(sellCards * 5)));
+                $('#amountAfter').val(parseInt(money_after));
             });
         });
     </script>
@@ -35,13 +38,13 @@
                     <div class="control-group">
                         <label class="span3" for="money_before">Money before this report : </label>
                         <div class="controls">
-                            {{ form_widget(form.amountBefore, { 'attr': {'class': 'span3', 'disabled': '' } }) }}
+                            {{ form_widget(form.amountBefore, { 'id': 'amountBefore' }) }}
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="span3" for="money_before">Money after this report : </label>
                         <div class="controls">
-                            {{ form_widget(form.amountAfter, { 'attr': {'class': 'span3', 'disabled': '' }}) }}
+                            {{ form_widget(form.amountAfter, { 'id': 'amountAfter' }) }}
                         </div>
                     </div>
 
@@ -51,7 +54,7 @@
                         <label class="span3" for="nbCardSold">Number of sold cards : </label>
 
                         <div class="controls">
-                            {{ form_widget(form.sellCard, { 'attr': {'class': 'span3', 'min': '1'} }) }}
+                            {{ form_widget(form.sellCard, { 'id': 'sellCard' }) }}
                         </div>
                         <!-- /controls -->
                     </div>
@@ -59,7 +62,7 @@
                         <label class="span3" for="nbCardSoldAvailable">Number of available cards : </label>
 
                         <div class="controls">
-                            {{ form_widget(form.availableCard, { 'attr': {'class': 'span3', 'min': '1', 'disabled': ''} }) }}
+                            {{ form_widget(form.availableCard, { 'id': 'availableCard' }) }}
                             <input type="hidden" id="available_card_fix" value="{{ cards }}">
                         </div>
                         <!-- /controls -->
