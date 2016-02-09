@@ -15,7 +15,7 @@
                 {% if esner.mentees|length > 0 and esner.mentor is null %}
                     <ul>
                         <li>
-                            <a href="#">{{ esner.member.fullname }}</a>
+                            <a href="#">{{ esner }}</a>
                                 <ul>
                                     {% include "@ESNHR/Recruitment/tree.html.twig" with {'mentees': esner.mentees} %}
                                 </ul>

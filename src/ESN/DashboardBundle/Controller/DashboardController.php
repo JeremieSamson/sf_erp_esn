@@ -49,7 +49,7 @@ class DashboardController extends Controller
         $erasmus = count($em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 0)));
 
         //Reports
-        $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), null, 5, null);;
+        $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array("date" => "DESC"), 5, null);;
 
         //Events
         $events = null;//$this->getEvents();

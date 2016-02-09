@@ -6,6 +6,7 @@
 
 {% block body %}
     <div class="span12">
+
         <p>
             {% for message in app.session.flashbag.get('notice') %}
                 <div class="alert alert-success">
@@ -15,6 +16,8 @@
             {% endfor %}
         </p>
 
-        {% block content %}{% endblock %}
+        <div class="widget-content">
+            {% block content %}{% endblock %}
+        </div>
     </div>
 {% endblock %}

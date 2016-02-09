@@ -137,7 +137,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="active", type="boolean", nullable=true)
      */
-    private $active = 1;
+    private $active = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="erasmusProgramme_esners", cascade="persist")
@@ -223,7 +223,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToOne(targetEntity="ESN\AdministrationBundle\Entity\Country", inversedBy="users", cascade="persist")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $nationality;
 
@@ -466,6 +466,8 @@ class User extends BaseUser
         $this->setPlainPassword(implode($pass)); //turn the array into a string
     }
 
+    /******************************************************************************************************************/
+
     /**
      * Check permission according to galaxy roles
      *
@@ -485,25 +487,77 @@ class User extends BaseUser
 
         switch($block){
             case 'dashboard' :
-                return in_array('Local.activeMember', explode(',', $this->getGalaxyRoles()));
+                return $this->isActiveMember();
             break;
             case 'treasury' :
-                return in_array('localTreasurer', explode(',', $this->getGalaxyRoles()));
+                return $this->isTreasurer() || $this->isPresident();
             break;
             case 'human-ressources':
-                return in_array('localVicePresident', explode(',', $this->getGalaxyRoles()));
+                return $this->isVP() || $this->isPresident();
             break;
             case 'administration':
-                return in_array('Local.webmaster', explode(',', $this->getGalaxyRoles()));
+                return $this->isWebmaster();
             break;
         }
 
         return false;
     }
 
+    /**
+     * Check if user is super admin
+     *
+     * @return bool
+     */
     public function isSuperAdmin(){
         return in_array("ROLE_SUPER_ADMIN", $this->getRoles());
     }
+
+    /**
+     * Check if user is VP
+     *
+     * @return bool
+     */
+    public function isVP(){
+        return in_array('Local.vicePresident', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is Treasurer
+     *
+     * @return bool
+     */
+    public function isTreasurer(){
+        return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is Webmaster
+     *
+     * @return bool
+     */
+    public function isWebmaster(){
+        return in_array('Local.webmaster', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is President
+     *
+     * @return bool
+     */
+    public function isPresident(){
+        return in_array('Local.president', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * Check if user is Active Member
+     *
+     * @return bool
+     */
+    public function isActiveMember(){
+        return in_array('Local.activeMember', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /******************************************************************************************************************/
 
     /**
      * @return string

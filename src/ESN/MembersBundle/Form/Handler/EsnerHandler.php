@@ -15,6 +15,7 @@ use FOS\UserBundle\Mailer\Mailer;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -68,11 +69,11 @@ class EsnerHandler
                 /** @var User $user */
                 $user = $this->form->getData();
 
-                if ($this->form->get('sendmail')->getData()){
+                if ($this->form->has('sendmail') && $this->form->get('sendmail')->getData()){
                     $this->sendEmail($user);
                 }
 
-                if ($this->form->get('trial')->getData()){
+                if ($this->form->has('trial') && $this->form->get('trial')->getData()){
                     $follow = new EsnerFollow();
                     $follow->setTrialstarted($this->form->get('trial')->getData());
 
@@ -100,6 +101,8 @@ class EsnerHandler
             $user->setEsner(true);
             $user->setEnabled(true);
 
+            $user->setActive(($user->getPost() == "Ancien membre") ? false : true);
+
             $this->em->persist($user);
         }
 
@@ -112,6 +115,8 @@ class EsnerHandler
      * @param User $user
      */
     private function sendEmail(User $user){
+        $attach = __DIR__ . "/../../../HRBundle/Resources/views/Emails/guide.pptx";
+
         $message = \Swift_Message::newInstance()
             ->setSubject('[ESN Lille] Bienvenue dans l\'association')
             ->setFrom($this->container->getParameter('mailer_from'))
@@ -123,6 +128,7 @@ class EsnerHandler
                 ),
                 'text/html'
             )
+            ->attach(\Swift_Attachment::fromPath($attach))
         ;
         $this->mailer->send($message);
     }

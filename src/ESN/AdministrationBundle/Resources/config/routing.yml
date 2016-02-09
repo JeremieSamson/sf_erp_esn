@@ -99,4 +99,8 @@ esn_administration_cards:
     path:     /administration/cards
     defaults: { _controller: ESNAdministrationBundle:Card:addCard }
 
+# CHANGELOG
+changelog:
+    path:     /changelog
+    defaults: { _controller: ESNAdministrationBundle:Administration:changelog }
  

@@ -14,40 +14,73 @@
         </div>
     </div>
 
-    <table id="erasmus" class="datatable" cellspacing="0" width="100%">
-        <thead>
-        <tr>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Âge</th>
-            <th>Téléphone</th>
-            <th>University</th>
-            <th>Nationalité</th>
-            <th></th>
-        </tr>
-        </thead>
-
-        {% for user in users %}
-            <tbody>
+    <div class="span12">
+        <table id="erasmus" class="datatable span12" cellspacing="0">
+            <thead>
             <tr>
-                <th>{{ user.firstname }}</th>
-                <th>{{ user.lastname }}</th>
-                <th>{% if user.getAge() > 0 %} {{ user.getAge() }} {% else %} ~ {% endif %}</th>
-                <th>{% if user.mobile %} {{ user.mobile }} {% else %} ~ {% endif %}</th>
-                <th>{% if user.university %} {{ user.university }} {% else %} ~ {% endif %}</th>
-                <th>{% if user.nationality %} {{ user.nationality }} {% else %} ~ {% endif %}</th>
-                <th>
-                    <a href="{{ path('esn_members_erasmus_edit', {'user_id': user.id}) }}">
-                        <i class="icon-edit icon-large" style="color: green;"></i>
-                    </a>
-                    <a href="">
-                        <i class="icon-remove-sign icon-large" style="color: red;"></i>
-                    </a>
-                </th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Âge</th>
+                <th>Téléphone</th>
+                <th>University</th>
+                <th>Nationalité</th>
+                <th></th>
             </tr>
-            </tbody>
-        {% endfor %}
-    </table>
+            </thead>
 
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th>{{ user.firstname }}</th>
+                        <th>{{ user.lastname }}</th>
+                        <th>{{ user.email }}</th>
+                        <th>{% if user.getAge() > 0 %} {{ user.getAge() }} {% else %} ~ {% endif %}</th>
+                        <th>{% if user.mobile %} {{ user.mobile }} {% else %} ~ {% endif %}</th>
+                        <th>{% if user.university %} {{ user.university }} {% else %} ~ {% endif %}</th>
+                        <th>{% if user.nationality %} {{ user.nationality }} {% else %} ~ {% endif %}</th>
+                        <th>
+                            <a href="{{ path('esn_members_erasmus_edit', {'user_id': user.id}) }}">
+                                <i class="icon-edit icon-large" style="color: green;"></i>
+                            </a>
+                            <a href="">
+                                <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                            </a>
+                        </th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function() {
+            $('.datatable').dataTable( {
+                "bPaginate": false,
+                "oLanguage": { "sSearch": "" },
+                "bInfo": false,
+                "order": [
+                    [ 0, 'asc' ],
+                    [ 1, 'asc' ]
+                ],
+                aoColumnDefs: [
+                    { "aTargets": [ 0 ], "bSortable": true },
+                    { "aTargets": [ 1 ], "bSortable": true },
+                    { "aTargets": [ 2 ], "bSortable": true },
+                    { "aTargets": [ 3 ], "bSortable": false },
+                    { "aTargets": [ 4 ], "bSortable": false },
+                    { "aTargets": [ 5 ], "bSortable": true },
+                    { "aTargets": [ 6 ], "bSortable": false }
+                ],
+                language: {
+                    searchPlaceholder: "Search ..."
+                }
+            } );
+        } );
+    </script>
 {% endblock %}

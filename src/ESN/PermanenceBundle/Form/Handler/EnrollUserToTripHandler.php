@@ -8,6 +8,7 @@
 
 namespace ESN\PermanenceBundle\Form\Handler;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use ESN\MembersBundle\Entity\Erasmus;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
@@ -45,32 +46,48 @@ class EnrollUserToTripHandler
             if ($this->form->isValid()) {
                 /** @var ParticipateTrip $participateTrip */
                 $participateTrip = $this->form->getData();
-                $participateTrip->setDateInscription(new \DateTime());
 
-                $operation = new Operation();
-                $operation->setDate(new \DateTime());
-                $operation->setDescription("New payment for the trip : " . $participateTrip->getTrip()->getName());
-                $operation->setLibelle("Payment for a trip");
-                $operation->setMontant($participateTrip->getTrip()->getPrice());
+                $users = new ArrayCollection();
+                $participateTrips = $this->em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findByTrip($participateTrip->getTrip());
+                /** @var ParticipateTrip $pt */
+                foreach($participateTrips as $pt){
+                    if (!$users->contains($pt->getUser()))
+                        $users->add($pt->getUser());
+                }
 
-                $montant = $this->em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
 
-                $caisse = new Caisse();
-                $caisse->setMontant($montant + $operation->getMontant());
 
-                $this->em->persist($caisse);
-                $this->em->persist($operation);
-                $this->em->persist($participateTrip);
+                if (!$users->contains($participateTrip->getUser())){
+                    $this->onSuccess($participateTrip);
 
-                $this->em->flush();
+                    return true;
+                }else{
+                    // Erreur to return
+                }
             }
-
-            return true;
         }
 
         return false;
     }
 
-    protected function onSuccess(){
+    protected function onSuccess(ParticipateTrip $participateTrip){
+        $participateTrip->setDateInscription(new \DateTime());
+
+        $operation = new Operation();
+        $operation->setDate(new \DateTime());
+        $operation->setDescription("New payment for the trip : " . $participateTrip->getTrip()->getName());
+        $operation->setLibelle("Payment for a trip");
+        $operation->setMontant($participateTrip->getTrip()->getPrice());
+
+        $montant = $this->em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
+
+        $caisse = new Caisse();
+        $caisse->setMontant($montant + $operation->getMontant());
+
+        $this->em->persist($caisse);
+        $this->em->persist($operation);
+        $this->em->persist($participateTrip);
+
+        $this->em->flush();
     }
 }
