@@ -33,9 +33,10 @@
     <script>
         $(document).ready(function() {
             $('.datatable').dataTable( {
+                "order": [[ 0, 'desc' ], [ 1, 'desc' ]],
                 "bPaginate": false,
                 "oLanguage": { "sSearch": "" },
-                "bInfo": false,
+                "bInfo": false
             } );
         } );
     </script>

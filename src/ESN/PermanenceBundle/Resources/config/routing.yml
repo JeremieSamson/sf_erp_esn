@@ -25,6 +25,10 @@ esn_permanence_seeReport:
     path:     /permanence/seeReport/{id}
     defaults: { _controller: ESNPermanenceBundle:Permanence:seeReport}
 
+esn_permanence_report_delete:
+    path:     /permanence/report/{report_id}/delete
+    defaults: { _controller: ESNPermanenceBundle:Permanence:delete}
+
 esn_permanence_createReports:
     path:     /permanence/createReports
     defaults: { _controller: ESNPermanenceBundle:Permanence:create}

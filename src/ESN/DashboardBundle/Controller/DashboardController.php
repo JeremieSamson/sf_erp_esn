@@ -10,7 +10,8 @@ class DashboardController extends Controller
 {
     /**
      * Affiche la page dashboard
-     * @return type
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
@@ -23,16 +24,16 @@ class DashboardController extends Controller
     
     /**
      * Affiche le subnavbar
-     * @return type
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function subnavbarAction()
     {
         return $this->render('ESNDashboardBundle:Dashboard:subnavbar.html.twig');
     }
-    
+
     /**
-     *
-     * @return type
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dashboardAction() {
         return $this->render('ESNDashboardBundle:Dashboard:dashboard.html.twig', array("dashboard" => $this->getDashboard()));
@@ -40,8 +41,8 @@ class DashboardController extends Controller
 
     private function getDashboard(){
         //Facebook
-        //$likes         = ($this->getFacebookPageLikes() >= 0) ? $this->getFacebookPageLikes() : 0;
-        //$group_members = ($this->getFacebookGroupMembers() >= 0) ? $this->getFacebookGroupMembers() : 0;
+        $likes         = $this->fbLikeCount();
+        $group_members = $this->fbGroupMemberCount();
 
         //Members
         $em      = $this->getDoctrine()->getManager();
@@ -52,15 +53,14 @@ class DashboardController extends Controller
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array("date" => "DESC"), 5, null);;
 
         //Events
-        $events = null;//$this->getEvents();
+        $events = $this->getEvents();
 
-        $dashboard = array( "facebook"  => array("likes" => 0, "group_members" => 0),
-                            "members"   => array("esners" => $esners, "erasmus" => $erasmus),
-                            "reports"   => $reports,
-                            "events"    => $events
+        return array(
+            "facebook"  => array("likes" => $likes, "group_members" => $group_members),
+            "members"   => array("esners" => $esners, "erasmus" => $erasmus),
+            "reports"   => $reports,
+            "events"    => $events
         );
-
-        return $dashboard;
     }
 
     /**
@@ -108,93 +108,132 @@ class DashboardController extends Controller
         }
     }
 
-    /*
+    /**
      * Get Events from website
      * @param $limit
      * @return events
      */
     private function getEvents($limit = 5){
         $base_url = $this->container->getParameter('section_website');
+        $xmlDoc = new \DOMDocument();
+        $items = array();
 
-        $content = $this->get_fcontent($base_url . "/events/feed/");
-        $rssitem = null;
+        try {
+            $xmlDoc->load($base_url. "/events/feed");
+            $feed   = $xmlDoc->getElementsByTagName('item');
 
-        $x = new SimpleXmlElement($content[0]);
+            for ($i = 0; $i < $limit; $i++) {
+                if (
+                    is_object($feed)
+                    && is_object($feed->item($i))
+                    && is_object($feed->item($i)->getElementsByTagName('title'))
+                    && is_object($feed->item($i)->getElementsByTagName('title')->item(0))
+                    && is_object($feed->item($i)->getElementsByTagName('title')->item(0)->childNodes)
+                    && is_object($feed->item($i)->getElementsByTagName('link'))
+                    && is_object($feed->item($i)->getElementsByTagName('link')->item(0))
+                    && is_object($feed->item($i)->getElementsByTagName('link')->item(0)->childNodes)
+                    && is_object($feed->item($i)->getElementsByTagName('description'))
+                    && is_object($feed->item($i)->getElementsByTagName('description')->item(0))
+                    && is_object($feed->item($i)->getElementsByTagName('description')->item(0)->childNodes)
+                ) {
 
-        $cpt = 0;
-        foreach($x->channel->item as $entry) {
-            if ($cpt < $limit){
-                $element = array();
+                    //Get Image
+                    $description = $feed->item($i)->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
+                    $firstcut = explode("?itok", $description);
+                    $image = "";
+                    if (count($firstcut) > 1){
+                        $firstpart = $firstcut[0];
+                        $url = explode("href=\"", $firstpart);
+                        $image = $url[1];
+                    }
 
-                //Get Image
-                $description = $entry->description;
-                $firstcut = explode("?itok", $description);
-                if (count($firstcut) > 1){
-                    $firstpart = $firstcut[0];
-                    $url = explode("href=\"", $firstpart);
-
-                    $image = $url[1];
+                    if (@file_get_contents($image))
+                    {
+                        $items[] = array(
+                            'title' => $this->cleanDatasForRss($feed->item($i)->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue),
+                            'link'   => $feed->item($i)->getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue,
+                            'image'  => $image,
+                            'description' => substr(strip_tags($description),0, 250)
+                        );
+                    }
                 }
-
-                $date = $entry->pubDate;
-                $newDate = date("d-m-Y H:i:s", strtotime($date));
-                $element["date"] = $newDate;
-                $element["title"] = $entry->title;
-                $element["description"] = substr(strip_tags($entry->description),0, 100);
-                $element["link"] = $entry->link;
-                $element["image"] = $image;
-                $rssitem[] = $element;
             }
+        } catch (\ErrorException $error) {}
 
-            $cpt++;
+        if (count($items) <= 0) {
+            $this->get('session')->getFlashBag()->add('error', $this->get('translator')->trans('error.rss'));
         }
 
-        return $rssitem;
+        return $items;
     }
 
-    /*
+    /**
      * Get Facebook page likes
-     * @return likes
+     *
+     * @return integer
      */
-    private function getFacebookPageLikes(){
-        $pageID = $this->container->getParameter('facebook_page_id');
-        $base_url = "https://graph.facebook.com/";
-        $access_token = "CAACEdEose0cBAPjsvVz4m7woCUaePQczZCswNhIC4yHGUZCnMG6Pxu9ZAcPHnVQHPEx2WnntUPxqlgFfGHhKFQMBPY7keej5bVHcARbsY8KIXrSM7cJstbZA4NROLNDjcQ1A0ceombbSEJRDklYssZBw7MERMYhGpPBMxFD93fBxcDqZA92KBEAI60eKl8SSBzW1ZCpCRoetRVMAz8KVCu9";
-        $url = $base_url . $pageID . '?access_token=' . $access_token;
-        return $this->getFromJson($url, "likes");
+    function fbLikeCount(){
+        $id = $this->container->getParameter('fb_page_id');
+        $appid = $this->container->getParameter('fb_appid');
+        $appsecret = $this->container->getParameter('fb_secret');
+
+        //Construct a Facebook URL
+        $json_url ='https://graph.facebook.com/'.$id.'?access_token='.$appid.'|'.$appsecret;
+        $json = file_get_contents($json_url);
+        $json_output = json_decode($json);
+
+        //Extract the likes count from the JSON object
+        if($json_output->likes){
+            return $likes = $json_output->likes;
+        }else{
+            return 0;
+        }
     }
 
-    /*
+    /**
      * Get Facebook Group members number
-     * @return numbers
+     * @return integer
      */
-    private function getFacebookGroupMembers(){
-        $group_id = $this->container->getParameter('facebook_group_id');
+    private function fbGroupMemberCount(){
+        $appid = $this->container->getParameter('fb_appid');
+        $appsecret = $this->container->getParameter('fb_secret');
+        $group_id = $this->container->getParameter('fb_group_id');
 
-        $access_token = "CAACEdEose0cBAPjsvVz4m7woCUaePQczZCswNhIC4yHGUZCnMG6Pxu9ZAcPHnVQHPEx2WnntUPxqlgFfGHhKFQMBPY7keej5bVHcARbsY8KIXrSM7cJstbZA4NROLNDjcQ1A0ceombbSEJRDklYssZBw7MERMYhGpPBMxFD93fBxcDqZA92KBEAI60eKl8SSBzW1ZCpCRoetRVMAz8KVCu9";
-        $base_url = "https://graph.facebook.com/";
-        $url = $base_url . $group_id . '/members?access_token=' . $access_token;
+        //Construct a Facebook URL
+        $json_url ='https://graph.facebook.com/'.$group_id.'/members?access_token='.$appid.'|'.$appsecret;
+        $json = file_get_contents($json_url);
+        $json_output = json_decode($json);
 
         $total_members = 0;
-        $content = $this->get_fcontent($url);
-        $json = json_decode($content[0],true);
-        while (!empty($json['paging']['next'])){
+
+        while (!empty($json_output->next)){
             $total_members += count($json['data']);
             $content=$this->get_fcontent($json['paging']['next']);
             $json=json_decode($content[0],true);
         }
-        return $total_members;
     }
 
-    /*
-     * @param $url Facebook GRAPH API url
-     * @param $key JSON key
-     * @return json
+    /**
+     * Clean title for RSS export
+     *
+     * @author Vincent Chalamon <vincent@ylly.fr>
+     *
+     * @param string $value Item title
+     *
+     * @return string
      */
-    private function getFromJson($url, $key){
-        $content = $this->get_fcontent($url);
-        $json = json_decode($content[0], true);
+    protected function cleanDatasForRss($value)
+    {
+        $value = strip_tags(str_ireplace(array('</p>', '</div>', '</td>'), array('<br />', '<br />', '<br />'), $value), '<br />');
+        if (strlen($value) > 255) {
+            if (false !== ($breakpoint = strpos($value, ' ', 255))) {
+                $length = $breakpoint;
+            }
+            $value = substr($value, 0, $length).'...';
 
-        return (array_key_exists($key, $json)) ? $json[$key] : null;
+            return $value;
+        }
+
+        return $value;
     }
 }
