@@ -10,16 +10,22 @@
                   <ul class="news-items">
                       {% for event in dashboard.events %}
                           <li>
-
-                              <div class="news-item-date">
-                                  <span class="news-item-day">{{ event.date|date("d") }}</span>
-                                  <span class="news-item-month">{{ event.date|date("M") }}</span>
-                              </div>
                               <div class="news-item-detail">
-                                  <a href="{{ event.link }}" class="news-item-title" target="_blank">{{ event.title }}</a>
-                                  <p class="news-item-preview">
-                                      {{ event.description ~ ' ...' }}
-                                  </p>
+                                  <a href="{{ event.link }}" class="news-item-title" target="_blank">
+                                      <img src="{{ event.image }}" style="width: 60%;">
+                                  </a>
+                                  <div style="width:40%;float: right;">
+                                      <div style="margin-left: 20px;">
+                                          <p>
+                                              <a href="{{ event.link }}" class="news-item-title" target="_blank">
+                                                  {{ event.title }}
+                                              </a>
+                                          </p>
+                                          <p>
+                                              {{ event.description|raw }}
+                                          </p>
+                                      </div>
+                                  </div>
                               </div>
                           </li>
                       {% endfor %}
@@ -30,10 +36,32 @@
               <!-- /widget -->
         </div>
     {% endif %}
-</div>
-<div class="row">
 
-    <div class="span3">
+    <div class="span4">
+        <div class="widget widget-nopad">
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+                <h3> Social Media </h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+                <div class="widget big-stats-container">
+                    <div class="widget-content">
+                        <div id="big_stats" class="cf">
+                            <div class="stat">
+                                <i class="icon-facebook"></i>
+                                <span class="value">{{ dashboard.facebook.likes }}</span> Likes
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span4">
         <div class="widget widget-nopad">
             <div class="widget-header"> <i class="icon-list-alt"></i>
               <h3> Members</h3>
@@ -83,5 +111,19 @@
     {% endif %}
 </div>
 
+<div class="row">
+    <div class="span12">
+        <div class="widget widget-nopad">
+            <div class="widget-header"> <i class="icon-list-alt"></i>
+                <h3>Google Calendar</h3>
+            </div>
+            <!-- /widget-header -->
+            <div class="widget-content">
+                <iframe src="https://calendar.google.com/calendar/embed?src=lille%40ixesn.fr&ctz=Europe/Brussels" style="border: 0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
+            <!-- /widget-content -->
+        </div>
+        <!-- /widget -->
+    </div>
 </div>
 

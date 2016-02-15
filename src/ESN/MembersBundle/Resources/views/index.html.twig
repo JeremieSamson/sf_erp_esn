@@ -15,6 +15,10 @@
             {% endfor %}
         </p>
     </div>
+
+    <div id="popup_confirm" title="Deleting an item" style="display: none;">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>These items will be permanently deleted and cannot be recovered. Are you sure?</p>
+    </div>
 {% endblock %}
 
 {% block javascript %}
@@ -24,9 +28,29 @@
             var now = new Date();
             var day = ("0" + now.getDate()).slice(-2);
             var month = ("0" + (now.getMonth() + 1)).slice(-2);
-            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            var today = now.getFullYear() + "-" + (month) + "-" + (day);
 
             $('#esner_form_trial').val(today);
-        } );
+
+            var confirm = $(".confirm");
+            confirm.on('click', function () {
+                var url = $(this).attr('data-href');
+
+                $("#popup_confirm").dialog({
+                    resizable: false,
+                    height: 140,
+                    modal: true,
+                    buttons: {
+                        "Delete all items": function () {
+                            console.log(url);
+                            window.location.href = url;
+                        },
+                        Cancel: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        });
     </script>
 {% endblock %}

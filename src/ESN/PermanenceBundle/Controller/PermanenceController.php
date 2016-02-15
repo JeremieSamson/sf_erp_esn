@@ -35,16 +35,45 @@ class PermanenceController extends Controller
     {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
+
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array('date' => 'DESC'));
 
         return $this->render('ESNPermanenceBundle:Reports:list.html.twig', array(
             'reports' => $reports
         ));
     }
+
+    /**
+     * Delete a report
+     *
+     * @param integer $report_id
+     */
+    public function deleteAction($report_id)
+    {
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var PermanenceReport $report */
+        $report = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->find($report_id);
+
+        if (!$report) {
+            throw $this->createNotFoundException('No report found');
+        }
+
+        $em->remove($report);
+
+        $this->get('activity.manager')->delete($report);
+
+        $em->flush();
+
+        $this->get('request')->getSession()->getFlashBag()->add('notice', 'Report deleted');
+
+        return $this->redirect($this->generateUrl('esn_permanence_reports'));
+    }
     
     /**
      * Retourne le montant de la caisse et le nombre de carte disponible.
-     * @return type
+     *
      */
     public function informationsAction()
     { 

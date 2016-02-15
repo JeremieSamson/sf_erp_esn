@@ -58,7 +58,7 @@ class ActivityManager
      */
     public function delete($object){
         $activity = new Activity();
-        $activity->setAction(Activity::$ACTIONS["u"]);
+        $activity->setAction(Activity::$ACTIONS["d"]);
         $activity->setOld(get_class($object));
 
         $this->save($activity);

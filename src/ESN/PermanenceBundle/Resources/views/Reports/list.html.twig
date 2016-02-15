@@ -35,16 +35,19 @@
                                    <td>{{report.date|date('d/m/Y G:i ')}}</td>
                                    <td>{{report.sellCard}}</td>
                                    <td>{{report.amountSell}}</td>
-                                   <td><a href="{{path('esn_permanence_seeReport', {
-                                                    'id' : report.id
-                                                   })}}">View details</a></td>
+                                   <td>
+                                       <a href="{{ path('esn_permanence_seeReport', {'id' : report.id} ) }}"><i class="fa fa-eye"></i></a>
+                                       {% if app.user.hasPermissionFor('human-ressources') %}
+                                           <a href="#" data-href="{{ path('esn_permanence_report_delete', {'report_id' : report.id} ) }}" class="confirm"><i class="fa fa-trash" style="color:red;"></i></a>
+                                       {% endif %}
+                                   </td>
                                </tr>
                             {%endfor %}
                       </tbody>
                 </table>
             </div>
-        </div><!-- widget-content -->
-    </div><!-- /widget -->
-</div><!-- /span8 -->
+        </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -11,6 +11,7 @@ namespace ESN\MembersBundle\Form\Handler;
 use Doctrine\ORM\EntityManager;
 use ESN\UserBundle\Entity\User;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
 class ErasmusHandler
@@ -40,8 +41,20 @@ class ErasmusHandler
             /** @var User $user */
             $user = $this->form->getData();
 
+            // Check if user already registred
+            if ($user->getEmail()){
+                $user_db = $this->em->getRepository('ESNUserBundle:User')->findOneBy(array("email" => $user->getEmail()));
+
+                if ($user_db){
+                    $this->form->get('email')->addError(new FormError('Email already used'));
+                    return false;
+                }
+            }
+
             if (!$user->getId()){
-                $user->setUsername($user->getEmail());
+                $username = ($user->getEmail()) ? $user->getEmail() : strtolower($user->getFirstname() . "_" .$user->getLastname());
+
+                $user->setUsername($username);
                 $user->setRandomPassword();
                 $user->setEsner(false);
                 $user->setEnabled(true);
