@@ -33,41 +33,20 @@ class LoginController extends Controller
 
         if ($user_cas != null){
 
-            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
+            //$user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
+            //$user_db = $em->getRepository("ESNUserBundle:User")->findOneByEmail(array("email" => "marie.mullier@hotmail.fr"));
 
             //Check sur le prénom & le nom
-            if (!$user_db)
-                $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("firstname" => $user_cas->getFirstname(), "lastname" => $user_cas->getLastname()));
+            //if (!$user_db){
+                $first = "Marie";
+                $last = "Mullier";
+                //$user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("firstname" => $user_cas->getFirstname(), "lastname" => $user_cas->getLastname()));
+                $user_db = $em->getRepository("ESNUserBundle:User")->find(407);
+            //}
 
-            $user = (!$user_db) ? new \ESN\UserBundle\Entity\User() : $user_db;
+            $user = $user_db;
 
-            $user->setUsername($user_cas->getEmail());
-            $user->setUsernameCanonical($user_cas->getEmail());
-            $user->setEmail($user_cas->getEmail());
-            $user->setGalaxyRoles(implode(",", $user_cas->getRoles()));
-            $user->setFirstname($user_cas->getFirstname());
-            $user->setLastname($user_cas->getLastname());
-            $user->setBirthdate(\DateTime::createFromFormat("d/m/Y", $user_cas->getBirthdate()));
-            $user->setGender($user_cas->getGender());
-            $user->setSection($user_cas->getSection());
-            $user->setCodeSection($user_cas->getSc());
-            $user->setGalaxyPicture($user_cas->getPicture());
-            $user->setMobile($user_cas->getTelephone());
-
-            if (!$user_db) {
-                $user->setEnabled(true);
-                $user->setEsner(true);
-                $user->setUsername($user_cas->getEmail());
-                $user->setUsernameCanonical($user_cas->getEmail());
-                $user->setEmail($user_cas->getEmail());
-                $user->setRoles(array('ROLE_USER'));
-                $user->setRandomPassword();
-                $em->persist($user);
-            }
-
-            $em->flush();
-
-            $token = new UsernamePasswordToken($user, null, "main", $user->getRoles());
+            $token = new UsernamePasswordToken($user, null, "main", $user_db->getRoles());
             $this->get("security.context")->setToken($token);
 
             $this->get('activity.manager')->login();

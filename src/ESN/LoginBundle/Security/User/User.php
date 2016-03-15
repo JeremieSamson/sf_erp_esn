@@ -42,7 +42,10 @@ class User implements UserInterface, EquatableInterface
         $this->picture      = $attributes['picture'];
         $this->birthdate    = $attributes['birthdate'];
         $this->gender       = $attributes['gender'];
-        $this->telephone    = $attributes['telephone'];
+
+        if (array_key_exists('telephone', $attributes))
+            $this->telephone    = $attributes['telephone'];
+
         $this->address      = $attributes['address'];
         $this->section      = $attributes['section'];
         $this->country      = $attributes['country'];
