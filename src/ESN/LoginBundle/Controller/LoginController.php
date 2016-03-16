@@ -34,19 +34,14 @@ class LoginController extends Controller
         if ($user_cas != null){
 
             //$user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
-            //$user_db = $em->getRepository("ESNUserBundle:User")->findOneByEmail(array("email" => "marie.mullier@hotmail.fr"));
+            $user_db = $em->getRepository("ESNUserBundle:User")->find(407);
 
             //Check sur le prénom & le nom
-            //if (!$user_db){
-                $first = "Marie";
-                $last = "Mullier";
-                //$user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("firstname" => $user_cas->getFirstname(), "lastname" => $user_cas->getLastname()));
-                $user_db = $em->getRepository("ESNUserBundle:User")->find(407);
-            //}
+            if (!$user_db){
+                $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("firstname" => $user_cas->getFirstname(), "lastname" => $user_cas->getLastname()));
+            }
 
-            $user = $user_db;
-
-            $token = new UsernamePasswordToken($user, null, "main", $user_db->getRoles());
+            $token = new UsernamePasswordToken($user_db, null, "main", $user_db->getRoles());
             $this->get("security.context")->setToken($token);
 
             $this->get('activity.manager')->login();

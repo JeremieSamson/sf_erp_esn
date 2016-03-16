@@ -38,12 +38,13 @@ class TreasuryController extends Controller
         } catch (NoResultException $e) {
             $montant = 0;
         }
-        
-        $repository = $this->getDoctrine()->getManager()->getRepository('ESNTreasuryBundle:Operation');
-        
-        $operations = array("operations" => $repository->findAll(), "caisse" => $montant);
+
+        $operations = $em->getRepository('ESNTreasuryBundle:Operation')->getOperationsOrdered();
                 
-        return $this->render('ESNTreasuryBundle:Operations:list.html.twig',$operations);
+        return $this->render('ESNTreasuryBundle:Operations:list.html.twig',array(
+            "operations" => $operations,
+            "caisse" => $montant
+        ));
         
     }
     /**

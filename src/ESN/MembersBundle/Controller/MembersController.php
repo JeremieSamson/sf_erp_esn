@@ -15,6 +15,7 @@ use ESN\MembersBundle\Form\Type\EsnerType;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
@@ -190,7 +191,7 @@ class MembersController extends Controller
      * @param Request $request
      * @param integer $user_id
      *
-     * @throws createAccessDeniedException
+     * @throws AccessDeniedException
      */
     public function editEsnerAction(Request $request, $user_id)
     {
@@ -220,10 +221,7 @@ class MembersController extends Controller
         if ($formHandler->process()){
             $this->get('activity.manager')->update("Esner", $user);
 
-            return $this->redirect($this->generateUrl('esn_members_detail', array(
-                'trips'=> $trips,
-                'user_id'=>$user_id
-            )));
+            return $this->redirect($this->generateUrl('esn_members_esner'));
         }
 
         return $this->render("ESNMembersBundle:Esners:edit.html.twig", array(
