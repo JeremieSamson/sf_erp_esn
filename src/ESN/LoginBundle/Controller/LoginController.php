@@ -33,8 +33,8 @@ class LoginController extends Controller
 
         if ($user_cas != null){
 
-            //$user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
-            $user_db = $em->getRepository("ESNUserBundle:User")->find(407);
+            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
+            //$user_db = $em->getRepository("ESNUserBundle:User")->find(407);
 
             //Check sur le prénom & le nom
             if (!$user_db){
