@@ -527,7 +527,7 @@ class User extends BaseUser
      * @return bool
      */
     public function isTreasurer(){
-        return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles()));
+        return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles())) || $this->isVP();
     }
 
     /**

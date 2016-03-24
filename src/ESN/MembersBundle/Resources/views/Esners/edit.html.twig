@@ -23,6 +23,7 @@
             </div><!-- /widget-content -->
         </div><!-- /widget -->
     </div>
+
     <div class="span9">
         <div class="widget">
             <div class="widget-content">
@@ -36,6 +37,16 @@
                     <a href="{{ path('esn_members_esner_detail', {'user_id': user.id}) }}" style="float:right;">
                         <i class="fa-eye icon-large" style="color: blue;"></i>
                     </a>
+                {% endif %}
+
+                <br>
+
+                {% if app.user.galaxyRoles %}
+                    {% set roles = app.user.galaxyRoles|split(',') %}
+
+                    {% for role in roles %}
+                        {{ role }}{% if not loop.last %},{% endif %}
+                    {% endfor %}
                 {% endif %}
             </div><!-- /widget-content -->
         </div><!-- /widget -->

@@ -60,7 +60,7 @@ class LoginController extends Controller
             if (!$user_db)
                 $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("firstname" => $user_cas->getFirstname(), "lastname" => $user_cas->getLastname()));
 
-            $user = (!$user_db) ? new User() : $user_db;
+            $user = (!$user_db) ? new \ESN\UserBundle\Entity\User() : $user_db;
 
             $user->setUsername($user_cas->getEmail());
             $user->setUsernameCanonical($user_cas->getEmail());

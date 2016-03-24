@@ -258,8 +258,6 @@ class MembersController extends Controller
         if ($formHandler->process()){
             $this->get('activity.manager')->update("Erasmus", $user);
 
-            $em->flush();
-
             return $this->redirect($this->generateUrl('esn_members_erasmus_detail', array(
                 'user_id' => $user_id
             )));
