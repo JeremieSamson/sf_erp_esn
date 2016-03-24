@@ -220,10 +220,7 @@ class MembersController extends Controller
         if ($formHandler->process()){
             $this->get('activity.manager')->update("Esner", $user);
 
-            return $this->redirect($this->generateUrl('esn_members_detail', array(
-                'trips'=> $trips,
-                'user_id'=>$user_id
-            )));
+            return $this->redirect($this->generateUrl('esn_members_detail'));
         }
 
         return $this->render("ESNMembersBundle:Esners:edit.html.twig", array(
