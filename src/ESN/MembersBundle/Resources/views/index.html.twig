@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block body %}
-    <div class="span12">
-        <p>
-            {% for message in app.session.flashbag.get('notice') %}
-                <div class="alert alert-success">
-                    <a href="#" class="close" data-dismiss="alert">&times;</a>
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </p>
+    <div class="row">
+        <div class="span12">
+            <p>
+                {% for message in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </p>
+        </div>
     </div>
 
     <div id="popup_confirm" title="Deleting an item" style="display: none;">

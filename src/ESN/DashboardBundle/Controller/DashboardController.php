@@ -179,15 +179,17 @@ class DashboardController extends Controller
 
         //Construct a Facebook URL
         $json_url ='https://graph.facebook.com/'.$id.'?access_token='.$appid.'|'.$appsecret;
-        $json = file_get_contents($json_url);
-        $json_output = json_decode($json);
+        $json = @file_get_contents($json_url);
 
-        //Extract the likes count from the JSON object
-        if($json_output->likes){
-            return $likes = $json_output->likes;
-        }else{
-            return 0;
+        if ($json != false) {
+            $json_output = json_decode($json);
+
+            if($json_output->likes){
+                return $likes = $json_output->likes;
+            }
         }
+
+        return 0;
     }
 
     /**
@@ -201,16 +203,21 @@ class DashboardController extends Controller
 
         //Construct a Facebook URL
         $json_url ='https://graph.facebook.com/'.$group_id.'/members?access_token='.$appid.'|'.$appsecret;
-        $json = file_get_contents($json_url);
-        $json_output = json_decode($json);
+        $json = @file_get_contents($json_url);
 
         $total_members = 0;
 
-        while (!empty($json_output->next)){
-            $total_members += count($json['data']);
-            $content=$this->get_fcontent($json['paging']['next']);
-            $json=json_decode($content[0],true);
+        if ($json != false) {
+            $json_output = json_decode($json);
+
+            while (!empty($json_output->next)){
+                $total_members += count($json['data']);
+                $content=$this->get_fcontent($json['paging']['next']);
+                $json=json_decode($content[0],true);
+            }
         }
+
+        return $total_members;
     }
 
     /**

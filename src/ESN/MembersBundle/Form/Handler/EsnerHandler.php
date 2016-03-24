@@ -71,7 +71,7 @@ class EsnerHandler
                 $user = $this->form->getData();
 
                 // Check if user already registred
-                if ($user->getEmail()){
+                if (!$user->getId() && $user->getEmail()){
                     $user_db = $this->em->getRepository('ESNUserBundle:User')->findOneBy(array("email" => $user->getEmail()));
 
                     if ($user_db){
@@ -98,6 +98,7 @@ class EsnerHandler
                 return true;
             }
         }
+
         return false;
     }
 

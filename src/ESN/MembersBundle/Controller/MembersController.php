@@ -15,6 +15,8 @@ use ESN\MembersBundle\Form\Type\EsnerType;
 use ESN\PermanenceBundle\Entity\ParticipateTrip;
 use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
@@ -190,7 +192,7 @@ class MembersController extends Controller
      * @param Request $request
      * @param integer $user_id
      *
-     * @throws createAccessDeniedException
+     * @throws AccessDeniedException
      */
     public function editEsnerAction(Request $request, $user_id)
     {
@@ -210,8 +212,7 @@ class MembersController extends Controller
             throw new NotFoundResourceException("No ESNer with this ID");
         }
 
-        $trips = $em->getRepository('ESNPermanenceBundle:ParticipateTrip')->findBy(array("user" => $user));
-
+        /** @var Form $form */
         $form = $this->get('form.factory')->create(new EsnerType($em, "update"), $user);
 
         $formHandler = new EsnerHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
@@ -220,7 +221,9 @@ class MembersController extends Controller
         if ($formHandler->process()){
             $this->get('activity.manager')->update("Esner", $user);
 
-            return $this->redirect($this->generateUrl('esn_members_detail'));
+            $this->addFlash('success', "L'utilisateur " . $user->getFullname() . " a bien été mis à jours");
+
+            return $this->redirect($this->generateUrl('esn_members_esner'));
         }
 
         return $this->render("ESNMembersBundle:Esners:edit.html.twig", array(
@@ -254,6 +257,8 @@ class MembersController extends Controller
 
         if ($formHandler->process()){
             $this->get('activity.manager')->update("Erasmus", $user);
+
+            $em->flush();
 
             return $this->redirect($this->generateUrl('esn_members_erasmus_detail', array(
                 'user_id' => $user_id
