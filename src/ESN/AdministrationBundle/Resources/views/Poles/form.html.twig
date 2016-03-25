@@ -27,17 +27,7 @@
                         <!-- /controls -->
                     </div>
                     <!-- /control-group -->
-                    <script type="text/javascript">
-                        $(document).ready(
-                                function () {
-                                    $('#form_color').jPicker(
-                                            {
-                                                window: {
-                                                    expandable: true
-                                                }
-                                            });
-                                });
-                    </script>
+
                     <div class="control-group">
                         <label class="control-label" for="description">Couleur</label>
 
@@ -74,4 +64,14 @@
 
     </div>
 
+    <script type="text/javascript">
+        $(document).ready( function () {
+            $('#form_color').jPicker({
+                window: {
+                    expandable: true
+                }
+            });
+        });
+    </script>
 {% endblock %}
+

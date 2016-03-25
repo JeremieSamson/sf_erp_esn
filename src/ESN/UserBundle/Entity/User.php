@@ -490,13 +490,13 @@ class User extends BaseUser
                 return $this->isActiveMember();
             break;
             case 'treasury' :
-                return $this->isTreasurer() || $this->isPresident();
+                return $this->isVP() || $this->isTreasurer() || $this->isPresident();
             break;
             case 'human-ressources':
                 return $this->isVP() || $this->isPresident();
             break;
             case 'administration':
-                return $this->isWebmaster();
+                return $this->isVP() || $this->isWebmaster();
             break;
         }
 
@@ -527,7 +527,7 @@ class User extends BaseUser
      * @return bool
      */
     public function isTreasurer(){
-        return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles())) || $this->isVP();
+        return in_array('Local.treasurer', explode(',', $this->getGalaxyRoles()));
     }
 
     /**
