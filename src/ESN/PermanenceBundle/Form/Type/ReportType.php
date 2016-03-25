@@ -32,7 +32,7 @@ class ReportType extends AbstractType
             ->add('sellCard', 'integer', array(
                 'attr' => array(
                     'class' => 'span3',
-                    'min' => 1
+                    'min' => 0
                 )
             ))
             ->add('availableCard', 'integer', array(
