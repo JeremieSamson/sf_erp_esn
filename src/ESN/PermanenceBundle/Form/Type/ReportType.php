@@ -8,12 +8,21 @@
 
 namespace ESN\PermanenceBundle\Form\Type;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Translation\Translator;
 
 class ReportType extends AbstractType
 {
+    /**
+     * @var Translator
+     */
+    private $translator;
+
+    public function __construct($translator) {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -32,6 +41,84 @@ class ReportType extends AbstractType
             ->add('sellCard', 'integer', array(
                 'attr' => array(
                     'class' => 'span3',
+                    'min' => 0
+                )
+            ))
+            ->add('hundred', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('fivty', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('twenty', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('ten', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('five', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('two', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('one', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('fivtycent', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('twentycent', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('tencent', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('fivecent', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('twocent', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
+                    'min' => 0
+                )
+            ))
+            ->add('onecent', 'integer', array(
+                'attr' => array(
+                    'class' => 'span1',
                     'min' => 0
                 )
             ))

@@ -9,7 +9,7 @@ use ESN\UserBundle\Entity\User;
  * PermanenceReport
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="ESN\PermanenceBundle\Entity\PermanenceReportRepository")
  */
  class PermanenceReport
 {
@@ -37,9 +37,6 @@ use ESN\UserBundle\Entity\User;
     */
     private $amountSell;
 
-
-
-
     /**
     * @ORM\Column(name="sellCard", type="integer")
     */
@@ -65,12 +62,104 @@ use ESN\UserBundle\Entity\User;
      */
     private $date;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="ESN\UserBundle\Entity\User", inversedBy="reports")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $owner;
+
+
      /**
-      * @ORM\ManyToOne(targetEntity="ESN\UserBundle\Entity\User", inversedBy="reports")
-      * @ORM\JoinColumn(nullable=false)
+      * @var integer
+      *
+      * @ORM\Column(name="hundred", type="integer")
       */
-     private $owner;
-    
+     private $hundred;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="fivty", type="integer")
+      */
+     private $fivty;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="twenty", type="integer")
+      */
+     private $twenty;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="ten", type="integer")
+      */
+     private $ten;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="five", type="integer")
+      */
+     private $five;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="two", type="integer")
+      */
+     private $two;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="one", type="integer")
+      */
+     private $one;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="fivtycent", type="integer")
+      */
+     private $fivtycent;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="twentycent", type="integer")
+      */
+     private $twentycent;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="tencent", type="integer")
+      */
+     private $tencent;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="fivecent", type="integer")
+      */
+     private $fivecent;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="twocent", type="integer")
+      */
+     private $twocent;
+
+     /**
+      * @var integer
+      *
+      * @ORM\Column(name="onecent", type="integer")
+      */
+     private $onecent;
+
     public function __construct()
     {
         $this->date = new \DateTime();
@@ -286,5 +375,213 @@ use ESN\UserBundle\Entity\User;
      public function setOwner(User $owner)
      {
          $this->owner = $owner;
+     }
+
+     /**
+      * @return int
+      */
+     public function getHundred()
+     {
+         return $this->hundred;
+     }
+
+     /**
+      * @param int $hundred
+      */
+     public function setHundred($hundred)
+     {
+         $this->hundred = $hundred;
+     }
+
+     /**
+      * @return int
+      */
+     public function getFivty()
+     {
+         return $this->fivty;
+     }
+
+     /**
+      * @param int $fivty
+      */
+     public function setFivty($fivty)
+     {
+         $this->fivty = $fivty;
+     }
+
+     /**
+      * @return int
+      */
+     public function getTwenty()
+     {
+         return $this->twenty;
+     }
+
+     /**
+      * @param int $twenty
+      */
+     public function setTwenty($twenty)
+     {
+         $this->twenty = $twenty;
+     }
+
+     /**
+      * @return int
+      */
+     public function getTen()
+     {
+         return $this->ten;
+     }
+
+     /**
+      * @param int $ten
+      */
+     public function setTen($ten)
+     {
+         $this->ten = $ten;
+     }
+
+     /**
+      * @return int
+      */
+     public function getFive()
+     {
+         return $this->five;
+     }
+
+     /**
+      * @param int $five
+      */
+     public function setFive($five)
+     {
+         $this->five = $five;
+     }
+
+     /**
+      * @return int
+      */
+     public function getTwo()
+     {
+         return $this->two;
+     }
+
+     /**
+      * @param int $two
+      */
+     public function setTwo($two)
+     {
+         $this->two = $two;
+     }
+
+     /**
+      * @return int
+      */
+     public function getOne()
+     {
+         return $this->one;
+     }
+
+     /**
+      * @param int $one
+      */
+     public function setOne($one)
+     {
+         $this->one = $one;
+     }
+
+     /**
+      * @return int
+      */
+     public function getFivtycent()
+     {
+         return $this->fivtycent;
+     }
+
+     /**
+      * @param int $fivtycent
+      */
+     public function setFivtycent($fivtycent)
+     {
+         $this->fivtycent = $fivtycent;
+     }
+
+     /**
+      * @return int
+      */
+     public function getTwentycent()
+     {
+         return $this->twentycent;
+     }
+
+     /**
+      * @param int $twentycent
+      */
+     public function setTwentycent($twentycent)
+     {
+         $this->twentycent = $twentycent;
+     }
+
+     /**
+      * @return int
+      */
+     public function getTencent()
+     {
+         return $this->tencent;
+     }
+
+     /**
+      * @param int $tencent
+      */
+     public function setTencent($tencent)
+     {
+         $this->tencent = $tencent;
+     }
+
+     /**
+      * @return int
+      */
+     public function getFivecent()
+     {
+         return $this->fivecent;
+     }
+
+     /**
+      * @param int $fivecent
+      */
+     public function setFivecent($fivecent)
+     {
+         $this->fivecent = $fivecent;
+     }
+
+     /**
+      * @return int
+      */
+     public function getTwocent()
+     {
+         return $this->twocent;
+     }
+
+     /**
+      * @param int $twocent
+      */
+     public function setTwocent($twocent)
+     {
+         $this->twocent = $twocent;
+     }
+
+     /**
+      * @return int
+      */
+     public function getOnecent()
+     {
+         return $this->onecent;
+     }
+
+     /**
+      * @param int $onecent
+      */
+     public function setOnecent($onecent)
+     {
+         $this->onecent = $onecent;
      }
 }

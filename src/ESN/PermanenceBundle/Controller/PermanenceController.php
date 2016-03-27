@@ -5,6 +5,7 @@ namespace ESN\PermanenceBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use ESN\AdministrationBundle\Controller\BaseController;
 use ESN\AdministrationBundle\Entity\Trip;
 use ESN\PermanenceBundle\Form\Handler\EnrollUserToTripHandler;
 
@@ -24,7 +25,7 @@ use ESN\AdministrationBundle\Entity\CardRepository;
 use ESN\TreasuryBundle\Entity\Caisse;
 use ESN\TreasuryBundle\Entity\CaisseRepository;
 
-class PermanenceController extends Controller
+class PermanenceController extends BaseController
 {
     /**
      * List all reports
@@ -216,8 +217,11 @@ class PermanenceController extends Controller
         $report->setAmountAfter($caisse);
         $report->setAvailableCard($nbCard);
 
+        /** @var PermanenceReport $previousReport */
+        $previousReport = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->getLast();
+
         /** @var Form $form */
-        $form = $this->get('form.factory')->create(new ReportType($em), $report);
+        $form = $this->get('form.factory')->create(new ReportType($this->getTranslator()), $report);
         $formHandler = new ReportHandler($em, $form, $request, $this->getUser());
         $form->handleRequest($request);
 
@@ -229,11 +233,12 @@ class PermanenceController extends Controller
 
             return $this->redirect($this->generateUrl('esn_permanence_reports'));
         }
-        
+
         return $this->render('ESNPermanenceBundle:Reports:create.html.twig', array(
             'form'  => $form->createView(),
             'cards' => $nbCard,
-            'money' => $caisse
+            'money' => $caisse,
+            'previous' => $previousReport[0]
         ));
     }//createReportAction
     

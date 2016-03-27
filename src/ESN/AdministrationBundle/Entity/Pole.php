@@ -10,7 +10,6 @@ use ESN\UserBundle\Entity\User;
  * Pole
  *
  * @ORM\Table()
- * @ORM\Entity
  * @ORM\Entity(repositoryClass="ESN\AdministrationBundle\Entity\PoleRepository")
  */
 class Pole

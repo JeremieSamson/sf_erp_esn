@@ -4,25 +4,6 @@
 
     {{ parent() }}
 
-    <script>
-        $(document).ready( function() {
-            var availableCard = $('#availableCard');
-            var availableCards = availableCard.val();
-            var money_before = $('#amountBefore').val();
-
-            $('#sellCard').change(function() {
-                var sellCards = $('#sellCard').val();
-                var new_availableCards = availableCards - sellCards;
-                availableCard.val(new_availableCards);
-
-                var money_after = parseInt(money_before) + parseInt(sellCards * 5);
-                console.log(parseInt(money_before));
-                console.log(parseInt(parseInt(sellCards * 5)));
-                $('#amountAfter').val(parseInt(money_after));
-            });
-        });
-    </script>
-
     <div class="span12">
         <div class="widget">
             <div class="widget-content">
@@ -47,6 +28,10 @@
                             {{ form_widget(form.amountAfter, { 'id': 'amountAfter' }) }}
                         </div>
                     </div>
+
+                    <h3> Cash </h3>
+
+                    {% include 'ESNPermanenceBundle:Cash:form.html.twig' %}
 
                     <h3> Cards </h3>
 
@@ -92,4 +77,23 @@
         </div>
         <!-- /widget -->
     </div><!-- /span8 -->
+
+    <script>
+        $(document).ready( function() {
+            var availableCard = $('#availableCard');
+            var availableCards = availableCard.val();
+            var money_before = $('#amountBefore').val();
+
+            $('#sellCard').change(function() {
+                var sellCards = $('#sellCard').val();
+                var new_availableCards = availableCards - sellCards;
+                availableCard.val(new_availableCards);
+
+                var money_after = parseInt(money_before) + parseInt(sellCards * 5);
+                console.log(parseInt(money_before));
+                console.log(parseInt(parseInt(sellCards * 5)));
+                $('#amountAfter').val(parseInt(money_after));
+            });
+        });
+    </script>
 {% endblock %}

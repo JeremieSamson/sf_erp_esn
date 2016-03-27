@@ -33,7 +33,12 @@
                                 <div class="controls">
                                         <input class="span4" id="amountSell" value="{{report.amountSell}}" type="text" disabled>
                                 </div> <!-- /controls -->				
-                        </div>                        
+                        </div>
+
+                        <h3> Cash </h3>
+
+                        {% include 'ESNPermanenceBundle:Cash:show.html.twig' %}
+
                         <h3> Cards </h3>
                         
                              <div class="control-group">											
