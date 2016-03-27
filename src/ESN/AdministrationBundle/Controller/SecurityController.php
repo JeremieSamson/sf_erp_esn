@@ -20,7 +20,7 @@ class SecurityController extends Controller
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $activities = $em->getRepository('ESNAdministrationBundle:Activity')->findAll(array(), array("createdat" => "DESC"));
+        $activities = $em->getRepository('ESNAdministrationBundle:Activity')->getOrderedActivities("DESC");
 
         return $this->render('ESNAdministrationBundle:Security:index.html.twig', array(
             "activities" => $activities

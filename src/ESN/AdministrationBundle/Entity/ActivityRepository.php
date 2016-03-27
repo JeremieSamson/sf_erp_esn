@@ -10,4 +10,10 @@ namespace ESN\AdministrationBundle\Entity;
  */
 class ActivityRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOrderedActivities($order) {
+        $queryBuilder = $this->createQueryBuilder('a');
+        $queryBuilder->orderBy('a.createdAt', $order);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }
