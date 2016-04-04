@@ -44,12 +44,6 @@ class ReportType extends AbstractType
                     'min' => 0
                 )
             ))
-            ->add('hundred', 'integer', array(
-                'attr' => array(
-                    'class' => 'span1',
-                    'min' => 0
-                )
-            ))
             ->add('fivty', 'integer', array(
                 'attr' => array(
                     'class' => 'span1',
@@ -99,24 +93,6 @@ class ReportType extends AbstractType
                 )
             ))
             ->add('tencent', 'integer', array(
-                'attr' => array(
-                    'class' => 'span1',
-                    'min' => 0
-                )
-            ))
-            ->add('fivecent', 'integer', array(
-                'attr' => array(
-                    'class' => 'span1',
-                    'min' => 0
-                )
-            ))
-            ->add('twocent', 'integer', array(
-                'attr' => array(
-                    'class' => 'span1',
-                    'min' => 0
-                )
-            ))
-            ->add('onecent', 'integer', array(
                 'attr' => array(
                     'class' => 'span1',
                     'min' => 0

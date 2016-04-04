@@ -68,14 +68,6 @@ use ESN\UserBundle\Entity\User;
      */
     private $owner;
 
-
-     /**
-      * @var integer
-      *
-      * @ORM\Column(name="hundred", type="integer")
-      */
-     private $hundred;
-
      /**
       * @var integer
       *
@@ -139,26 +131,6 @@ use ESN\UserBundle\Entity\User;
       */
      private $tencent;
 
-     /**
-      * @var integer
-      *
-      * @ORM\Column(name="fivecent", type="integer")
-      */
-     private $fivecent;
-
-     /**
-      * @var integer
-      *
-      * @ORM\Column(name="twocent", type="integer")
-      */
-     private $twocent;
-
-     /**
-      * @var integer
-      *
-      * @ORM\Column(name="onecent", type="integer")
-      */
-     private $onecent;
 
     public function __construct()
     {
@@ -380,22 +352,6 @@ use ESN\UserBundle\Entity\User;
      /**
       * @return int
       */
-     public function getHundred()
-     {
-         return $this->hundred;
-     }
-
-     /**
-      * @param int $hundred
-      */
-     public function setHundred($hundred)
-     {
-         $this->hundred = $hundred;
-     }
-
-     /**
-      * @return int
-      */
      public function getFivty()
      {
          return $this->fivty;
@@ -535,53 +491,5 @@ use ESN\UserBundle\Entity\User;
      public function setTencent($tencent)
      {
          $this->tencent = $tencent;
-     }
-
-     /**
-      * @return int
-      */
-     public function getFivecent()
-     {
-         return $this->fivecent;
-     }
-
-     /**
-      * @param int $fivecent
-      */
-     public function setFivecent($fivecent)
-     {
-         $this->fivecent = $fivecent;
-     }
-
-     /**
-      * @return int
-      */
-     public function getTwocent()
-     {
-         return $this->twocent;
-     }
-
-     /**
-      * @param int $twocent
-      */
-     public function setTwocent($twocent)
-     {
-         $this->twocent = $twocent;
-     }
-
-     /**
-      * @return int
-      */
-     public function getOnecent()
-     {
-         return $this->onecent;
-     }
-
-     /**
-      * @param int $onecent
-      */
-     public function setOnecent($onecent)
-     {
-         $this->onecent = $onecent;
      }
 }
