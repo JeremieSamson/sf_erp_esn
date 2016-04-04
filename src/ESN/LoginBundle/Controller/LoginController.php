@@ -37,7 +37,7 @@ class LoginController extends Controller
             $user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
         }else{
             /** @var User $user_db */
-            $user_db = $em->getRepository("ESNUserBundle:User")->findOneByUsername("marie.mullier@hotmail.fr");
+            $user_db = $em->getRepository("ESNUserBundle:User")->find(407);
 
             $token = new UsernamePasswordToken($user_db, null, "main", $user_db->getRoles());
             $this->get("security.context")->setToken($token);
@@ -64,7 +64,6 @@ class LoginController extends Controller
 
             $user->setUsername($user_cas->getEmail());
             $user->setUsernameCanonical($user_cas->getEmail());
-            $user->setEmail($user_cas->getEmail());
             $user->setGalaxyRoles(implode(",", $user_cas->getRoles()));
             $user->setFirstname($user_cas->getFirstname());
             $user->setLastname($user_cas->getLastname());
@@ -73,7 +72,9 @@ class LoginController extends Controller
             $user->setSection($user_cas->getSection());
             $user->setCodeSection($user_cas->getSc());
             $user->setGalaxyPicture($user_cas->getPicture());
-            $user->setMobile($user_cas->getTelephone());
+
+            if (!$user->getEmail()) $user->setEmail($user_cas->getEmail());
+            if (!$user->getMobile()) $user->setMobile($user_cas->getTelephone());
 
             if (!$user_db) {
                 $user->setEnabled(true);
