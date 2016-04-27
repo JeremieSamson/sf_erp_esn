@@ -59,6 +59,13 @@ class Apply {
 
     /**
      * @var string
+     *
+     * @ORM\Column(name="mobile", type="string", length=14)
+     */
+    private $mobile;
+
+    /**
+     * @var string
      * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
      */
     private $facebook_id;
@@ -115,7 +122,7 @@ class Apply {
     /**
      * Constructor
      */
-    public function __constructor(){
+    public function __construct(){
         $this->languages = new ArrayCollection();
     }
 
@@ -402,5 +409,21 @@ class Apply {
         $now = new \DateTime();
         $interval = $now->diff($date);
         return $interval->y;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
+
+    /**
+     * @param string $mobile
+     */
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
     }
 }

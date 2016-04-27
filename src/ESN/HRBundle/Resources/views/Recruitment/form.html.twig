@@ -15,7 +15,9 @@
 
                     <div style="margin: 10px auto 10px auto;" class="alert alert-info">
                         <p>
-                        Pour nous envoyer votre candidature, merci de remplir ce formulaire avec un maximum d'information. <br>Nous vous enverrons une réponse par mail au plus vite.
+                        Pour nous envoyer votre candidature, merci de remplir ce formulaire avec un maximum d'information.
+                            <br>Nous vous enverrons une réponse par mail au plus vite.
+                            <br><br>Des questions ? N'hésite pas à nous contacter à vp@esnlille.fr !
                         </p>
                     </div>
 
@@ -58,6 +60,13 @@
                             <label class="control-label" for="email">Email</label>
                             <div class="controls">
                                 {{ form_widget(form.email, { 'attr': {'placeholder': 'Email'} }) }}
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="email">Téléphone</label>
+                            <div class="controls">
+                                {{ form_widget(form.mobile) }}
                             </div>
                         </div>
 
