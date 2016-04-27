@@ -35,7 +35,7 @@
                                 </div> <!-- /controls -->				
                         </div>
 
-                        <h3> Cash </h3>
+                        <h3> Cash </h3><br>
 
                         {% include 'ESNPermanenceBundle:Cash:show.html.twig' %}
 
@@ -56,11 +56,19 @@
                         
                         
                         <h3> Informations </h3>
+
+                        <div class="control-group">
+                            <label class="span4" for="frequentation">Frequentation : </label>
+                            <div class="controls">
+                                <input class="span4" id="frequentation" value="{{report.frequentation}}" type="text" disabled>
+                            </div>
+                        </div>
+
                         <div class="control-group">											
-                                    <label class="span4" for="comments">Comments : </label>
-                                    <div class="controls">
-                                        <textarea class="span5" rows="4" cols="14 " style="resize: none;" disabled>{{report.comments}}</textarea>
-                                    </div>		
+                            <label class="span4" for="comments">Comments : </label>
+                            <div class="controls">
+                                <textarea class="span5" rows="4" cols="14 " style="resize: none;" disabled>{{report.comments}}</textarea>
+                            </div>
                         </div>
                             
                     </fieldset>

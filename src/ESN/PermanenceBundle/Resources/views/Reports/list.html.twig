@@ -26,6 +26,7 @@
                               <th>Date</th>
                               <th>Number of cards sold </th>
                               <th>Sales amount</th>
+                              <th>Frequentation</th>
                               <th>Action</th>
                             </tr>
                       </thead>
@@ -35,6 +36,7 @@
                                    <td>{{report.date|date('d/m/Y G:i ')}}</td>
                                    <td>{{report.sellCard}}</td>
                                    <td>{{report.amountSell}}</td>
+                                   <td>{{report.frequentation}}</td>
                                    <td>
                                        <a href="{{ path('esn_permanence_seeReport', {'id' : report.id} ) }}"><i class="fa fa-eye"></i></a>
                                        {% if app.user.hasPermissionFor('human-ressources') %}

@@ -20,8 +20,6 @@ use ESN\UserBundle\Entity\User;
     */
     private $id;
 
-
-
      /**
     * @ORM\Column(type="decimal", scale=2)
     */
@@ -47,7 +45,11 @@ use ESN\UserBundle\Entity\User;
     */
     private $availableCard;
 
-    
+     /**
+      * @ORM\Column(name="frequentation", type="integer")
+      */
+     private $frequentation;
+
     /**
      * @var string
      *
@@ -492,4 +494,21 @@ use ESN\UserBundle\Entity\User;
      {
          $this->tencent = $tencent;
      }
+
+     /**
+      * @return mixed
+      */
+     public function getFrequentation()
+     {
+         return $this->frequentation;
+     }
+
+     /**
+      * @param mixed $frequentation
+      */
+     public function setFrequentation($frequentation)
+     {
+         $this->frequentation = $frequentation;
+     }
+
 }

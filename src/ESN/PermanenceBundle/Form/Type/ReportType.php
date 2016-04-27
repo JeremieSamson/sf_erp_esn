@@ -32,6 +32,11 @@ class ReportType extends AbstractType
                     'class' => 'span3'
                 )
             ))
+            ->add('frequentation', 'integer', array(
+                'attr' => array(
+                    'class' => 'span3'
+                )
+            ))
             ->add('amountAfter', 'integer', array(
                 'attr' => array(
                     'readonly' => true,

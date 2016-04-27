@@ -29,7 +29,7 @@
                         </div>
                     </div>
 
-                    <h3> Cash </h3>
+                    <h3> Cash </h3><br>
 
                     {% include 'ESNPermanenceBundle:Cash:form.html.twig' %}
 
@@ -54,6 +54,14 @@
                     </div>
 
                     <h3> Informations </h3>
+
+                    <div class="control-group">
+                        <label class="span3" for="frequentation">Frequentation : </label>
+
+                        <div class="controls">
+                            {{ form_widget(form.frequentation, { 'attr': {'class': 'span4'} }) }}
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <label class="span3" for="comments">Comments : </label>
