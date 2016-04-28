@@ -18,6 +18,8 @@
                             <th>Nom</th>
                             <th>Âge</th>
                             <th>Nationalité</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -29,9 +31,11 @@
                                 <th>{{ apply.lastname }}</th>
                                 <th>{% if apply.getAge() > 0 %} {{ apply.getAge() }} {% else %} ~ {% endif %}</th>
                                 <th>{{ apply.nationality }}</th>
+                                <th>{{ apply.email }}</th>
+                                <th>{{ apply.mobile }}</th>
                                 <th>
                                     <a href="{{ path('esn_hr_recruitment_view', {'apply_id' : apply.id}) }}">
-                                        <i class="icon-edit icon-large" style="color: green;"></i>
+                                        <i class="fa-eye icon-large" style="color: green;"></i>
                                     </a>
                                     <a href="{{ path('esn_hr_recruitment_delete', {'apply_id' : apply.id}) }}">
                                         <i class="icon-remove-sign icon-large" style="color: red;"></i>
