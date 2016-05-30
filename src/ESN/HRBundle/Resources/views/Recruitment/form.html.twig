@@ -153,3 +153,15 @@
         </div>
     </div>
 {% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function() {
+            $('.datetimepicker').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "dd/mm/yy"
+            });
+        });
+    </script>
+{% endblock %}

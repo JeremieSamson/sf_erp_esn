@@ -37,7 +37,14 @@ class ApplyType extends AbstractType
         $builder
             ->add('firstname', 'text')
             ->add('lastname','text')
-            ->add('birthdate', 'date', array('widget' => 'single_text'))
+            ->add('birthdate', 'date', array(
+                'widget' => 'single_text',
+                'html5'  => false,
+                'format' => 'd/MM/y',
+                'attr' => array(
+                    'class' => 'datetimepicker'
+                )
+            ))
             ->add('nationality', 'entity', array(
                     'class' => 'ESNAdministrationBundle:Country',
                     'empty_value'  => '',

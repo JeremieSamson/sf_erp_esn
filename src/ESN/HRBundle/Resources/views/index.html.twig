@@ -24,3 +24,9 @@
         </p>
     </div>
 {% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    {% block js %}{% endblock %}
+{% endblock %}
