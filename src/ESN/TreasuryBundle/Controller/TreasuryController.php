@@ -2,6 +2,7 @@
 
 namespace ESN\TreasuryBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use ESN\TreasuryBundle\Entity\Operation;
 use ESN\TreasuryBundle\Entity\Caisse;
@@ -129,6 +130,37 @@ class TreasuryController extends Controller
             'form' => $form->createView(),
         ));
     }
-    
+
+    /**
+     * Delete a treasury entry
+     *
+     * @param integer $operation_id
+     */
+    public function deleteAction($operation_id)
+    {
+        if (!$this->getUser()->isTreasurer()){
+             throw $this->createAccessDeniedException();
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Operation $operation */
+        $operation = $em->getRepository('ESNTreasuryBundle:Operation')->find($operation_id);
+
+        if (!$operation) {
+            throw $this->createNotFoundException('No Operation with id ' . $operation->getId(). ' found');
+        }
+
+        $em->remove($operation);
+
+        $this->get('activity.manager')->delete($operation);
+
+        $em->flush();
+
+        $this->get('request')->getSession()->getFlashBag()->add('notice', 'Operation deleted');
+
+        return $this->redirect($this->generateUrl('esn_treasury_list'));
+    }
     
 }

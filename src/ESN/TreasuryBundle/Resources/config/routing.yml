@@ -5,7 +5,11 @@ esn_treasury_list:
 esn_treasury_add:
     path:     /treasury/add
     defaults: { _controller: ESNTreasuryBundle:Treasury:add }
+
+esn_treasury_delete:
+    path:     /treasury/{operation_id}/delete
+    defaults: { _controller: ESNTreasuryBundle:Treasury:delete }
     
 esn_treasury_see:
-    path:     /treasury/see/{id}
+    path:     /treasury/{id}
     defaults: { _controller: ESNTreasuryBundle:Treasury:see }

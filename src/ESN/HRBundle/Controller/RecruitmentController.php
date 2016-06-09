@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use ESN\HRBundle\Entity\Apply;
 use ESN\HRBundle\Form\Handler\ApplyHandler;
 use ESN\HRBundle\Form\Type\ApplyType;
+use ESN\HRBundle\Form\Type\RecruiterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -118,6 +119,32 @@ class RecruitmentController extends Controller {
         $apply = new Apply();
 
         $form = $this->get('form.factory')->create(new ApplyType($em), $apply);
+        $formHandler = new ApplyHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
+        $form->handleRequest($request);
+
+        if ($formHandler->process())
+        {
+            $this->get('session')->getFlashBag()->add(
+                'notice',
+                'Votre candidature a bien été prise en compte, vous serez bientôt contacté par notre Vice-Président pour faire suite à votre candidature'
+            );
+
+            return $this->redirect($this->generateUrl('esn_hr_recruitment_create'));
+        }
+
+        return $this->render('ESNHRBundle:Recruitment:form.html.twig',
+            array(
+                'form' => $form->createView(),
+                'hasError' => $request->getMethod() == 'POST' && !$form->isValid()
+            )
+        );
+    }
+
+    public function addRecruiterAction(Request $request){
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->get('form.factory')->create(new RecruiterType());
         $formHandler = new ApplyHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
         $form->handleRequest($request);
 

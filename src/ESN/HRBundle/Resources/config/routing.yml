@@ -30,6 +30,9 @@ esn_hr_recruitment_create_short:
     path:   /postuler
     defaults: { _controller : ESNHRBundle:Recruitment:createApply}
 
+esn_hr_recruitment_add_recruiter:
+    path:   /human-ressources/recruitment/recruiter/add
+    defaults: { _controller : ESNHRBundle:Recruitment:addRecruiter}
 
 esn_hr_recruitment_view:
     path:   /human-ressources/recruitment/view/{apply_id}

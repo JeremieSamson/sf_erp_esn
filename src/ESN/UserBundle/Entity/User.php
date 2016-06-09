@@ -531,6 +531,22 @@ class User extends BaseUser
     }
 
     /**
+     * Check if user is Recruter
+     *
+     * @return bool
+     */
+    public function isRecruter(){
+        return in_array('Local.recruter', explode(',', $this->getGalaxyRoles()));
+    }
+
+    /**
+     * @param string $role
+     */
+    public function addRole($role){
+        $this->galaxy_roles = $this->galaxy_roles . ',' . $role;
+    }
+
+    /**
      * Check if user is Webmaster
      *
      * @return bool
