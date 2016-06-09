@@ -75,18 +75,20 @@ class ReportHandler
         $Card->setNumber($availableCard);
         $this->em->persist($Card);
 
-        $operation = new Operation();
-        $operation->setMontant($report->getAmountSell());
-        $operation->setDate(new \DateTime());
-        $operation->setLibelle("Vente carte ESN pendant la perm");
-        $operation->setDescription("Vente de " . $report->getSellCard() . " cartes ESN");
-        $this->em->persist($operation);
+        if ($report->getAmountSell() > 0){
+            $operation = new Operation();
+            $operation->setMontant($report->getAmountSell());
+            $operation->setDate(new \DateTime());
+            $operation->setLibelle("Vente carte ESN pendant la perm");
+            $operation->setDescription("Vente de " . $report->getSellCard() . " cartes ESN");
+            $this->em->persist($operation);
+        }
 
         // CAISSE
         $montant = $this->em->getRepository('ESNTreasuryBundle:Caisse')->getLastCaisse();
 
         $caisse = new Caisse();
-        $caisse->setMontant($montant + $operation->getMontant());
+        $caisse->setMontant($montant + $report->getAmountSell());
         $this->em->persist($caisse);
 
         if (!$report->getId()){
