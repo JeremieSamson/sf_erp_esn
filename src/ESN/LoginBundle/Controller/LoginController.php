@@ -37,7 +37,7 @@ class LoginController extends Controller
             $user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
         }else{
             /** @var User $user_db */
-            $user_db = $em->getRepository("ESNUserBundle:User")->find(407);
+            $user_db = $em->getRepository("ESNUserBundle:User")->find(13);
 
             $token = new UsernamePasswordToken($user_db, null, "main", $user_db->getRoles());
             $this->get("security.context")->setToken($token);

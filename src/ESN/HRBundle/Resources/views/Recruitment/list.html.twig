@@ -6,15 +6,17 @@
 
 <div class="row">
 
-    <div class="span3">
-        <div class="widget">
-            <div class="widget-content">
-                <a class="btn btn-info" data-href="{{ path('esn_hr_recruitment_add_recruiter') }}" id="addrecruiter">Add/Remove a recruiter</a>
+    {% if app.user.hasPermissionFor('human-ressources') %}
+        <div class="span3">
+            <div class="widget">
+                <div class="widget-content">
+                    <a class="btn btn-info" data-href="{{ path('esn_hr_recruitment_add_recruiter') }}" id="addrecruiter">Add/Remove a recruiter</a>
+                </div>
+                <!-- /widget-content -->
             </div>
-            <!-- /widget-content -->
+            <!-- /widget -->
         </div>
-        <!-- /widget -->
-    </div>
+    {% endif %}
 
     <div class="span12">
         <div class="widget">
@@ -48,9 +50,11 @@
                                     <a href="{{ path('esn_hr_recruitment_view', {'apply_id' : apply.id}) }}">
                                         <i class="fa-eye icon-large" style="color: green;"></i>
                                     </a>
-                                    <a href="{{ path('esn_hr_recruitment_delete', {'apply_id' : apply.id}) }}">
-                                        <i class="icon-remove-sign icon-large" style="color: red;"></i>
-                                    </a>
+                                    {% if app.user.hasPermissionFor('human-ressources') %}
+                                        <a href="{{ path('esn_hr_recruitment_delete', {'apply_id' : apply.id}) }}">
+                                            <i class="icon-remove-sign icon-large" style="color: red;"></i>
+                                        </a>
+                                    {% endif %}
                                 </th>
                             </tr>
                             </tbody>

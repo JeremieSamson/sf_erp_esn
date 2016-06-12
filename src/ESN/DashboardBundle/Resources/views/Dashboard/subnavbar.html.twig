@@ -8,7 +8,7 @@
                                 href="{{ path('esn_dashboard_homepage') }}"><i
                                     class="icon-dashboard"></i><span>Dashboard</span> </a></li>
 
-                    {% if app.user.hasPermissionFor('dashboard') %}
+
                         <li class="dropdown {% if '/members' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="icon-group"></i>
@@ -45,21 +45,24 @@
                             </li>
                         {% endif %}
 
-                            <li class="dropdown {% if '/human-ressources' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
+                        <li class="dropdown {% if '/human-ressources' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
 
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon-group"></i>
-                                    <span>Human Ressources</span>
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% if app.user.hasPermissionFor('human-ressources') or app.user.isRecruiter%}
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="icon-group"></i>
+                                <span>Human Ressources</span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if app.user.hasPermissionFor('human-ressources') or app.user.isRecruiter %}
+                                    {% if app.user.hasPermissionFor('human-ressources') %}
                                         <li><a href="{{ path('esn_hr_association') }}">Association</a></li>
+                                    {% else %}
                                         <li><a href="{{ path('esn_hr_recruitment') }}">Recruitement</a></li>
                                     {% endif %}
-                                    <li><a href="{{ path('esn_hr_treeceratops')  }}">Treeceratops</a></li>
-                                </ul>
-                            </li>
+                                {% endif %}
+                                <li><a href="{{ path('esn_hr_treeceratops')  }}">Treeceratops</a></li>
+                            </ul>
+                        </li>
 
                         {% if app.user.hasPermissionFor('administration') %}
                             <li class="dropdown
@@ -94,7 +97,7 @@
                                 </ul>
                             </li>
                         {% endif %}
-                    {% endif %}
+
                 {% else %}
                     <li class="dropdown {% if '/human-ressources' in (app.request.server.get('PHP_SELF')) %}active{% endif %} ">
                         <a href="{{ path('esn_hr_recruitment_create') }}">

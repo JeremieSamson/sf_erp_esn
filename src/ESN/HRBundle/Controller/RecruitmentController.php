@@ -10,6 +10,7 @@ use ESN\HRBundle\Form\Handler\RecruiterHandler;
 use ESN\HRBundle\Form\Type\ApplyType;
 use ESN\HRBundle\Form\Type\RecruiterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -19,13 +20,14 @@ class RecruitmentController extends Controller {
     /**
      * List all current application
      *
-     * @throws createAccessDeniedException
+     * @throws AccessDeniedException
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction()
     {
-        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+
+        if (!$this->getUser()->hasPermissionFor('human-ressources') && !$this->getUser()->isRecruiter()){
             throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
         }
 
@@ -53,7 +55,7 @@ class RecruitmentController extends Controller {
      * @return mixed
      */
     public function viewApplyAction($apply_id) {
-        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+        if (!$this->getUser()->hasPermissionFor('human-ressources') && !$this->getUser()->isRecruiter()){
             throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
         }
 
@@ -146,6 +148,10 @@ class RecruitmentController extends Controller {
     }
 
     public function addRecruiterAction(Request $request){
+        if (!$this->getUser()->hasPermissionFor('human-ressources')){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 

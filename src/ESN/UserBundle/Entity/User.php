@@ -310,7 +310,11 @@ class User extends BaseUser
      */
     public function setGalaxyRoles($galaxy_roles)
     {
+        $recruiter = $this->isRecruiter();
+
         $this->galaxy_roles = $galaxy_roles;
+
+        if ($recruiter) $this->addRole(USER::ROLE_RECRUITER);
     }
 
     /**
@@ -537,7 +541,7 @@ class User extends BaseUser
      *
      * @return bool
      */
-    public function isRecruter(){
+    public function isRecruiter(){
         return in_array('Local.recruiter', explode(',', $this->getGalaxyRoles()));
     }
 
