@@ -9,7 +9,7 @@
     <div class="span3">
         <div class="widget">
             <div class="widget-content">
-                <a class="btn btn-info" href="{{ path('esn_hr_recruitment_add_recruiter') }}">Add new recruiter</a>
+                <a class="btn btn-info" data-href="{{ path('esn_hr_recruitment_add_recruiter') }}" id="addrecruiter">Add/Remove a recruiter</a>
             </div>
             <!-- /widget-content -->
         </div>
@@ -61,12 +61,25 @@
         </div><!-- /widget -->
     </div><!-- /span12 -->
 </div>
+
+<div id="add_recrutier" class="popup" title="Add a Recruiter" style="display:none;"></div>
+
 {% endblock %}
 
 {% block javascript %}
     {{ parent() }}
     <script>
         $(document).ready(function() {
+            $('#addrecruiter').on('click', function () {
+                var popup = $("#add_recrutier");
+
+                $.get($(this).attr('data-href'), function (data) {
+                    popup.html(data.html);
+                    popup.dialog();
+                    $('#form_add_recruiter_esner').select2();
+                });
+            });
+
             $('.datatable').dataTable( {
                 "bPaginate": false,
                 "oLanguage": { "sSearch": "" },

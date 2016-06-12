@@ -53,7 +53,7 @@
                                     <b class="caret"></b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    {% if app.user.hasPermissionFor('human-ressources') %}
+                                    {% if app.user.hasPermissionFor('human-ressources') or app.user.isRecruiter%}
                                         <li><a href="{{ path('esn_hr_association') }}">Association</a></li>
                                         <li><a href="{{ path('esn_hr_recruitment') }}">Recruitement</a></li>
                                     {% endif %}

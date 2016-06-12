@@ -9,14 +9,12 @@
 
 namespace ESN\HRBundle\Form\Handler;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
-use ESN\HRBundle\Entity\Apply;
-use ESN\HRBundle\Entity\InfoEsner;
-use ESN\MembersBundle\Entity\Esner;
+use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\Form;
-use ESN\MembersBundle\Entity\Member;
 use Symfony\Component\HttpFoundation\Request;
 
 class RecruiterHandler
@@ -77,69 +75,62 @@ class RecruiterHandler
     {
         if ($this->form->isValid()) {
             if ('POST' == $this->request->getMethod()) {
-                /** @var Apply $apply */
-                $apply = $this->form->getData();
+                $recruiters = $this->em->getRepository('ESNUserBundle:User')->findRecruiters();
 
-                $apply_email = $this->em->getRepository('ESNHRBundle:Apply')->findOneByEmail($apply->getEmail());
-                $apply_name  = $this->em->getRepository('ESNHRBundle:Apply')->findBy(array("firstname" => $apply->getFirstname(), "lastname" => $apply->getLastname()));
+                /** @var ArrayCollection $recruiters_selected */
+                $recruiters_selected = $this->form->get('esner')->getData();
 
-                if (!$apply_email && !$apply_name){
-                    $this->onSuccess($apply);
-                    return true;
-                }else{
-                    $this->container->get('session')->getFlashBag()->add(
-                        'error',
-                        'Vous êtes déjà enregistré dans notre base de données, il est inutile de postuler plusieurs fois.'
-                    );
+                /** @var User $recruiter */
+                foreach($recruiters as $recruiter) {
+                    if (!$recruiters_selected->contains($recruiter)){
+                        $recruiter->removeRole(User::ROLE_RECRUITER);
+                    }
                 }
+
+                $this->onSuccess($recruiters_selected);
+
+                $this->em->flush();
+
+                return true;
             }
         }
+
         return false;
     }
 
     /**
-     * @param Apply $apply
+     * @param ArrayCollection $esners
      */
-    protected function onSuccess(Apply $apply){
-        $this->em->persist($apply);
-        $this->em->flush();
+    protected function onSuccess(ArrayCollection $esners)
+    {
+        /** @var User $esner */
+        foreach ($esners as $esner) {
+            $esner->addRole(User::ROLE_RECRUITER);
 
-        $this->sendEmail($apply);
+            $this->sendEmail($esner);
+        }
     }
 
     /**
-     * Send email to application user
-     *
-     * @param Apply $apply
+     * @param User $esner
+     * @throws \Exception
+     * @throws \Twig_Error
      */
-    private function sendEmail(Apply $apply){
+    private function sendEmail(User $esner){
         /** @var \Swift_Message $message */
         $message = \Swift_Message::newInstance()
-            ->setSubject('[ESN Lille] Candidature prise en compte')
+            ->setSubject('[ESN Lille] Recruteur')
             ->setFrom($this->container->getParameter('mailer_from'))
-            ->setTo($apply->getEmail())
+            ->setTo($esner->getEmail())
             ->setBody(
                 $this->templating->render(
-                    'ESNHRBundle:Emails:application.html.twig',
-                    array('apply' => $apply)
+                    'ESNHRBundle:Emails:recruiter.html.twig',
+                    array('esner' => $esner)
                 ),
                 'text/html'
             )
         ;
-        $this->mailer->send($message);
 
-        $message = \Swift_Message::newInstance()
-            ->setSubject('[ESN Lille] Candidature prise en compte')
-            ->setFrom($this->container->getParameter('mailer_from'))
-            ->setTo($apply->getEmail())
-            ->setBody(
-                $this->templating->render(
-                    'ESNHRBundle:Emails:new_application.html.twig',
-                    array('apply' => $apply)
-                ),
-                'text/html'
-            )
-        ;
         $this->mailer->send($message);
     }
 }

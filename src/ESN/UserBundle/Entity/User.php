@@ -22,6 +22,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
+    const ROLE_RECRUITER = "Local.recruiter";
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -536,14 +538,23 @@ class User extends BaseUser
      * @return bool
      */
     public function isRecruter(){
-        return in_array('Local.recruter', explode(',', $this->getGalaxyRoles()));
+        return in_array('Local.recruiter', explode(',', $this->getGalaxyRoles()));
     }
 
     /**
      * @param string $role
      */
     public function addRole($role){
-        $this->galaxy_roles = $this->galaxy_roles . ',' . $role;
+        if (!strpos($this->galaxy_roles, $role))
+            $this->galaxy_roles = $this->galaxy_roles . ',' . $role;
+    }
+
+    /**
+     * @param string $role
+     */
+    public function removeRole($role){
+        if (strpos($this->galaxy_roles, $role))
+            $this->galaxy_roles = str_replace(",$role", '', $this->galaxy_roles);
     }
 
     /**

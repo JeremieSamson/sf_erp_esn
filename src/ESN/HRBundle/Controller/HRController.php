@@ -7,15 +7,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class HRController extends Controller
 {
+    /**
+     * @param $type
+     * @param $action
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction($type, $action)
     {
-        $data = array('title' => "Human Resources", 'type' => $type, 'action' => $action);
-        return $this->render('ESNHRBundle::index.html.twig', $data);
+        return $this->render('ESNHRBundle::index.html.twig',  array(
+            'title' => "Human Resources",
+            'type' => $type,
+            'action' => $action
+        ));
     }
     
     /**
      * Affiche la liste ou le formulaire selon la valeur de action
-     * @param type $action
+     * @param string $action
      * @return type
      */
     public function associationAction($action)

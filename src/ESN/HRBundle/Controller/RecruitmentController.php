@@ -6,9 +6,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use ESN\HRBundle\Entity\Apply;
 use ESN\HRBundle\Form\Handler\ApplyHandler;
+use ESN\HRBundle\Form\Handler\RecruiterHandler;
 use ESN\HRBundle\Form\Type\ApplyType;
 use ESN\HRBundle\Form\Type\RecruiterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
@@ -33,8 +35,11 @@ class RecruitmentController extends Controller {
         /** @var ArrayCollection $applies */
         $applies = $em->getRepository('ESNHRBundle:Apply')->findAll();
 
+        $esners = $em->getRepository('ESNUserBundle:User')->findBy(array("esner" => true));
+
         return $this->render('ESNHRBundle:Recruitment:list.html.twig', array(
-            'applies' => $applies
+            'applies' => $applies,
+            'esners'  => $esners
         ));
     }
     
@@ -144,25 +149,26 @@ class RecruitmentController extends Controller {
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->get('form.factory')->create(new RecruiterType());
-        $formHandler = new ApplyHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
+        $form = $this->get('form.factory')->create(new RecruiterType($em));
+        $formHandler = new RecruiterHandler($em, $form, $request, $this->container, $this->get('templating'), $this->get('mailer'));
         $form->handleRequest($request);
 
         if ($formHandler->process())
         {
             $this->get('session')->getFlashBag()->add(
-                'notice',
-                'Votre candidature a bien été prise en compte, vous serez bientôt contacté par notre Vice-Président pour faire suite à votre candidature'
+                'notice', "Le ou les recruteurs ont bien été ajouté"
             );
 
-            return $this->redirect($this->generateUrl('esn_hr_recruitment_create'));
+            return $this->redirect($this->generateUrl('esn_hr_recruitment'));
         }
 
-        return $this->render('ESNHRBundle:Recruitment:form.html.twig',
-            array(
-                'form' => $form->createView(),
-                'hasError' => $request->getMethod() == 'POST' && !$form->isValid()
-            )
-        );
+        return new JsonResponse(array(
+            'html' => $this->renderView(
+                'ESNHRBundle:Recruitment:popup_esner.html.twig',
+                array(
+                    'form' => $form->createView()
+                )
+            ),
+        ));
     }
 }
