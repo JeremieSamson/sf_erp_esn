@@ -162,7 +162,7 @@ class RecruitmentController extends Controller {
         if ($formHandler->process())
         {
             $this->get('session')->getFlashBag()->add(
-                'notice', "Le ou les recruteurs ont bien été ajouté"
+                'notice', "La mise à jours des recruteurs à bien été effectué.  "
             );
 
             return $this->redirect($this->generateUrl('esn_hr_recruitment'));

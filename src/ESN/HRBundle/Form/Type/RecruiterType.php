@@ -37,6 +37,7 @@ class RecruiterType extends AbstractType
     {
         $builder
             ->add('esner', 'entity', array(
+                'label' => false,
                 'multiple'  => true,
                 'class'     => 'ESNUserBundle:User',
                 'query_builder' => function (EntityRepository $er) {
