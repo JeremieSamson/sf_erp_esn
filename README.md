@@ -1,6 +1,6 @@
 # ERP - ESN Lille
 
-[![Build Status](https://travis-ci.org/JeremieSamson/sf_erp_esn.svg?branch=master)](https://travis-ci.org/JeremieSamson/sf_erp_esn)"
+[![Build Status](https://travis-ci.org/JeremieSamson/sf_erp_esn.svg?branch=master)](https://travis-ci.org/JeremieSamson/sf_erp_esn)
 
 ## Installation
 
