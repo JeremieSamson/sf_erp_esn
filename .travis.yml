@@ -22,4 +22,11 @@ script:
   - phpunit
 
 notifications:
-  email: webmaster@esnlille.fr
+  email:
+
+notifications:
+  email:
+    recipients:
+      - webmaster@esnlille.fr
+    on_success: [never]
+    on_failure: [always]
