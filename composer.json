@@ -28,7 +28,8 @@
         "friendsofsymfony/rest-bundle": "^1.7",
         "jms/serializer-bundle": "^1.1",
         "nelmio/api-doc-bundle": "^2.11",
-        "friendsofsymfony/oauth-server-bundle": "^1.5"
+        "friendsofsymfony/oauth-server-bundle": "^1.5",
+        "friendsofsymfony/comment-bundle": "^2.0"
     },
     "require-dev": {
     },

@@ -33,3 +33,9 @@ esn_login:
 esn_index:
     path:     /
     defaults: { _controller: ESNDashboardBundle:Dashboard:index }
+
+fos_comment_api:
+    type: rest
+    resource: "@FOSCommentBundle/Resources/config/routing.yml"
+    prefix: /api
+    defaults: { _format: html }

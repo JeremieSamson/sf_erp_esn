@@ -107,7 +107,9 @@
                         <a class="btn" href="{{ path('esn_hr_recruitment') }}">Retour</a>
                     </div> <!-- /form-actions -->
                 </fieldset>  
-                </form>    
+                </form>
+
+                {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'apply_' ~ apply.id } %}
             </div><!-- /widget-content -->
         </div><!-- /widget -->
         

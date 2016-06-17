@@ -1,10 +1,11 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: services.yml }
 
 framework:
     #esi:             ~
-    #translator:      { fallback: "%locale%" }
+    translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -35,7 +36,6 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -95,3 +95,20 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: ESN\UserBundle\Entity\User
+
+fos_comment:
+    acl: true
+    db_driver: orm
+    service:
+        acl:
+            thread:  fos_comment.acl.thread.roles
+            comment: comment.acl
+            vote:    fos_comment.acl.vote.roles
+        manager:
+            thread:  fos_comment.manager.thread.acl
+            comment: fos_comment.manager.comment.acl
+            vote:    fos_comment.manager.vote.acl
+    class:
+        model:
+            comment: ESN\HRBundle\Entity\Comment
+            thread: ESN\HRBundle\Entity\Thread
