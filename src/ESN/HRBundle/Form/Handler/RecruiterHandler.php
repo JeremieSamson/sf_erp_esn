@@ -105,9 +105,10 @@ class RecruiterHandler
     {
         /** @var User $esner */
         foreach ($esners as $esner) {
-            $esner->addRole(User::ROLE_RECRUITER);
-
-            $this->sendEmail($esner);
+            if (!$esner->isRecruiter()){
+                $esner->addRole(User::ROLE_RECRUITER);
+                $this->sendEmail($esner);
+            }
         }
     }
 
