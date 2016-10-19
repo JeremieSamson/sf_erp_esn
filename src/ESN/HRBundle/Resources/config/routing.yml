@@ -49,3 +49,7 @@ esn_hr_recruitment_delete:
 esn_hr_recruitment:
     path:   /human-ressources/recruitment
     defaults: { _controller : ESNHRBundle:Recruitment:list}
+
+esn_hr_recruitment_enroll:
+    path:   /human-ressources/recruitment/{id}/enroll
+    defaults: { _controller: ESNHRBundle:Recruitment:enroll}

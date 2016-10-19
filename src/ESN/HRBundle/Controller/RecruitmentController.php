@@ -9,6 +9,7 @@ use ESN\HRBundle\Form\Handler\ApplyHandler;
 use ESN\HRBundle\Form\Handler\RecruiterHandler;
 use ESN\HRBundle\Form\Type\ApplyType;
 use ESN\HRBundle\Form\Type\RecruiterType;
+use ESN\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -35,7 +36,7 @@ class RecruitmentController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         /** @var ArrayCollection $applies */
-        $applies = $em->getRepository('ESNHRBundle:Apply')->findAll();
+        $applies = $em->getRepository('ESNHRBundle:Apply')->findBy(array("archived" => false));
 
         $esners = $em->getRepository('ESNUserBundle:User')->findBy(array("esner" => true));
 
@@ -44,13 +45,63 @@ class RecruitmentController extends Controller {
             'esners'  => $esners
         ));
     }
+
+    /**
+     * After clicking on the bootstrap toogle confirmation
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function enrollAction(Request $request, $id)
+    {
+        if (!$this->getUser()->hasPermissionFor('human-ressources') && !$this->getUser()->isRecruiter()){
+            throw $this->createAccessDeniedException('Vous n\'êtes pas authorisé à acceder à cette page');
+        }
+
+        /** @var EntityManager $em */
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var Apply $apply */
+        $apply = $em->getRepository('ESNHRBundle:Apply')->find($id);
+
+        if (!$apply) {
+            throw $this->createNotFoundException();
+        }
+
+        /** @var User $esner */
+        $esner_db = $em->getRepository('ESNUserBundle:User')->findUserByEmail($apply->getEmail());
+
+        $esner = ($esner_db) ? $esner_db : new User();
+
+        $esner->setFirstname($apply->getFirstname());
+        $esner->setLastname($apply->getLastname());
+        $esner->setEnabled(1);
+        $esner->setEmail($apply->getEmail());
+        $esner->setPlainPassword($esner->getEmail());
+        $esner->setUsername($apply->getEmail());
+        $esner->setUsernameCanonical($apply->getEmail());
+        $esner->setBirthdate($apply->getBirthDate());
+        $esner->setActive(true);
+        $esner->setEsner(true);
+        $esner->setMobile(str_replace(' ', '', $apply->getMobile()));
+
+        $em->persist($esner);
+
+        $apply->setArchived(true);
+
+        $em->flush();
+
+        $msg = ($esner_db) ? "Le compte ESNer de " . $apply->getFirstname() . " a bien été mis à jours" : $apply->getFirstname() . " a bien été passé en ESNer";
+        $this->addFlash('notice', $msg);
+
+        return $this->redirectToRoute('esn_hr_recruitment');
+    }
     
     /**
      * Voir les applies
      *
      * @param integer $apply_id
      *
-     * @throws createAccessDeniedException
+     * @throws AccessDeniedException
      *
      * @return mixed
      */
@@ -81,7 +132,7 @@ class RecruitmentController extends Controller {
      *
      * @return mixed
      *
-     * @throws createAccessDeniedException
+     * @throws AccessDeniedException
      */
     public function deleteApplyAction($apply_id) {
         if (!$this->getUser()->hasPermissionFor('human-ressources')){
@@ -100,10 +151,7 @@ class RecruitmentController extends Controller {
             );
         }
 
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            "L'application de " .$apply. " a bien été supprimé"
-        );
+        $this->addFlash('notice', "La fiche de recrutement de " .$apply. " a bien été supprimé");
 
         $em->remove($apply);
         $em->flush();

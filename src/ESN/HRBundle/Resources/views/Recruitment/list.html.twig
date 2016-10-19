@@ -47,11 +47,15 @@
                                 <th>{{ apply.email }}</th>
                                 <th>{{ apply.mobile }}</th>
                                 <th>
+                                    <a href="{{ path('esn_hr_recruitment_enroll', {'id' : apply.id}) }}" data-class="btn btn-success" data-label="Make {{ apply.firstname }} an ESNer !" data-toggle="confirmation" data-placement="left" data-original-title="" title="Are you sure ?">
+                                        <i class="fa fa-plus-square" aria-hidden="true" style="color: orange;"></i>
+                                    </a>
                                     <a href="{{ path('esn_hr_recruitment_view', {'apply_id' : apply.id}) }}">
                                         <i class="fa-eye icon-large" style="color: green;"></i>
                                     </a>
+
                                     {% if app.user.hasPermissionFor('human-ressources') %}
-                                        <a href="{{ path('esn_hr_recruitment_delete', {'apply_id' : apply.id}) }}">
+                                        <a href="{{ path('esn_hr_recruitment_delete', {'apply_id' : apply.id}) }}" data-class="btn btn-danger" data-toggle="confirmation" data-placement="left" data-original-title="" title="Are you sure ?">
                                             <i class="icon-remove-sign icon-large" style="color: red;"></i>
                                         </a>
                                     {% endif %}
@@ -89,6 +93,18 @@
                 "oLanguage": { "sSearch": "" },
                 "bInfo": false,
             } );
+
+            $('[data-toggle="confirmation"]').confirmation({
+                href: function(elem){
+                    return $(elem).attr('href');
+                },
+                btnOkClass: function(elem){
+                    return $(elem).attr('data-class');
+                },
+                btnOkLabel: function(elem){
+                    return $(elem).attr('data-label');
+                }
+            });
         } );
     </script>
 {% endblock %}

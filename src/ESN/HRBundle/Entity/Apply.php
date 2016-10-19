@@ -120,10 +120,18 @@ class Apply {
     private $languages;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="archived", type="boolean")
+     */
+    private $archived = false;
+
+    /**
      * Constructor
      */
     public function __construct(){
         $this->languages = new ArrayCollection();
+        $this->archived  = false;
     }
 
     /**
@@ -425,5 +433,21 @@ class Apply {
     public function setMobile($mobile)
     {
         $this->mobile = $mobile;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isArchived()
+    {
+        return $this->archived;
+    }
+
+    /**
+     * @param boolean $archived
+     */
+    public function setArchived($archived)
+    {
+        $this->archived = $archived;
     }
 }
