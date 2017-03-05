@@ -76,7 +76,7 @@ class LoginController extends Controller
             if (!$user->getEmail()) $user->setEmail($user_cas->getEmail());
             if (!$user->getMobile()) $user->setMobile($user_cas->getTelephone());
 
-            if (!$user_db) {
+			if (($user->getPole() != null)&&($user->getSection() == "ESN Lille")){
                 $user->setEnabled(true);
                 $user->setEsner(true);
                 $user->setUsername($user_cas->getEmail());
