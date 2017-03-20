@@ -29,7 +29,8 @@
         "jms/serializer-bundle": "^1.1",
         "nelmio/api-doc-bundle": "^2.11",
         "friendsofsymfony/oauth-server-bundle": "^1.5",
-        "friendsofsymfony/comment-bundle": "^2.0"
+        "friendsofsymfony/comment-bundle": "^2.0",
+		"ob/highcharts-bundle": "1.*"
     },
     "require-dev": {
     },

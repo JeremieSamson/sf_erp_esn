@@ -25,6 +25,8 @@ use ESN\AdministrationBundle\Entity\CardRepository;
 use ESN\TreasuryBundle\Entity\Caisse;
 use ESN\TreasuryBundle\Entity\CaisseRepository;
 
+use Ob\HighchartsBundle\Highcharts\Highchart;
+
 class PermanenceController extends BaseController
 {
     /**
@@ -38,9 +40,37 @@ class PermanenceController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array('date' => 'DESC'));
+			
+		$reportsgraph = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array('date' => 'DESC'), 15); //Prend les 15 derniers rapports 
+	
+		$frequentations=array_fill(0,15,1);
+		
+		for ($i=14; $i>=0; $i--){
+			$frequentations[$i] = $reportsgraph[14-$i]->getFrequentation(); 
+		}
+		
+		$dates=array_fill(0,15,date("d m Y"));
+
+		for ($i=14; $i>=0; $i--){
+			$dates[$i] = $reportsgraph[14-$i]->getDate()->format("d/m/Y");
+		}
+		
+        $ob = new Highchart();
+        
+        $ob->chart->renderTo('columnchart');
+        $ob->title->text('Fréquentation des 15 dernières permanences');
+        $ob->chart->type('column');
+
+        $ob->yAxis->title(array('text' => "Fréquentation"));
+
+        $ob->xAxis->title(array('text' => "Date"));
+        $ob->xAxis->categories($dates);
+
+        $ob->series(array(array('name' => "Fréquentation" , 'data' => $frequentations)));
 
         return $this->render('ESNPermanenceBundle:Reports:list.html.twig', array(
-            'reports' => $reports
+            'reports' => $reports,
+			'columnchart' => $ob
         ));
     }
 
