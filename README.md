@@ -9,7 +9,7 @@
 Récupérez le projet depuis github :
 
 ```shell
-git clone git@github.com:ylly/arengi.git
+git clone git@github.com:ylly/sf_erp_esn/.git
 ```
 Créez les fichiers de configuration, puis éditez-les avec vos propres paramètres :
 
