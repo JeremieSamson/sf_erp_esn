@@ -58,7 +58,6 @@ class ApplyType extends AbstractType
             ->add('facebook_id', 'text', array("required" => true))
             ->add('mobile', 'text', array("required" => true))
             ->add('student', 'checkbox', array("required" => false))
-            ->add('olderasmus', 'checkbox', array("required" => false))
             ->add('availabletime', 'choice', array(
                 'required' => true,
                 'choices' => array(

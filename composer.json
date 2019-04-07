@@ -7,8 +7,8 @@
         "psr-0": { "": "src/", "SymfonyStandard": "app/" }
     },
     "require": {
-        "php": ">=5.3.3",
-        "symfony/symfony": "^2.8",
+        "php": ">=5.6.40",
+        "symfony/symfony": "^2.6",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle":"~1.2",
         "twig/extensions": "~1.0",
@@ -35,7 +35,8 @@
     "require-dev": {
         "phpunit/phpunit": "5.7.27",
         "liip/functional-test-bundle": "1.10.0",
-        "sensiolabs/security-checker": "^5.0"
+        "sensiolabs/security-checker": "^5.0",
+        "willdurand/faker-bundle": "^1.4"
     },
     "scripts": {
         "post-root-package-install": [
