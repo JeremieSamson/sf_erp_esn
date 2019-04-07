@@ -54,6 +54,9 @@ php.ini
 #Docker
 docker-compose.override.yml
 .docker/data
+docker-dev.lock
+supervisord.log
+supervisord.pid
 
 # Node
 ./node_nmodules
