@@ -52,3 +52,9 @@ nbproject/
 .ftpquota
 .htaccess
 php.ini
+
+#Docker
+docker-compose.override.yml
+
+# Node
+./node_nmodules

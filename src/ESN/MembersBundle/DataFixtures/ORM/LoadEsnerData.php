@@ -10,9 +10,6 @@ namespace ESN\MembersBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use ESN\MembersBundle\Entity\Erasmus;
-use ESN\MembersBundle\Entity\Esner;
-use ESN\MembersBundle\Entity\Member;
 use ESN\AdministrationBundle\Entity\University;
 use ESN\AdministrationBundle\Entity\Country;
 
@@ -27,7 +24,7 @@ class LoadEsnerData extends AbstractFixture implements OrderedFixtureInterface
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager){
-        $this->manager = $manager;
+       /* $this->manager = $manager;
         $esn_members = $manager->getRepository('ESNMembersBundle:Member')->findAll();
         $poles = $manager->getRepository('ESNAdministrationBundle:Pole')->findAll();
         $maxPoleId = $this->getMaxPoleId();
@@ -45,6 +42,7 @@ class LoadEsnerData extends AbstractFixture implements OrderedFixtureInterface
         }
 
         $manager->flush();
+  */
     }
 
     private function getMaxPoleId(){
