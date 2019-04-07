@@ -3,17 +3,15 @@
 namespace ESN\HRBundle\Tests;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class LoginControllerTest extends WebTestCase
 {
-    /**
-     * Test if the galaxy login button is on the login page
-     */
     public function testGalaxyLoginButton()
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/login');
+        $crawler = $client->request(Request::METHOD_GET, '/login');
 
         $this->assertGreaterThan(
             0,

@@ -1,5 +1,3 @@
-# Created by https://www.gitignore.io
-
 .DS_Store
 
 #Capyfony
@@ -55,6 +53,7 @@ php.ini
 
 #Docker
 docker-compose.override.yml
+.docker/data
 
 # Node
 ./node_nmodules

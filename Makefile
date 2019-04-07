@@ -1,14 +1,14 @@
 DOCKER_COMPOSE?=docker-compose
-RUN=$(DOCKER_COMPOSE) run --rm app
-EXEC?=$(DOCKER_COMPOSE) exec app entrypoint.sh
+RUN=$(DOCKER_COMPOSE) run --rm php
+EXEC?=$(DOCKER_COMPOSE) exec php 
 COMPOSER=$(EXEC) composer
-CONSOLE=$(EXEC) app/console
+CONSOLE=$(EXEC) /var/www/erp/app/console
 PHPCSFIXER?=$(EXEC) php -d memory_limit=1024m vendor/bin/php-cs-fixer
 BEHAT=$(EXEC) vendor/bin/behat
 BEHAT_ARGS?=-vvv
-PHPUNIT=$(EXEC) vendor/bin/phpunit
+PHPUNIT=$(EXEC) bin/phpunit
 PHPUNIT_ARGS?=-v
-DOCKER_FILES=$(shell find ./docker/dev/ -type f -name '*')
+DOCKER_FILES=$(shell find ./docker/php/ -type f -name '*')
 
 .DEFAULT_GOAL := help
 .PHONY: help start stop reset db db-diff db-diff-dump db-migrate db-rollback db-load watch clear clean test tu tf tj lint ls ly lt
@@ -54,12 +54,12 @@ tty:                                                                            
 ##---------------------------------------------------------------------------
 
 wait-for-db:
-	$(EXEC) php -r "set_time_limit(60);for(;;){if(@fsockopen('db',3306)){break;}echo \"Waiting for MySQL\n\";sleep(1);}"
+	$(EXEC) php -r "set_time_limit(60);for(;;){if(@fsockopen('mysql',3306)){break;}echo \"Waiting for MySQL\n\";sleep(1);}"
 
 db: vendor wait-for-db                                                                                 ## Reset the database and load fixtures
 	$(CONSOLE) doctrine:database:drop --force --if-exists
 	$(CONSOLE) doctrine:database:create --if-not-exists
-	$(CONSOLE) doctrine:database:import -n -- dump/dump_04042019.sql
+	$(CONSOLE) doctrine:database:import -n dump/dump_04042019.sql
 	$(CONSOLE) doctrine:migrations:migrate -n
 	$(CONSOLE) doctrine:fixtures:load -n
 
