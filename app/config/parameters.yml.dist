@@ -1,11 +1,11 @@
 # This file is a "template" of what your parameters.yml file should look like
 parameters:
     database_driver:   pdo_mysql
-    database_host:     127.0.0.1
-    database_port:     ~
-    database_name:     symfony
+    database_host:     mysql
+    database_port:     3306
+    database_name:     erp
     database_user:     root
-    database_password: ~
+    database_password: root
     # You should uncomment this if you want use pdo_sqlite
     # database_path: "%kernel.root_dir%/data.db3"
 
@@ -29,10 +29,10 @@ parameters:
     fb_page_id: ESNLillePage
     fb_appid: 618555368228153
     fb_secret: d2174d13b107a03129befb25ba27b6ab
-    fb_group_id: 276842445810288
+    fb_group_id: 177072012972260
     section_website: http://esnlille.fr/satellite
 
     #CAS
-    cas_server:        galaxy.esn.org
+    cas_server:        accounts.esn.org
     cas_port:          443
     cas_path:          /cas/

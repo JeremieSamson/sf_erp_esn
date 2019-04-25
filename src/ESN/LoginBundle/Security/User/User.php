@@ -1,12 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jérémie Samson | jeremie@ylly.fr
- * Date: 20/04/15
- * Time: 23:49
- */
 
-// src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php
 namespace ESN\LoginBundle\Security\User;
 
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,36 +14,34 @@ class User implements UserInterface, EquatableInterface
 
     private $email;
     private $sc;
-    private $firstname;
-    private $lastname;
+    private $firstName;
+    private $lastName;
     private $nationality;
     private $picture;
-    private $birthdate;
+    private $birthDate;
     private $gender;
     private $telephone;
     private $address;
     private $section;
     private $country;
 
-    public function __construct($username, $attributes, $password, $salt, array $roles)
+    public function __construct($username, $attributes, $password = null, $salt = null, array $roles = [])
     {
-        $this->username     = $username;
-        $this->email        = $attributes['mail'];
-        $this->firstname    = $attributes['first'];
-        $this->lastname     = $attributes['last'];
-        $this->nationality  = $attributes['nationality'];
-        $this->picture      = $attributes['picture'];
-        $this->birthdate    = $attributes['birthdate'];
-        $this->gender       = $attributes['gender'];
-
-        if (array_key_exists('telephone', $attributes))
-            $this->telephone    = $attributes['telephone'];
-
-        $this->address      = $attributes['address'];
-        $this->section      = $attributes['section'];
-        $this->country      = $attributes['country'];
-        $this->sc           = $attributes['sc'];
-        $this->roles        = $attributes['roles'];
+        $this->username = $username;
+        $this->email = $attributes['mail'];
+        $this->sc = $attributes['sc'];
+        $this->firstName = $attributes['first'];
+        $this->lastName = $attributes['last'];
+        $this->nationality = $attributes['nationality'];
+        $this->roles = $attributes['roles'];
+        $this->picture = $attributes['picture'];
+        $this->birthDate = $attributes['birthdate'];
+        $this->gender = $attributes['gender'];
+        $this->telephone = array_key_exists('telephone', $attributes) ? $attributes['telephone'] : null;
+        $this->section = $attributes['section'];
+        $this->country = $attributes['country'];
+        $this->password = $password;
+        $this->salt = $salt;
     }
 
     /**
@@ -90,15 +81,15 @@ class User implements UserInterface, EquatableInterface
      */
     public function getFirstname()
     {
-        return $this->firstname;
+        return $this->firstName;
     }
 
     /**
-     * @param mixed $firstname
+     * @param mixed $firstName
      */
-    public function setFirstname($firstname)
+    public function setFirstname($firstName)
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstName;
     }
 
     /**
@@ -106,15 +97,15 @@ class User implements UserInterface, EquatableInterface
      */
     public function getLastname()
     {
-        return $this->lastname;
+        return $this->lastName;
     }
 
     /**
-     * @param mixed $lastname
+     * @param mixed $lastName
      */
-    public function setLastname($lastname)
+    public function setLastname($lastName)
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastName;
     }
 
     /**
@@ -154,15 +145,15 @@ class User implements UserInterface, EquatableInterface
      */
     public function getBirthdate()
     {
-        return $this->birthdate;
+        return $this->birthDate;
     }
 
     /**
-     * @param mixed $birthdate
+     * @param mixed $birthDate
      */
-    public function setBirthdate($birthdate)
+    public function setBirthdate($birthDate)
     {
-        $this->birthdate = $birthdate;
+        $this->birthDate = $birthDate;
     }
 
     /**
@@ -243,22 +234,6 @@ class User implements UserInterface, EquatableInterface
     public function setCountry($country)
     {
         $this->country = $country;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAttributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * @param mixed $attributes
-     */
-    public function setAttributes($attributes)
-    {
-        $this->attributes = $attributes;
     }
 
     public function getRoles()

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jérémie Samson | jeremie@ylly.fr
- * Date: 20/04/15
- * Time: 23:53
- */
 
 namespace ESN\LoginBundle\Security\User;
 
@@ -16,9 +10,20 @@ use phpCAS;
 
 class UserProvider implements UserProviderInterface
 {
-    public function loadUser($cas_host, $cas_port, $cas_context){
+    private $casHost;
+    private $casPort;
+    private $casContext;
+
+    public function __construct($casHost, $casPort, $casContext)
+    {
+        $this->casHost = $casHost;
+        $this->casPort = $casPort;
+        $this->casContext = $casContext;
+    }
+
+    public function loadUserFromCas(){
         phpCAS::setDebug();
-        phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context, false);
+        phpCAS::client(CAS_VERSION_2_0, $this->casHost, $this->casPort, $this->casContext, false);
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
 
@@ -27,14 +32,16 @@ class UserProvider implements UserProviderInterface
         if ($username) {
             $attributes = phpCAS::getAttributes();
 
-            return new User($username, $attributes, null, null, array());
+            return new User($username, $attributes, null, null, []);
         }
+
+        return null;
     }
 
     public function loadUserByUsername($username)
     {
         phpCAS::setDebug();
-        phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
+        phpCAS::client(CAS_VERSION_2_0, $this->casHost, $this->casPort, $this->casContext);
         phpCAS::setNoCasServerValidation();
         phpCAS::forceAuthentication();
 

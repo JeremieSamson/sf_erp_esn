@@ -40,19 +40,21 @@ class PermanenceController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array('date' => 'DESC'));
-			
-		$reportsgraph = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array('date' => 'DESC'), 15); //Prend les 15 derniers rapports 
-	
-		$frequentations=array_fill(0,15,1);
+
+        $limit = 15; //Prend les 15 derniers rapports
+		$reportsgraph = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array('date' => 'DESC'), $limit);
+	    $reportsCount = count($reportsgraph);
+
+		$frequentations = array_fill(0,$limit,0);
 		
-		for ($i=14; $i>=0; $i--){
-			$frequentations[$i] = $reportsgraph[14-$i]->getFrequentation(); 
+		for ($i=$reportsCount; $i>0; $i--){
+			$frequentations[$i] = $reportsgraph[$reportsCount-$i]->getFrequentation();
 		}
 		
-		$dates=array_fill(0,15,date("d m Y"));
+		$dates=array_fill(0,$limit,date("d m Y"));
 
-		for ($i=14; $i>=0; $i--){
-			$dates[$i] = $reportsgraph[14-$i]->getDate()->format("d/m/Y");
+		for ($i=$reportsCount; $i>0; $i--){
+			$dates[$i] = $reportsgraph[$reportsCount-$i]->getDate()->format("d/m/Y");
 		}
 		
         $ob = new Highchart();
@@ -60,9 +62,7 @@ class PermanenceController extends BaseController
         $ob->chart->renderTo('columnchart');
         $ob->title->text('Fréquentation des 15 dernières permanences');
         $ob->chart->type('column');
-
         $ob->yAxis->title(array('text' => "Fréquentation"));
-
         $ob->xAxis->title(array('text' => "Date"));
         $ob->xAxis->categories($dates);
 

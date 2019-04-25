@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__.'/../app/autoload.php';
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 

@@ -23,18 +23,17 @@ class LoginController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $user_cas = null;
 
-        $cas_host = $this->container->getParameter('cas_server');
-        $cas_port = $this->container->getParameter('cas_port');
-        $cas_context = $this->container->getParameter('cas_path');
+        $casHost = $this->container->getParameter('cas_server');
+        $casPort = $this->container->getParameter('cas_port');
+        $casContext = $this->container->getParameter('cas_path');
 
         if (isset($_SERVER['HTTP_CLIENT_IP'])
             || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
             || !(in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', 'fe80::1', '::1')) || php_sapi_name() === 'cli-server')
         ) {
             /** @var UserProvider $up */
-            $up = new UserProvider($cas_host, $cas_context, $cas_port);
-
-            $user_cas = $up->loadUser($cas_host, $cas_port, $cas_context);
+            $up = new UserProvider($casHost, $casPort, $casContext);
+            $user_cas = $up->loadUserFromCas();
         }else{
             /** @var User $user_db */
             $user_db = $em->getRepository("ESNUserBundle:User")->find(65);
@@ -53,12 +52,15 @@ class LoginController extends Controller
         }
 
         if ($user_cas != null){
+            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy([
+                "username" => $user_cas->getEmail()
+            ]);
 
-            $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("username" => $user_cas->getEmail()));
-
-            //Check sur le prénom & le nom
-            if (!$user_db)
-                $user_db = $em->getRepository("ESNUserBundle:User")->findOneBy(array("firstname" => $user_cas->getFirstname(), "lastname" => $user_cas->getLastname()));
+            //Check on last and first name
+            $user_db = $user_db ? $user_db : $em->getRepository("ESNUserBundle:User")->findOneBy([
+                "firstname" => $user_cas->getFirstname(),
+                "lastname" => $user_cas->getLastname()
+            ]);
 
             $user = (!$user_db) ? new \ESN\UserBundle\Entity\User() : $user_db;
 
@@ -76,7 +78,7 @@ class LoginController extends Controller
             if (!$user->getEmail()) $user->setEmail($user_cas->getEmail());
             if (!$user->getMobile()) $user->setMobile($user_cas->getTelephone());
 
-			if ($user->getPole() != null){
+			if ($user->getPole() != null || !$user->getPassword()){
                 $user->setEnabled(true);
                 $user->setEsner(true);
                 $user->setUsername($user_cas->getEmail());
