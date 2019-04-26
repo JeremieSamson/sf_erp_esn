@@ -1,9 +1,0 @@
-esn_login_homepage:
-    path:     /caslogin
-    defaults: { _controller: ESNLoginBundle:Login:index }
-esn_login_check:
-    path:     /login_check
-    defaults: { _controller: ESNLoginBundle:Login:check }
-esn_logout:
-    path:   /logout
-    defaults: { _controller: ESNLoginBundle:Login:logout }

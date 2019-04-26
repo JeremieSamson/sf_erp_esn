@@ -1,8 +1,8 @@
 DOCKER_COMPOSE?=docker-compose
 RUN=$(DOCKER_COMPOSE) run --rm php
-EXEC?=$(DOCKER_COMPOSE) exec php 
+EXEC?=$(DOCKER_COMPOSE) exec app
 COMPOSER=$(EXEC) composer
-CONSOLE=$(EXEC) /var/www/erp/app/console
+CONSOLE=$(EXEC) bin/console
 PHPCSFIXER?=$(EXEC) php -d memory_limit=1024m vendor/bin/php-cs-fixer
 BEHAT=$(EXEC) vendor/bin/behat
 BEHAT_ARGS?=-vvv
@@ -22,7 +22,7 @@ help:
 ## Project setup
 ##---------------------------------------------------------------------------
 
-start: build up app/config/parameters.yml db assets                                                                   ## Install and start the project
+start: build up .env db assets                                                                   ## Install and start the project
 
 stop:                                                                                                                 ## Remove docker containers
 	$(DOCKER_COMPOSE) kill
@@ -59,7 +59,6 @@ wait-for-db:
 db: vendor wait-for-db                                                                                 ## Reset the database and load fixtures
 	$(CONSOLE) doctrine:database:drop --force --if-exists
 	$(CONSOLE) doctrine:database:create --if-not-exists
-	$(CONSOLE) doctrine:database:import -n dump/dump_04042019.sql
 	$(CONSOLE) doctrine:migrations:migrate -n
 	$(CONSOLE) doctrine:fixtures:load -n
 
@@ -185,5 +184,5 @@ vendor: composer.lock
 composer.lock: composer.json
 	@echo composer.lock is not up to date.
 
-app/config/parameters.yml: app/config/parameters.yml.dist vendor
+.env: .env.dist vendor
 	$(EXEC) composer -n run-script post-install-cmd

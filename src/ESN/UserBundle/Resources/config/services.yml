@@ -1,4 +1,0 @@
-services:
-#    esn_user.example:
-#        class: ESN\UserBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]

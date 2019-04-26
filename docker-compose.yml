@@ -8,9 +8,9 @@ networks:
 services:
     apache:
         build: .docker/apache
-        container_name: erp_apache
+        container_name: erp4_apache
         depends_on:
-        - php
+        - app
         volumes:
         - .docker/config/vhosts:/etc/apache2/sites-enabled
         - .:/var/www/erp
@@ -19,9 +19,9 @@ services:
         ports:
         - 8000:80
 
-    php:
-        build: .docker/php
-        container_name: erp_php
+    app:
+        build: .docker/app
+        container_name: erp4_app
         volumes:
         - .:/var/www/erp
         depends_on:
@@ -31,7 +31,7 @@ services:
 
     mysql:
         image: mysql:5.7
-        container_name: erp_mysql
+        container_name: erp4_mysql
         command: --default-authentication-plugin=mysql_native_password
         restart: always
         ports:
@@ -46,7 +46,7 @@ services:
 
     maildev:
         image: djfarrelly/maildev
-        container_name: erp_maildev
+        container_name: erp4_maildev
         ports:
         - 8001:80
 

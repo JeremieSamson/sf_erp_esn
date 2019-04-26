@@ -1,4 +1,0 @@
-services:
-#    esn_treasury.example:
-#        class: ESN\TreasuryBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]

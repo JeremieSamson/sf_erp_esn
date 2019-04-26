@@ -1,5 +1,0 @@
-services:
-    comment.acl:
-        class: ESN\HRBundle\Acl\RoleCommentAcl
-        public: false
-        arguments: ['@security.context', IS_AUTHENTICATED_FULLY, IS_AUTHENTICATED_ANONYMOUSLY, ROLE_ADMIN, ROLE_ADMIN, 'FOS\CommentBundle\Acl\AclCommentManager']

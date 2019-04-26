@@ -1,3 +1,0 @@
-esn_dashboard_homepage:
-    path:     /dashboard
-    defaults: { _controller: ESNDashboardBundle:Dashboard:index }

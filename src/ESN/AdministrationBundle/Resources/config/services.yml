@@ -1,6 +1,0 @@
-services:
-    activity.manager:
-        class: ESN\AdministrationBundle\Manager\ActivityManager
-        arguments:
-                - "@security.context"
-                - "@doctrine.orm.entity_manager"
