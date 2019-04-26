@@ -1,0 +1,116 @@
+version: 2
+
+references:
+  working_directory: &working_directory
+    working_directory: ~/app
+
+  configure_base: &configure_base
+    docker:
+    - image: circleci/php:7.2-apache-node-browsers-legacy
+    - image: circleci/mysql:5.7
+      environment:
+        - MYSQL_USER=root
+        - MYSQL_PASSWORD=
+        - MYSQL_ALLOW_EMPTY_PASSWORD=true
+        - MYSQL_DATABASE=circle_test
+
+jobs:
+  build:
+    <<: *working_directory
+    <<: *configure_base
+    parallelism: 1
+    steps:
+    - run:
+        name: Install PHP extensions
+        command: sudo docker-php-ext-install pdo_mysql
+
+    - checkout
+
+    - run:
+        name: Run composer self-update
+        command: sudo composer self-update
+
+    - restore_cache:
+        keys:
+        - vendors-v1-{{ checksum "composer.json" }}
+        - vendors-v1-
+
+    - run:
+        name: Build setup
+        command: composer install -n --prefer-dist
+
+    - run:
+        name: Clean cache
+        command: rm -rf var/cache/*
+
+    - save_cache:
+        key: composer-v1-{{ checksum "composer.json" }}
+        paths:
+        - ./vendor
+
+    - persist_to_workspace:
+        root: ~/
+        paths: app
+
+  security-checker:
+    <<: *working_directory
+    <<: *configure_base
+    parallelism: 1
+    steps:
+    - attach_workspace:
+        at: ~/
+
+    - checkout
+
+    - run:
+        name: Run Security checker
+        command: php bin/security-checker security:check
+
+  lint:
+    <<: *working_directory
+    <<: *configure_base
+    parallelism: 1
+    steps:
+    - attach_workspace:
+        at: ~/
+
+    - checkout
+
+    - run:
+        name: Lint
+        command: |
+          app/console lint:yaml app
+          app/console lint:twig src
+
+  phpunit:
+    <<: *working_directory
+    <<: *configure_base
+    parallelism: 1
+    steps:
+    - attach_workspace:
+        at: ~/
+
+    - checkout
+
+    - run:
+        name: PHPUnit
+        command: |
+          php bin/phpunit
+
+workflows:
+  version: 2
+  build_and_security_test:
+    jobs:
+    - build
+
+    - security-checker:
+        requires:
+        - build
+
+    - lint:
+        requires:
+        - build
+
+    - phpunit:
+        requires:
+        - build

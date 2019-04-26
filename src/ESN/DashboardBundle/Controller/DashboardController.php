@@ -15,8 +15,6 @@ class DashboardController extends Controller
      */
     public function indexAction()
     {
-        $dashboard = $this->getDashboard();
-
         return $this->render('ESNDashboardBundle::index.html.twig', array(
             'title' => "Dashboard"
         ));
@@ -36,18 +34,19 @@ class DashboardController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dashboardAction() {
-        return $this->render('ESNDashboardBundle:Dashboard:dashboard.html.twig', array("dashboard" => $this->getDashboard()));
+        return $this->render('ESNDashboardBundle:Dashboard:dashboard.html.twig', [
+            "dashboard" => $this->getDashboard()
+        ]);
     }
 
     private function getDashboard(){
         //Facebook
-        $likes         = $this->fbLikeCount();
-        $group_members = $this->fbGroupMemberCount();
+        $likes = $this->fbLikeCount();
 
         //Members
         $em      = $this->getDoctrine()->getManager();
-        $esners  = count($em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 1)));
-        $erasmus = count($em->getRepository('ESNUserBundle:User')->findBy(array("esner" => 0)));
+        $esners  = $em->getRepository('ESNUserBundle:User')->countESNers();
+        $erasmus  = $em->getRepository('ESNUserBundle:User')->countInternationalStudents();
 
         //Reports
         $reports = $em->getRepository('ESNPermanenceBundle:PermanenceReport')->findBy(array(), array("date" => "DESC"), 5, null);;
@@ -56,7 +55,7 @@ class DashboardController extends Controller
         $events = $this->getEvents();
 
         return array(
-            "facebook"  => array("likes" => $likes, "group_members" => $group_members),
+            "facebook"  => array("likes" => $likes,),
             "members"   => array("esners" => $esners, "erasmus" => $erasmus),
             "reports"   => $reports,
             "events"    => $events
@@ -173,51 +172,22 @@ class DashboardController extends Controller
      * @return integer
      */
     function fbLikeCount(){
-        $id = $this->container->getParameter('fb_page_id');
+        $pageId = $this->container->getParameter('fb_page_id');
         $appid = $this->container->getParameter('fb_appid');
         $appsecret = $this->container->getParameter('fb_secret');
 
-        //Construct a Facebook URL
-        $json_url ='https://graph.facebook.com/'.$id.'?access_token='.$appid.'|'.$appsecret;
+        $json_url ='https://graph.facebook.com/'.$pageId.'?fields=fan_count&access_token='.$appid.'|'.$appsecret;
         $json = @file_get_contents($json_url);
 
         if ($json != false) {
-            $json_output = json_decode($json);
+            $json_output = json_decode($json, true);
 
-            if($json_output->likes){
-                return $likes = $json_output->likes;
+            if(isset($json_output['fan_count'])){
+                return $json_output['fan_count'];
             }
         }
 
         return 0;
-    }
-
-    /**
-     * Get Facebook Group members number
-     * @return integer
-     */
-    private function fbGroupMemberCount(){
-        $appid = $this->container->getParameter('fb_appid');
-        $appsecret = $this->container->getParameter('fb_secret');
-        $group_id = $this->container->getParameter('fb_group_id');
-
-        //Construct a Facebook URL
-        $json_url ='https://graph.facebook.com/'.$group_id.'/members?access_token='.$appid.'|'.$appsecret;
-        $json = @file_get_contents($json_url);
-
-        $total_members = 0;
-
-        if ($json != false) {
-            $json_output = json_decode($json);
-
-            while (!empty($json_output->next)){
-                $total_members += count($json['data']);
-                $content=$this->get_fcontent($json['paging']['next']);
-                $json=json_decode($content[0],true);
-            }
-        }
-
-        return $total_members;
     }
 
     /**

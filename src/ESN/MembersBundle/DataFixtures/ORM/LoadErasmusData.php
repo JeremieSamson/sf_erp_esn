@@ -27,7 +27,7 @@ class LoadErasmusData extends AbstractFixture implements OrderedFixtureInterface
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager){
-        $this->manager = $manager;
+        /*$this->manager = $manager;
 
         $nationalities = $manager->getRepository('ESNAdministrationBundle:Country')->findOneByName("France");
         $erasmus_members = $nationalities->getMembers();
@@ -39,7 +39,7 @@ class LoadErasmusData extends AbstractFixture implements OrderedFixtureInterface
             $erasmus->setEsncard($this->getRandomEsnCard());
 
             $manager->persist($erasmus);
-        }
+        }*/
 
         $manager->flush();
     }

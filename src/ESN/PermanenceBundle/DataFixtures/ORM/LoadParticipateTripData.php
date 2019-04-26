@@ -26,7 +26,7 @@ class LoadParticipateTripData extends AbstractFixture implements OrderedFixtureI
      * {@inheritDoc}
      */
     public function load(ObjectManager $manager){
-        $this->manager = $manager;
+       /* $this->manager = $manager;
 
         $members = $manager->getRepository('ESNMembersBundle:Member')->findAll();
         $trips   = $manager->getRepository('ESNAdministrationBundle:Trip')->findAll();
@@ -38,7 +38,7 @@ class LoadParticipateTripData extends AbstractFixture implements OrderedFixtureI
             $participateTrip->setTrips($manager->getRepository('ESNAdministrationBundle:Trip')->find($trips[rand(0,count($trips)-1)]));
             $this->manager->persist($participateTrip);
         }
-        $this->manager->flush();
+        $this->manager->flush();*/
     }
 
     public function getOrder()

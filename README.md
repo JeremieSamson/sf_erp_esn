@@ -1,6 +1,6 @@
 # ERP - ESN Lille
 
-[![Build Status](https://travis-ci.org/JeremieSamson/sf_erp_esn.svg?branch=master)](https://travis-ci.org/JeremieSamson/sf_erp_esn)
+[![CircleCI](https://circleci.com/gh/JeremieSamson/sf_erp_esn/tree/master.svg?style=svg)](https://circleci.com/gh/JeremieSamson/sf_erp_esn/tree/master)
 
 ## Installation
 
@@ -48,5 +48,5 @@ Sinon, il est recommandé d'utiliser les ACL comme suit :
 ```shell
 HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
-sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwXapp/cache app/logs
+sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 ```

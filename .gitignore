@@ -1,5 +1,3 @@
-# Created by https://www.gitignore.io
-
 .DS_Store
 
 #Capyfony
@@ -52,3 +50,13 @@ nbproject/
 .ftpquota
 .htaccess
 php.ini
+
+#Docker
+docker-compose.override.yml
+.docker/data
+docker-dev.lock
+supervisord.log
+supervisord.pid
+
+# Node
+./node_nmodules
